@@ -233,6 +233,24 @@ T& LinkedList<T>::getEntry(int position)
 }
 
 template <typename T>
+bool LinkedList<T>::search(T value) const
+{
+	Node<T>* temp = m_front;
+	bool isFound = false;
+	while(temp != nullptr)
+	{
+		if(temp -> getValue() == value)
+		{
+			isFound = true;
+			break;
+		}
+		else{}
+		temp = temp -> getNext();
+	}
+	return(isFound);
+}
+
+template <typename T>
 LinkedList<T>::~LinkedList()
 {
   while(m_front != nullptr)

@@ -94,6 +94,11 @@ class LinkedList
 	* 		NOTE: The range of indices is from 1 to n, where n is the number of elements in the list
 	*/
 	T& getEntry(int position);
+  /** @pre the value is a valid T.
+  *   @post none.
+  *   @return intrue is the value is in the list, false otherwise.
+  */
+  bool search(T value) const;
 
 	private:
 	Node<T>* m_front;
