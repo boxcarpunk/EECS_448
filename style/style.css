@@ -25,23 +25,21 @@ body {
   transition: margin-left .5s;
 }
 
-/*anything else we need to add*/
-
 .menu {
-	position:fixed;
-	top:0;
-    left: 0;
-    right: 0;
-    margin: 0;
-	width:100%; 
-	height: 100px; 
-    background-color: rgba(20, 20, 20, 0.9);
-	z-index:9998;
-	display: none;
+  position:fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  width:100%; 
+  height: 100px; 
+  background-color: rgba(20, 20, 20, 0.9);
+  z-index:9998;
+  display: none;
 }
 
 .navbar {
-  background-color: rgba(175, 175, 175, 0.9);
+  background-color: rgba(27, 125, 122, 0.9);
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   height: 100px;
   font-family: "Ubuntu", sans-serif;
@@ -94,141 +92,59 @@ body {
 .midsection {
   height: 530px;
   width: 100%;
-  background: rgba(62,76,76,0.8);
+  background: rgba(62, 76, 76, 0.8);
   padding-top: 70px;
-  margin-bottom: 1200px;
+  margin-bottom: 0px;
 }
 
 .events {
-  /**/
+  padding-top: 20px;
+  height: 1000px;
 }
 
-/*anything else we need to add*/
-
-ul {list-style-type: none;}
-body {font-family: Raleway, sans-serif;}
-
-/* Month header */
-.month {
-    padding: 70px 25px;
-    width: 90%;
-    background: #1abc9c;
-    text-align: center;
-    margin: auto;
+.events h1 {
+  font-family: "Ubuntu", sans-serif;
+  text-align: center;
+  font-size: 25pt;
+  color: #333;
 }
 
-/* Month list */
-.month ul {
-    margin: 0;
-    padding: 0;
-}
+/* below this comment is the css for the side navigation. link to source in documentation.txt under "Side Navigation" */
 
-.month ul li {
-    color: white;
-    font-size: 20px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-}
-
-/* Previous button inside month header */
-.month .prev {
-    float: left;
-    padding-top: 10px;
-}
-
-/* Next button */
-.month .next {
-    float: right;
-    padding-top: 10px;
-}
-
-/* Weekdays (Mon-Sun) */
-.weekdays {
-    width: 92.6%;
-    margin: auto;
-    padding: 10px 0;
-    background-color:#ddd;
-}
-
-.weekdays li {
-    display: inline-block;
-    width: 13.6%;
-    color: #666;
-    text-align: center;
-    font-size: 20pt;
-}
-
-/* Days (1-31) */
-.days {
-    width: 92.6%;
-    padding: 10px 0;
-    background: #eee;
-    margin: auto;
-}
-
-.days li {
-    list-style-type: none;
-    display: inline-block;
-    width: 13.6%;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size:12px;
-    color: #777;
-    font-size: 15pt;
-}
-
-.days .hover {
-    border-radius: 50px;
-    background: #999;
-    color: grey !important;
-    padding: 5px;
-}
-
-/* Highlight the "current" day */
-.days li .active {
-    border-radius: 50px;
-    padding: 5px;
-    background: #1abc9c;
-    color: white !important
-}
-
-/* sidenav stuff from: https://www.w3schools.com/howto/howto_js_sidenav.asp */
 .side-nav {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0;
-    background-color: #111; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-    z-index: 9999;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1; 
+  top: 0; 
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+  z-index: 9999;
 }
 
-/* The navigation menu links */
 .side-nav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
+  font-family: "Ubuntu", sans-serif;
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
 }
 
-/* When you mouse over the navigation links, change their color */
 .side-nav a:hover {
-    color: #f1f1f1;
+  color: #f1f1f1;
 }
 
-/* Position and style the close button (top right corner) */
 .side-nav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
 }
 
 .brgrBtn {
@@ -249,4 +165,89 @@ body {font-family: Raleway, sans-serif;}
   position: static;
   margin-top: -30px;
   padding-left: 20px;
+}
+
+/* below this comment is the css for the in-place calendar. link to source in documentation.txt under "CSS Calendar" */
+
+ul {list-style-type: none;}
+body {font-family: "Ubuntu", sans-serif;}
+
+.month {
+  padding: 70px 25px;
+  width: 90%;
+  background: #4BC3BF;
+  text-align: center;
+  margin: auto;
+}
+
+.month ul {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.month ul li {
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.month .prev {
+  float: left;
+  padding-top: 10px;
+}
+
+.month .next {
+  float: right;
+  padding-top: 10px;
+}
+
+.weekdays {
+  width: 92.6%;
+  margin: auto;
+  padding: 10px 0;
+  background-color:#ddd;
+}
+
+.weekdays li {
+  font-family: "Ubuntu", sans-serif;
+  display: inline-block;
+  width: 13.6%;
+  color: #666;
+  text-align: center;
+  font-size: 20pt;
+}
+
+.days {
+  width: 92.6%;
+  padding: 10px 0;
+  background: #eee;
+  margin: auto;
+}
+
+.days li {
+  font-family: "Ubuntu", sans-serif;
+  list-style-type: none;
+  display: inline-block;
+  width: 13.6%;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size:12px;
+  color: #777;
+  font-size: 15pt;
+}
+
+.days .hover {
+  border-radius: 50px;
+  background: #999;
+  color: grey !important;
+  padding: 5px;
+}
+
+.days li .active {
+  border-radius: 50px;
+  padding: 5px;
+  background: #1abc9c;
+  color: white !important
 }

@@ -16,22 +16,24 @@
     <link rel="stylesheet" href="style/style.css">
     
     <link rel="stylesheet" type="text/css" href="style/jsCalendar.css">
-    <script src="scripts/style-scripts.js"></script>
     <script src="scripts/jquery.js"></script>
     
     <!-- this is where we will link all of the JavaScript files -->
+    <script src="scripts/style-scripts.js"></script>
     <script src=""></script>
   </head>
   
   <div id="sideNav" class="side-nav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#">Home</a>
+    <a href="#events">Events</a>
     <a href="#">About</a>
-    <a href="#">Resources</a>
+    <a href="#">Help</a>
     <a href="#">Documentation</a>
   </div>
-    
+  
   <div id="main">
-    <!-- stuff goes here -->
+    <!-- main body of webpage -->
     <nav class="navbar">
       <a class="navLink" href="#">
         <img class="navImage" src="images/grey-logo-vector.svg">
@@ -41,7 +43,7 @@
         <div class="brgrBtn"></div>
         <div class="brgrBtn"></div>
       </div>
-      
+
     </nav>
     <nav class="menu">
       <a class="navLink" href="#">
@@ -52,11 +54,12 @@
         <div class="brgrBtn-wht"></div>
         <div class="brgrBtn-wht"></div>
       </div>
-      
-    </nav>
-    
-    <div class="midsection">
 
+    </nav>
+
+    <div class="midsection">
+      <!-- where the calendar will be -->
+      
       <!--   literally just text with color, nothing more atm   -->
       <div class="month"> 
         <ul>
@@ -107,13 +110,13 @@
         <li>29</li>
         <li>30</li>        
       </ul>
-      <div class="events">
-        <!-- stuff -->
-      </div>
+    </div>
+    <div id="events" class="events">
+      <h1>Events</h1>
     </div>
   </div>
 </html>
-<!-- http://redvinestudio.com/how-to-make-a-menu-fade-in-on-scroll-using-jquery/ -->
+<!-- the script below controls the fade in navigation bar. not working properly in the style-scripts.js file. source in documentation.txt under "Fade-in Navigation Bar" -->
 <script>
   (function($) {          
     $(document).ready(function(){                    
