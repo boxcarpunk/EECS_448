@@ -30,13 +30,13 @@ while(1>0)
 		std::cout << e_time << " e time**** 1\n";
 		Events event(name, month, day, year, s_time, e_time);
 		eventList->addFront(event);
-		std::cout << "Front of list : "; eventList->getEntry(0).getInfo(); std::cout << "\n";
+		std::cout << "Front of list : "; eventList->getEntry(1).getInfo(); std::cout << "\n";
 	}
 	std::cout << "\n*********Test Output************\n";
-	std::cout << "Front of list : "; eventList->getEntry(0).getInfo(); std::cout << "\n";
-	std::cout << "Second of list : "; eventList->getEntry(1).getInfo(); std::cout << "\n";
-	std::cout << "Third of list : "; eventList->getEntry(2).getInfo(); std::cout << "\n";
-	std::cout << "Last of list : "; eventList->getEntry(3).getInfo(); std::cout << "\n";
+	std::cout << "Front of list : "; eventList->getEntry(1).getInfo(); std::cout << "\n";
+	std::cout << "Second of list : "; eventList->getEntry(2).getInfo(); std::cout << "\n";
+	std::cout << "Third of list : "; eventList->getEntry(3).getInfo(); std::cout << "\n";
+	std::cout << "Last of list : "; eventList->getEntry(4).getInfo(); std::cout << "\n";
 	std::cout << "\n*********Test Output************\n";		
 }
 
@@ -64,7 +64,7 @@ void Executive::run()
 			eventList->getEntry(0).getInfo();
 			eventList->getEntry(1).getInfo();
 			eventList->getEntry(2).getInfo();*/	
-			for (int i=0; i<length; i++)
+			for (int i=1; i<=length; i++)
 			{
 				eventList->getEntry(i).getInfo();
 			}

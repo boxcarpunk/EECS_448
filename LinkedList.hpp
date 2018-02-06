@@ -224,12 +224,23 @@ void LinkedList<T>::setEntry(int position, T value)
 template <typename T>
 T& LinkedList<T>::getEntry(int position)
 {
-  Node<T>* temp = m_front;
-  for(int i = 1; i < position; i++)
-  {
-    temp = temp -> getNext();
-  }
-  return(temp -> getValue());
+	Node<T>* temp = m_front;
+	if (position<1 || position>m_length)
+	{
+		throw(std::runtime_error("Invalid Entry - Out of range"));
+	}
+	else if (position == 1)
+	{
+		return m_front->getValue();
+	}
+	else
+	{
+		for (int i=0; i<position-1; i++)
+		{
+			temp = temp->getNext();
+		}
+		return temp->getValue();
+	}
 }
 
 template <typename T>
