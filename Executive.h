@@ -1,8 +1,10 @@
 //EECS448 Project 1 Kleyn
 #pragma once
-#inlude "LinkedList.h"
+#include "LinkedList.h"
+#include <fstream>
 
-class Executive(){
+class Executive
+{
 	public:
 	Executive();
 	~Executive();
@@ -10,5 +12,6 @@ class Executive(){
 	
 	private:
 	std::ifstream inFile; 
+};
 	
 

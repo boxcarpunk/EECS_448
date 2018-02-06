@@ -1,10 +1,11 @@
 //EECS448 Project 1 Kleyn
 
-#include "Executive.cpp"
+#include "Executive.h"
 
-int main() {
+int main() 
+{
 	Executive exec;
 	exec.run();
 	
-  return(0);
+	return(0);
 }
