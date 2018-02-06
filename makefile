@@ -5,7 +5,7 @@ main.o: main.cpp Executive.h Events.h LinkedList.h Node.h Events.cpp LinkedList.
 	g++ -std=c++11 -g -Wall -c main.cpp
 
 Executive.o: Executive.h Executive.cpp LinkedList.h Node.h Events.h
-	g++ -std=c++11 -g -Wall -c Executive.cpp
+	g++ -std=c++11 -g -Wall -c Executive.cpp Events.cpp
 
 Events.o: Events.h Events.cpp
 	g++ -std=c++11 -g -Wall -c Events.cpp

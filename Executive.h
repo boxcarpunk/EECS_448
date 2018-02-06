@@ -1,6 +1,7 @@
 //EECS448 Project 1 Kleyn
 #pragma once
 #include "LinkedList.h"
+#include "Events.h"
 #include <fstream>
 
 class Executive
