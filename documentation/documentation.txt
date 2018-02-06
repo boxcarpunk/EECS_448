@@ -84,3 +84,39 @@
 		- Integer
 		- Private
 		- m_length is used to keep track of the number of elements in the list.
+
+##Node.h & Node.hpp
+	- Node(T value)
+		- Templated value.
+		- Public
+		- Creates a new node with the value that is passed in as a parameter.
+
+	- T& getValue() 
+		- None
+		- Public
+		- Returns the value that is associated with any given node.
+
+	- void setValue(T value)
+		- Templated value.
+		- Public
+		- Sets the value of a node equal to the value passed in as a parameter.
+
+	- Node<T>* getNext() const
+		- None
+		- Public
+		- Returns a pointer to the node that follows the original.
+
+	- void setNext(Node<T>* next)
+		- A node pointer representing the next value in a list.
+		- Public
+		- Sets the next node in a structure equal to the pointer that is passed in as a parameter.
+
+	- T m_value
+		- Templated value
+		- Private
+		- Stores the value that is to be held by the node.
+
+	- Node<T>* m_next
+		- Node pointer
+		- Private
+		- Keeps track of the node that follows the original. Set to 'nullptr' until setNext() is called.
