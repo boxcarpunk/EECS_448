@@ -1,0 +1,3 @@
+## LinkedList.h
+  - LinkedList.h has been sourced from EECS 268 at the University of Kansas by Dr. John Gibbons.
+  - Methods have been implemented by EECS 448 Team 7 Spring 2018 Semester
