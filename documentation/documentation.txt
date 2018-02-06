@@ -1,0 +1,86 @@
+## File Name
+	- Method Name || Variable Name
+		- Method Parameters || Variable Type
+		- Private || Public
+		- Method Action || Variable Use
+
+## LinkedList.h & LinkedList.hpp
+	- LinkedList()
+		- None
+		- Public
+		- An empty list is created.
+
+	- ~LinkedList()
+		- None
+		- Public
+		- All nodes that are present in the list are removed and memory is freed.
+
+	- bool isEmpty() const
+		- None
+		- Public
+		- Checks to see if the value associated with private member variable 'm_length' is greater than 0. If it is, isEmpty() will return 'false', otherwise 'true'.
+
+	- int getLength() const
+		- None
+		- Public
+		- Returns the value associated with the number of nodes that are in the list at the time called.
+
+	- int positionOf(T value) const
+		- Templated value, in the case of cal448 this is an event.
+		- Public
+		- Returns the index associated with the templated value. If it does not exist in the list, the user is notified.
+
+	- void addBack(T value)
+		- Templated value, in the case of cal448 this is an event.
+		- Public
+		- Adds a new element to the end of the list.
+
+	- void addFront(T value) 
+		- Templated value, in the case of cal448 this is an event.
+		- Public
+		- Adds a new element to the front of the list.
+
+	- bool insert(int position, T value)
+		- Templated value and an integer representing the index at which you wish to add the value.
+		- Public
+		- Returns 'true' if the value was inserted at the given position, 'false' otherwise. NOTE: Position must fall between 0 and m_size (the number of elements in the list at the time of inserting)
+
+	- bool removeBack() 
+		- None
+		- Public
+		- Returns 'true' if the element at the end of the list is removed, 'false' if the list is empty.
+
+	- bool removeFont()
+		- None
+		- Public
+		- Return 'true' if the element at the front of the list is removed, 'false' if the list is empty.
+
+	- bool removeAt(int position)
+		- Integer representing the index at which you wish to remove a value.
+		- Public
+		- Returns 'true' if the element at the given position is removed, 'false' otherwise.
+
+	- void setEntry(int position, T value)
+		- Integer representing the index you wish to change the value and the value you want.
+		- Public
+		- The value at the given position is overridden with the value passed in. If the position is beyond the size of the list, the user is notified.
+
+	- T& getEntry(int position)
+		- Integer representing the index you wish to have the value returned.
+		- Public
+		- Returns the value associated with the index that is passed in as a parameter.
+
+	- bool search(T value) const
+		- Templated value, in the case of cal448 this is an event.
+		- Public
+		- The list is searched and if the value passed in is found 'true' is returned, 'false' signifies that the value does not exist in the list.
+
+	- Node<T>* m_front
+		- Node pointer
+		- Private
+		- m_front is used to keep track of the front-most node in the list.
+
+	- int m_length
+		- Integer
+		- Private
+		- m_length is used to keep track of the number of elements in the list.
