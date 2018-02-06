@@ -12,6 +12,7 @@ class Executive
 	
 	private:
 	std::ifstream inFile; 
+	LinkedList<Events>* eventList;
 };
 	
 
