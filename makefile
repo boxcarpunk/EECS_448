@@ -12,3 +12,6 @@ Events.o: Events.h Events.cpp
 
 clean:
 	rm *.o project1
+	rm *.o main
+	rm *.o Executive
+	rm *.o Events
