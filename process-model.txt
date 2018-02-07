@@ -1,1 +1,8 @@
-##process model chosen
+##Process Model
+	- We all agreed that this project would run smoothest if using an iterative process flow and a prescriptive process model.
+	- We chose to loosely follow the Incremental Model (Multi-waterfall cycle).
+	- The Multi-waterfall model allows teams to build and deploy a first version of software and then go back to build on it to provide more features and functionality.
+	- Essentially it allowed us to build our application piece by piece. This meant that we were not forced to implement each and every requirement without first testing it. We were allowed to focus on what we thought would be most important and then move on from there after determining that a feature worked as intended.
+	- When we initially started planning for Project 01, we chose to use HTML/CSS and JavaScript. We were able to build a website that was very basic, but did not perform any of the required tasks. Due to this we had to go back to planning and chose to continue with Project 01 in a language that each team member was significantly more comfortable with; that being C++. 
+	- Our first increment was in HTML/CSS and JavaScript, but because of complications and confusion we had to abandon that after deploying a general user interface. Our second increment was in C++. Functionality existed in the this increment, where it did not in the first. 
+	- We quickly found out that by using this model we needed to come together and have a deeply detailed plan and design. This is one of the largest reasons for the switch from a web application to a terminal-based one. Since we chose the Multi-waterfall cycle, there was not a heavy cost (time) endured by the team. We were able to go directly back to communication and agree on where we needed to go. The second increment had significantly more planning and modeling. Had we used a different prescriptive model, we would not have been able to quickly get back on our feet.
