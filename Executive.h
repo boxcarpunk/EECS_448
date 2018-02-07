@@ -14,6 +14,9 @@ class Executive
 	private:
 	std::ifstream inFile; 
 	LinkedList<Events>* eventList;
+	void adminFunc();
+	void userFunc();
+	int listLength = 0;
 };
 	
 

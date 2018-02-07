@@ -8,7 +8,7 @@ Executive::Executive()
 	inFile.open("eventslist.txt");
 	std::string name = "";
 	std::string month = "";
-	std::string day = "";
+	std::string day = "";										//Event variables
 	std::string year = "";
 	std::string s_time = "";
 	std::string e_time = "";
@@ -17,27 +17,15 @@ while(1>0)
 	{
 		std::getline(inFile, name, ',');
 		if (inFile.eof()) break;
-		std::cout << name << " name **** 1\n";
 		std::getline(inFile, month, ',');
-		std::cout << month << " month **** 1\n";
 		std::getline(inFile, day, ',');
-		std::cout << day << " day **** 1\n";
-		std::getline(inFile, year, ',');
-		std::cout << year << " year **** 1\n";
+		std::getline(inFile, year, ',');							//Creating list of events from "storage"
 		std::getline(inFile, s_time, ',');
-		std::cout << s_time << " s time **** 1\n";
 		std::getline(inFile, e_time);
-		std::cout << e_time << " e time**** 1\n";
 		Events event(name, month, day, year, s_time, e_time);
-		eventList->addFront(event);
-		std::cout << "Front of list : "; eventList->getEntry(1).getInfo(); std::cout << "\n";
+		eventList->addBack(event);
 	}
-	std::cout << "\n*********Test Output************\n";
-	std::cout << "Front of list : "; eventList->getEntry(1).getInfo(); std::cout << "\n";
-	std::cout << "Second of list : "; eventList->getEntry(2).getInfo(); std::cout << "\n";
-	std::cout << "Third of list : "; eventList->getEntry(3).getInfo(); std::cout << "\n";
-	std::cout << "Last of list : "; eventList->getEntry(4).getInfo(); std::cout << "\n";
-	std::cout << "\n*********Test Output************\n";		
+
 }
 
 Executive::~Executive()
@@ -49,30 +37,40 @@ void Executive::run()
 {
 	bool program_status = true;			
 	std::string admin = "unspecified";
-	int length = eventList->getLength();
+	listLength = eventList->getLength();
 
+
+	std::cout << "\nWelcome to Cal448! ";
 	while (program_status == true)			//main program loop condition
 	{
-		std::cout << "\nWelcome to Cal448! Are you the admin or the user? ";
+		std::cout << "Are you the admin or the user? ";
 		std::cin >> admin;
 		if (admin == "user" || admin == "USER" || admin == "User")			//runs if user logs in
 		{
-			std::cout << "You have specified that you are a user\nNumber of events currently planned: " << length << "\n\nEvent list:\n";
-			/*Events event("Third test", "October", "31", "2019", "1300", "1320");
-			eventList->addFront(event);
-			std::cout << "\nTest length: " << length << "\n";
-			eventList->getEntry(0).getInfo();
-			eventList->getEntry(1).getInfo();
-			eventList->getEntry(2).getInfo();*/	
-			for (int i=1; i<=length; i++)
-			{
-				eventList->getEntry(i).getInfo();
-			}
-			
+			userFunc();
 		}
 		else if (admin == "admin" || admin == "ADMIN" || admin == "Admin")		//runs if admin logs in
 		{
-			std::cout << "You have specified that you are an admin\n\n";
+			adminFunc();
+		}
+		else
+		{
+			std::cout << "\nYour input was not recognized.\n\n";
 		}
 	}
+}
+void Executive::adminFunc()
+{
+	std::cout << "\nYou have specified that you are an admin\n\n";	
+}
+
+void Executive::userFunc()
+{
+	std::cout << "\nYou have specified that you are a user\n\nHow would you like to proceed?";
+	std::cout << "Number of events currently planned: " << listLength << "\n\nEvent list:\n";
+	for (int i=1; i<=listLength; i++)
+	{
+		eventList->getEntry(i).getInfo();
+	}
+	std::cout << "\n";
 }
