@@ -4,6 +4,7 @@
 #define EVENTS_H
 #include <iostream>
 #include <sstream>
+#include <TimeSlots.h>
 
 class Events
 {
@@ -57,7 +58,7 @@ private:
 	int year; // year of event
 	int s_time; // start time of event
 	int e_time; // end time of event
-	bool timeSlots[72]; // slots for event openings
+	TimeSlots daySchedule; // slots for event openings
 
 };
 #endif
