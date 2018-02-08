@@ -13,6 +13,8 @@ public:
 
 	/* Constructor instantiates all global instance variables **/
 	Events();
+	
+	Events (std::string name, int month, int day, int year, s_time, e_time);
 
 	/* Copy Constructor **/
 	Events(const Events& object);
