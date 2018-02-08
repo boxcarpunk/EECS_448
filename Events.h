@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <time.h> /* clock_t, clock, CLOCKS_PER_SEC */
+#include <ctime>
 
 class Events
 {
