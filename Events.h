@@ -4,8 +4,6 @@
 #define EVENTS_H
 #include <iostream>
 #include <sstream>
-#include <time.h> /* clock_t, clock, CLOCKS_PER_SEC */
-#include <ctime>
 
 class Events
 {
@@ -14,7 +12,8 @@ public:
 	/* Constructor instantiates all global instance variables **/
 	Events();
 	
-	Events (std::string name, int month, int day, int year, s_time, e_time);
+	/* Parameterized Constructor **/
+	Events (std::string n, int m, int d, int y, int s_t, int e_t);
 
 	/* Copy Constructor **/
 	Events(const Events& object);
@@ -29,42 +28,34 @@ public:
 	/* Operator equal to overload for comparing keys**/
 	bool operator==(const Events& newEvent) const;
 
-	/* set methods set for private variables
+	/* set methods set private variables
 	@post respective instance variables set equal to argument passed to set methods
 	@param new values for respective instance variables **/
-	void setEventName(std::string n);
-	void setNumOfUsers(int n);
-	void setStartTime(int hours, int minutes, int seconds, int month, int day, int year);
-	void setEndTime(int hours, int minutes, int seconds, int month, int day, int year);
-
+	void setName(std::string n);
+	int setMonth(int m);
+	int setDay(int d);
+	int setYear(int y);
+	int setS_Time(int s_t);
+	int setE_Time(int e_t);
 
 	/* get methods return their respective instance variables
 	@return repective instance variables**/
-	std::string getEventName() const;
-	int getNumOfUsers() const;
-
-	int getStartHours() const;
-	int getStartMinutes() const;
-	int getStartSeconds() const;
-	int getStartMonth() const;
-	int getStartDay() const;
-	int getStartYear() const;
-
-	int getEndHours() const;
-	int getEndMinutes() const;
-	int getEndSeconds() const;
-	int getEndMonth() const;
-	int getEndDay() const;
-	int getEndYear() const;
+	int getName() const;
+	int getMonth() const;
+	int getDay() const;
+	int getYear() const;
+	int getS_Time() const;
+	int getE_Time() const;
 
 
 private:
-	std::string eventName;
-	std::string stringMonth;
-	int numOfUsers;
-	std::tm startOfEvent;
-	std::tm endOfEvent;
-	bool timeSlots[72];
+	std::string name; // event name
+	int month; // month of event
+	int day; // day of event
+	int year; // year of event
+	int s_time; // start time of event
+	int e_time; // end time of event
+	bool timeSlots[72]; // slots for event openings
 
 };
 #endif
