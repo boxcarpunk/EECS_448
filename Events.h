@@ -32,15 +32,15 @@ public:
 	@post respective instance variables set equal to argument passed to set methods
 	@param new values for respective instance variables **/
 	void setName(std::string n);
-	int setMonth(int m);
-	int setDay(int d);
-	int setYear(int y);
-	int setS_Time(int s_t);
-	int setE_Time(int e_t);
+	void setMonth(int m);
+	void setDay(int d);
+	void setYear(int y);
+	void setS_Time(int s_t);
+	void setE_Time(int e_t);
 
 	/* get methods return their respective instance variables
 	@return repective instance variables**/
-	int getName() const;
+	std::string getName() const;
 	int getMonth() const;
 	int getDay() const;
 	int getYear() const;
