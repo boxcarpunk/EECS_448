@@ -5,6 +5,8 @@
 *	@brief Implementation file for templated LinkedList class
 */
 #include <iostream>
+#include "LinkedList.h"
+#include <string>
 
 template <typename T>
 LinkedList<T>::LinkedList()
@@ -244,21 +246,31 @@ T& LinkedList<T>::getEntry(int position)
 }
 
 template <typename T>
-bool LinkedList<T>::search(T value) const
+T& LinkedList<T>::search(std::string name) throw(Exception)
 {
 	Node<T>* temp = m_front;
+  Events temp1 = temp ->getValue();
 	bool isFound = false;
 	while(temp != nullptr)
 	{
-		if(temp -> getValue() == value)
+    temp1 = temp -> getValue();
+		if(temp1.getName() == name)
 		{
 			isFound = true;
+      return(temp1);
 			break;
 		}
-		else{}
+		else{
 		temp = temp -> getNext();
+    }
 	}
-	return(isFound);
+  throw Exception("No Event Exists with the name: "<<name<<"\n");
+}
+
+template <typename T>
+void LinkedList<T>::sortList()
+{
+  Node<T>* temp = m_front;
 }
 
 template <typename T>

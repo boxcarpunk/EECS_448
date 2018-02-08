@@ -10,6 +10,8 @@
 
 //TODO You need to implement the Node class!
 #include "Node.h"
+#include "Events.h"
+#include <string>
 
 template <typename T>
 class LinkedList
@@ -98,7 +100,8 @@ class LinkedList
   *   @post none.
   *   @return intrue is the value is in the list, false otherwise.
   */
-  bool search(T value) const;
+  T& search(std::string name) throw(Exception);
+	void sortList();
 
 	private:
 	Node<T>* m_front;
