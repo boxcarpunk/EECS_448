@@ -4,11 +4,11 @@ Events::Events()
 {
 	// initialize variables to "" for strings, 0 for ints, false for bools
 	name = "";
-	month = 0; 
-	day = 0; 
-	year = 0; 
-	s_time = 0; 
-	e_time = 0; 
+	month = 0;
+	day = 0;
+	year = 0;
+	s_time = 0;
+	e_time = 0;
 
 	for (int i = 0; i < 72; i++)
 	{
@@ -24,7 +24,7 @@ Events::Events(std::string n, int m, int d, int y, int s_t, int e_t)
 	year = y;
 	s_time = s_t;
 	e_time = e_t;
-	
+
 	for (int i = 0; i < 72; i++)
 	{
 		timeSlots[i] = false;
@@ -142,10 +142,3 @@ void Events::getInfo()
 {
 	std::cout << "\n" << name << " is occuring on " << month << "/" << day << "/" << year << " from " << s_time << " to " << e_time << ".\n";
 }
-
-
-
-
-
-
-

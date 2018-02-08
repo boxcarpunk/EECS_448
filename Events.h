@@ -1,10 +1,8 @@
-#pragma once
-
 #ifndef EVENTS_H
 #define EVENTS_H
 #include <iostream>
 #include <sstream>
-#include <TimeSlots.h>
+#include "TimeSlots.h"
 
 class Events
 {
@@ -12,7 +10,7 @@ public:
 
 	/* Constructor instantiates all global instance variables **/
 	Events();
-	
+
 	/* Parameterized Constructor **/
 	Events (std::string n, int m, int d, int y, int s_t, int e_t);
 
@@ -47,7 +45,7 @@ public:
 	int getYear() const;
 	int getS_Time() const;
 	int getE_Time() const;
-	
+
 	void getInfo();
 
 
