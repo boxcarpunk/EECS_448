@@ -246,7 +246,7 @@ T& LinkedList<T>::getEntry(int position)
 }
 
 template <typename T>
-T& LinkedList<T>::search(std::string name) throw(Exception)
+T& LinkedList<T>::search(std::string name)
 {
 	Node<T>* temp = m_front;
   Events temp1 = temp ->getValue();
@@ -264,7 +264,8 @@ T& LinkedList<T>::search(std::string name) throw(Exception)
 		temp = temp -> getNext();
     }
 	}
-  throw Exception("No Event Exists with the name: "<<name<<"\n");
+  Events empty;
+  return(empty);
 }
 
 template <typename T>

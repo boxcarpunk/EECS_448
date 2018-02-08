@@ -100,7 +100,7 @@ class LinkedList
   *   @post none.
   *   @return intrue is the value is in the list, false otherwise.
   */
-  T& search(std::string name) throw(Exception);
+  T& search(std::string name);
 	void sortList();
 
 	private:
