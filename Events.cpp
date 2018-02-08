@@ -137,3 +137,15 @@ int Events::getE_Time() const
 {
 	return e_time;
 }
+
+void Events::getInfo()
+{
+	std::cout << "\n" << name << " is occuring on " << month << "/" << day << "/" << year << " from " << s_time << " to " << e_time << ".\n";
+}
+
+
+
+
+
+
+

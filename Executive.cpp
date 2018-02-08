@@ -2,7 +2,7 @@
 #include "Executive.h"
 #include "Events.h"
 #include "LinkedList.h"
-//THIS IS A TEST
+
 Executive::Executive()
 {
 	inFile.open("eventslist.txt");
@@ -34,23 +34,23 @@ Executive::~Executive()
 
 void Executive::run()
 {
-	bool program_status = true;			
+	bool programStatus = true;			
 	std::string admin = "unspecified";
 	listLength = eventList->getLength();
 
 
 	std::cout << "\nWelcome to Cal448! ";
-	while (program_status == true)			//main program loop condition
+	while (programStatus == true)			//main program loop condition
 	{
 		std::cout << "Are you the admin or the user? ";
 		std::cin >> admin;
 		if (admin == "admin" || admin == "ADMIN" || admin == "Admin")		//runs if admin logs in
 		{
-			adminFunc();
+			programStatus = adminFunc();
 		}
 		else if (admin == "user" || admin == "USER" || admin == "User")			//runs if user logs in
 		{
-			userFunc();
+			programStatus = userFunc();
 		}
 		else
 		{
@@ -58,9 +58,10 @@ void Executive::run()
 		}
 	}
 }
-void Executive::adminFunc()
+
+bool Executive::adminFunc()
 {
-	adminChoice = 0;
+	int adminChoice = 0;
 	std::cout << "\nWelcome admin... How would you like to proceed?\n\n";
 	std::cout << "1) Add an event\n2) Print all events\n3) Find a specific event\n4) Quit\n\nChoice: ";
 	std::cin >> adminChoice;
@@ -86,16 +87,18 @@ void Executive::adminFunc()
 	else 
 	{
 		std::cout << "\nPlease enter a valid choice\n";
+		return true;
 	}	
 }
 
-void Executive::userFunc()
+bool Executive::userFunc()
 {
-	std::cout << "\nYou have specified that you are a user\n\nHow would you like to proceed?";
-	std::cout << "Number of events currently planned: " << listLength << "\n\nEvent list:\n";
+	std::cout << "\nYou have specified that you are a user\n\nHow would you like to proceed?\n";
+	std::cout << "Number of events currently planned: " << listLength << "\nEvent list:\n";
 	for (int i=1; i<=listLength; i++)
 	{
 		eventList->getEntry(i).getInfo();
 	}
 	std::cout << "\n";
+	return true;
 }

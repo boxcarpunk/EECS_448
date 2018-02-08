@@ -46,6 +46,8 @@ public:
 	int getYear() const;
 	int getS_Time() const;
 	int getE_Time() const;
+	
+	void getInfo();
 
 
 private:
