@@ -3,6 +3,7 @@
 #include "LinkedList.h"
 #include "Events.h"
 #include <fstream>
+#include <vector>
 
 class Executive
 {
@@ -17,6 +18,13 @@ class Executive
 	bool adminFunc();
 	bool userFunc();
 	int listLength = 0;
+	std::string name = "";
+	std::string month = "";
+	std::string day = "";										//Event variables
+	std::string year = "";
+	std::string s_time = "";
+	std::string e_time = "";
+
 };
 	
 

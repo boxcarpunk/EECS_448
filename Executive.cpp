@@ -6,14 +6,8 @@
 Executive::Executive()
 {
 	inFile.open("eventslist.txt");
-	std::string name = "";
-	std::string month = "";
-	std::string day = "";										//Event variables
-	std::string year = "";
-	std::string s_time = "";
-	std::string e_time = "";
 	eventList = new LinkedList<Events>();
-while(1>0)
+while(inFile)
 	{
 		std::getline(inFile, name, ',');
 		if (inFile.eof()) break;
@@ -24,19 +18,20 @@ while(1>0)
 		std::getline(inFile, e_time);
 		Events event(name, stoi(month), stoi(day), stoi(year), stoi(s_time), stoi(e_time));
 		eventList->addBack(event);
+		//eventList.push_back(event);
 	}
 }
 
 Executive::~Executive()
 {
-
+	//delete eventList
 }
 
 void Executive::run()
 {
 	bool programStatus = true;			
 	std::string admin = "unspecified";
-	listLength = eventList->getLength();
+	listLength = eventList->getLength();//eventList.Size();
 
 
 	std::cout << "\nWelcome to Cal448! ";
@@ -67,7 +62,20 @@ bool Executive::adminFunc()
 	std::cin >> adminChoice;
 	if (adminChoice == 1)
 	{
-		std::cout << "\nYou have chosen to add an event\n";
+		std::cout << "\nWhat is the name of your event?\n";
+		std::cin >> name;
+		std::cout << "\nWhat year will your event take place?\n";
+		std::cin >> year;
+		std::cout << "\nWhat month will your event take place?\n";
+		std::cin >> month;
+		std::cout << "\nWhat day will your event take place?\n";
+		std::cin >> day;
+		std::cout << "\nWhat time will your event start?\n";
+		std::cin >> s_time;
+		std::cout << "\nWhat time will your event end?\n";
+		std::cin >> e_time;
+		Events event(name, stoi(month), stoi(day), stoi(year), stoi(s_time), stoi(e_time));
+		eventList->addBack(event);
 		return true;
 	}
 	else if (adminChoice == 2)
@@ -95,7 +103,7 @@ bool Executive::userFunc()
 {
 	std::cout << "\nYou have specified that you are a user\n\nHow would you like to proceed?\n";
 	std::cout << "Number of events currently planned: " << listLength << "\nEvent list:\n";
-	for (int i=1; i<=listLength; i++)
+	for (int i=1; i<=eventList->getLength(); i++)
 	{
 		eventList->getEntry(i).getInfo();
 	}
