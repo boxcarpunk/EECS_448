@@ -101,7 +101,15 @@ class LinkedList
   *   @return intrue is the value is in the list, false otherwise.
   */
   T& search(std::string name);
+	/** @pre none.
+  *   @post Sorted LinkedList of Events.
+  *   @return none.
+	*/
 	void sortList();
+	/** @pre Two T values
+  *   @post none.
+  *   @return true if event1 comes before event2.
+  */
 	bool compare(T event1, T event2);
 
 	private:
