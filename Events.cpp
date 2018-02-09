@@ -2,13 +2,15 @@
 
 Events::Events()
 {
-	// initialize variables to "" for strings, 0 for ints, false for bools
+	// initialize variables to "" for strings, 0 for ints
 	//timeSlots = new TimeSlots[72];
 	name = "";
 	month = 0;
 	day = 0;
 	year = 0;
-	
+	m_TimeSlot = new LinkedList<TimeSlots>();
+	s_time = 0;
+	e_time = 0;
 }
 
 Events::Events(std::string n, int m, int d, int y)
@@ -17,49 +19,132 @@ Events::Events(std::string n, int m, int d, int y)
 	month = m;
 	day = d;
 	year = y;
-	
+	m_TimeSlot = new LinkedList<TimeSlots>();
+	s_time = 0;
+	e_time = 0;
 }
 
+// For right now we don't need a copy constructor for Events.cpp, but I will leave its unfinished implementation
+// here in case we need it for some reason later on
+/*
 Events::Events(const Events& object)
 {
-	name = object.name; // copy event name
-	month = object.month; // copy month of event
-	day = object.day; // copy day of event
-    year = object.year; // copy year of event
+name = object.name; // copy event name
+month = object.month; // copy month of event
+day = object.day; // copy day of event
+year = object.year; // copy year of event
+m_TimeSlot = new LinkedList<TimeSlots>();
 
-	// copy time slots' boolean values
-	/*for (int i = 0; i < 72; i++)
-	{
-		timeSlots[i] = object.timeSlots[i];
-	}*/
+// copy time slots' values
+for (int i = s_t; i <= e_t; i += 20)
+{
+TimeSlots newSlot(0, i);
+m_TimeSlot->addBack(newSlot);
 }
 
-void Events::operator=(const Events& rhs)
-{
-	name = rhs.name; // copy event name
-	month = rhs.month; // copy month of event
-	day = rhs.day; // copy day of event
-	year = rhs.year; // copy year of event
+m_TimeSlot->sortListTime();
+} */
 
-	// copy time slots' boolean values
-	/*for (int i = 0; i < 72; i++)
-	{
-		timeSlots[i] = rhs.timeSlots[i];
-	}*/
+Events::~Events()
+{
+	delete m_TimeSlot;
+	m_TimeSlot = nullptr;
 }
 
 bool Events::operator>(const Events& rhs) const
 {
-	return 0;
+	if (year > rhs.getYear())
+	{
+		return true;
+	}
+	else if (year < rhs.getYear())
+	{
+		return false;
+	}
+	else
+	{
+		if (month > rhs.getMonth())
+		{
+			return true;
+		}
+		else if (month < rhs.getMonth())
+		{
+			return false;
+		}
+		else
+		{
+			if (day > rhs.getDay())
+			{
+				return true;
+			}
+			else
+			{
+				// TODO need to compare timeslots
+				return false;
+			}
+		}
+	}
 }
 
 bool Events::operator<(const Events& rhs) const
 {
-	return 0;
+	if (year < rhs.getYear())
+	{
+		return true;
+	}
+	else if (year > rhs.getYear())
+	{
+		return false;
+	}
+	else
+	{
+		if (month < rhs.getMonth())
+		{
+			return true;
+		}
+		else if (month > rhs.getMonth())
+		{
+			return false;
+		}
+		else
+		{
+			if (day < rhs.getDay())
+			{
+				return true;
+			}
+			else
+			{
+				// TODO need to compare timeslots
+				return false;
+			}
+		}
+	}
 }
 
-bool Events::operator==(const Events& newEvent) const
+bool Events::operator==(const Events& rhs) const
 {
+	if (year == rhs.getYear())
+	{
+		if (month == rhs.getMonth())
+		{
+			if (day == rhs.getDay())
+			{
+				// TODO need to compare time slots;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
 	return 0;
 }
 
@@ -83,16 +168,6 @@ void Events::setYear(int y)
 	year = y;
 }
 
-void Events::setS_Time(int s_t)
-{
-	s_time = s_t;
-}
-
-void Events::setE_Time(int e_t)
-{
-	e_time = e_t;
-}
-
 std::string Events::getName() const
 {
 	return name;
@@ -113,16 +188,6 @@ int Events::getYear() const
 	return year;
 }
 
-int Events::getS_Time() const
-{
-	return s_time;
-}
-
-int Events::getE_Time() const
-{
-	return e_time;
-}
-
 void Events::getInfo()
 {
 	std::cout << "\n" << name << " is occuring on " << month << "/" << day << "/" << year << " from " << s_time << " to " << e_time << ".\n";
@@ -130,8 +195,13 @@ void Events::getInfo()
 
 bool Events::addTimeSlots(int s_t, int e_t)
 {
-	return true; //TO DO
+	s_time = s_t;
+	e_time = e_t;
+	for (int i = s_t; i <= e_t; i += 20)
+	{
+		TimeSlots newSlot(0, i);
+		m_TimeSlot->addBack(newSlot);
+	}
+
+	m_TimeSlot->sortListTime();
 }
-
-
-

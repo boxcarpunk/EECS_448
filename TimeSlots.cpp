@@ -29,5 +29,5 @@ int TimeSlots::getNum()
 
 int TimeSlots::getTimeslot()
 {
-	retunr m_TimeSlot;
+	return m_TimeSlot;
 }
