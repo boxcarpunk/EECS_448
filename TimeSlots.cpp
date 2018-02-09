@@ -2,7 +2,7 @@
 
 TimeSlots::TimeSlots()
 {
-		bool avilable = true;
+		bool available = true;
 		std::string nameOfEvent = "";
 		int time = 0;
 		size = 10;
