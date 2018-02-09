@@ -9,21 +9,26 @@
 class Executive
 {
 	public:
-	Executive();
+	Executive(); 								//Opens a file and creates a list of events that have already been created
 	~Executive();
-	void run();
+	void run(); 								//Main run function
+	void printEvents();							//Prints info on all the events in the event list
 
 	private:
 	std::ifstream inFile;
-	LinkedList<Events>* eventList;
-	bool adminFunc();
-	bool userFunc();
-	int listLength = 0;
-	std::string name = "";
-	std::string month = "";
-	std::string day = "";										//Event variables
-	std::string year = "";
-	std::string s_time = "";
-	std::string e_time = "";
+	LinkedList<Events>* eventList; 				//List which holds the event objects
+	bool adminFunc(); 							//Function which handles admin menu and options
+	bool userFunc();							//Function which handles user menu and options
+	bool addEvent();							//Prompts the admin to create an event and it to the list
+	std::string monthConv(std::string month)
+	int listLength = 0;							//Length of the list of events
+	std::string m_name = "";
+	std::string m_month = "";
+	std::string m_day = "";						//Event variables
+	std::string m_year = "";
+	std::string m_time = "";
+	std::string m_attNum = "";
+	std::string m_stime = "";
+	std::string m_etime = "";
 
 };
