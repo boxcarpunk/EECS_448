@@ -7,16 +7,15 @@ Events::Events()
 	month = 0;
 	day = 0;
 	year = 0;
-	s_time = 0;
-	e_time = 0;
+	
 
 	for (int i = 0; i < 72; i++)
 	{
-		timeSlots[i] = false;
+		timeSlots[i] = NULL;
 	}
 }
 
-Events::Events(std::string n, int m, int d, int y, int s_t, int e_t)
+Events::Events(std::string n, int m, int d, int y)
 {
 	name = n;
 	month = m;
@@ -37,8 +36,6 @@ Events::Events(const Events& object)
 	month = object.month; // copy month of event
 	day = object.day; // copy day of event
     year = object.year; // copy year of event
-	s_time = object.s_time; // copy start time of event
-	e_time = object.e_time; // copy end time of event
 
 	// copy time slots' boolean values
 	for (int i = 0; i < 72; i++)
@@ -53,8 +50,6 @@ void Events::operator=(const Events& rhs)
 	month = rhs.month; // copy month of event
 	day = rhs.day; // copy day of event
 	year = rhs.year; // copy year of event
-	s_time = rhs.s_time; // copy start time of event
-	e_time = rhs.e_time; // copy end time of event
 
 	// copy time slots' boolean values
 	for (int i = 0; i < 72; i++)

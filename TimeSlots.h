@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 /**
 *	@file TimeSlots.h
 *	@author Robert Goss
@@ -6,15 +7,21 @@
 *	@brief Header file for TimeSlots class, a class that holds time slots that an event occupies
 */
 
-#ifndef TIMESLOTS_H
-#define TIMESLOTS_H
-
 class TimeSlots
 {
-public:
-	TimeSlots();
-private:
-	int timeSlots[72];
+	public:
+		TimeSlots(std::string n, int t);
+		getNameOfEvent();
+		getTime();
+		setAvailablity(std::string name);
+
+	
+	private:
+		std::string nameOfEvent = "";
+		int time = 0;
+		int size = 10;
+		std::string availableNames[size];
+		
+
 };
 
-#endif

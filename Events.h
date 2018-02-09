@@ -1,5 +1,4 @@
-#ifndef EVENTS_H
-#define EVENTS_H
+#pragma once
 #include <iostream>
 #include <sstream>
 #include "TimeSlots.h"
@@ -12,7 +11,7 @@ public:
 	Events();
 
 	/* Parameterized Constructor **/
-	Events (std::string n, int m, int d, int y, int s_t, int e_t);
+	Events (std::string n, int m, int d, int y);
 
 	/* Copy Constructor **/
 	Events(const Events& object);
@@ -47,6 +46,7 @@ public:
 	int getE_Time() const;
 
 	void getInfo();
+	bool addTimeSlots(int s_t, int e_t);
 
 
 private:
@@ -56,7 +56,8 @@ private:
 	int year; // year of event
 	int s_time; // start time of event
 	int e_time; // end time of event
+	TimeSlots timeSlots[72];
 	TimeSlots daySchedule; // slots for event openings
 
 };
-#endif
+
