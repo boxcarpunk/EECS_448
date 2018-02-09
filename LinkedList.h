@@ -105,12 +105,15 @@ class LinkedList
   *   @post Sorted LinkedList of Events.
   *   @return none.
 	*/
-	void sortList();
+	void sortListEvent();
 	/** @pre Two T values
   *   @post none.
   *   @return true if event1 comes before event2.
   */
-	bool compare(T event1, T event2);
+	bool compareEvent(T event1, T event2);
+	void sortListTime();
+	bool compareTime(T time1, T time2);
+
 
 	private:
 	Node<T>* m_front;
