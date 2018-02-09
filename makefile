@@ -7,8 +7,8 @@ main.o: main.cpp Executive.h Events.h LinkedList.h Node.h TimeSlots.h Events.cpp
 Executive.o: Executive.h Executive.cpp LinkedList.h Node.h Events.h
 	g++ -std=c++11 -g -Wall -c Executive.cpp
 
-Events.o: Events.h Events.cpp TimeSlots.h TimeSlots.cpp 
-	g++ -std=c++11 -g -Wall -c Events.cpp 
+Events.o: Events.h Events.cpp TimeSlots.h TimeSlots.cpp TimeSlots.o
+	g++ -std=c++11 -g -Wall -c Events.cpp
 
 TimeSlots.o: TimeSlots.h TimeSlots.cpp
 	g++ -std=c++11 -g -Wall -c TimeSlots.cpp
