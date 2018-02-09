@@ -8,8 +8,8 @@ TimeSlots::TimeSlots()
 
 TimeSlots::TimeSlots(int num, int time)
 {
-		m_numOfAtt = num;
-		m_TimeSlot = time;
+	m_numOfAtt = num;
+	m_TimeSlot = time;
 }
 
 void TimeSlots::setNum(int num)

@@ -229,7 +229,8 @@ T& LinkedList<T>::getEntry(int position)
 	Node<T>* temp = m_front;
 	if (position<1 || position>m_length)
 	{
-		throw(std::runtime_error("Invalid Entry - Out of range"));
+    std::cout<<"Invalid Entry - Out of range.\n";
+		//throw(std::runtime_error("Invalid Entry - Out of range"));
 	}
 	else if (position == 1)
 	{
@@ -249,7 +250,7 @@ template <typename T>
 T& LinkedList<T>::search(std::string name)
 {
 	Node<T>* temp = m_front;
-  Events temp1 = temp ->getValue();
+  T temp1 = temp ->getValue();
 	bool isFound = false;
 	while(temp != nullptr)
 	{
@@ -264,7 +265,7 @@ T& LinkedList<T>::search(std::string name)
 		temp = temp -> getNext();
     }
 	}
-  Events empty;
+  T empty;
   return(empty);
 }
 
