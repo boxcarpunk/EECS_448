@@ -325,17 +325,17 @@ bool LinkedList<T>::compare(T event1, T event2)
 {
 	bool isTrue = false;
 
-	if(event1.getYear() < event2.getYear())
+	if(event1.getYear() > event2.getYear())
 	{
 		isTrue = true;
 		return(isTrue);
 	}
-	if(event1.getYear() == event2.getYear() && event1.getMonth() < event2.getMonth())
+	if(event1.getYear() == event2.getYear() && event1.getMonth() > event2.getMonth())
 	{
 		isTrue = true;
 		return(isTrue);
 	}
-	if(event1.getYear() == event2.getYear() && event1.getMonth() == event2.getMonth() && event1.getDay() < event2.getDay())
+	if(event1.getYear() == event2.getYear() && event1.getMonth() == event2.getMonth() && event1.getDay() > event2.getDay())
 	{
 		isTrue = true;
 		return(isTrue);
