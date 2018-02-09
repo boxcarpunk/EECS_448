@@ -17,12 +17,12 @@ Executive::Executive()
 		std::getline(inFile, m_day, ',');
 		std::getline(inFile, m_year, ',');		//Creating list of events from "storage"
 		Events event(m_name, stoi(m_month), stoi(m_day), stoi(m_year));
-		while (inFile.peek() == "'");
+		/*while (inFile.peek() == "'");
 		{
 			std::getline(inFile, m_time, ',');
 			std::getline(inFile, m_attNum, ',');
 			event.addTimeSlots(m_time, m_attNum);
-		}	
+		}	*/
 		eventList->addBack(event);
 		eventList -> sortListEvent();
 	}
@@ -130,29 +130,29 @@ bool Executive::addEvent()
 {
 	std::cout << "\nWhat is the name of your event?\n";
 	std::cin.ignore();
-	std::getline (std::cin,name);
+	std::getline (std::cin, m_name);
 	std::cout << "\nWhat year will your event take place?\n";
-	std::cin >> year;
+	std::cin >> m_year;
 	std::cout << "\nWhat month will your event take place?\n";
-	std::cin >> month;
-	if (month.length() > 2)		
+	std::cin >> m_month;
+	if (m_month.length() > 2)		
 	{
-		month = monthConv(month);								//Converts month string to integer
+		m_month = monthConv(m_month);								//Converts month string of letters to string of ints to be used in other functions
 	}
-	else if (month.at(1) == 0)
+	else if (m_month.at(1) == 0)
 	{
-		month = month.at(1);									//Converts single 0x inputs to single integers
+		m_month = m_month.at(1);									//Converts single 0x inputs to single integers
 	}
 	std::cout << "\nWhat day will your event take place?\n";
-	std::cin >> day;
+	std::cin >> m_day;
 	std::cout << "\nWhat time will your event start?\n";
-	std::cin >> s_time;
+	std::cin >> m_stime;
 	std::cout << "\nWhat time will your event end?\n";
-	std::cin >> e_time;
-	Events event(name, stoi(month), stoi(day), stoi(year));
-	for (int i = s_time; i <= e_time; i += 20)
+	std::cin >> m_etime;
+	Events event(m_name, stoi(m_month), stoi(m_day), stoi(m_year));
+	for (int i = stoi(m_stime); i <= stoi(m_etime); i += 20)
 	{
-		event.addTimeSlots(time, attNum);
+		event.addTimeSlots(i, stoi(m_attNum));
 	}
 	eventList->addBack(event);
 	return true;
@@ -168,5 +168,8 @@ void Executive::printEvents()
 	std::cout << "\n";
 }
 
-
+std::string Executive::monthConv(std::string month)
+{
+	return month;
+}
 

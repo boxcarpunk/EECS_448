@@ -20,7 +20,7 @@ class Executive
 	bool adminFunc(); 							//Function which handles admin menu and options
 	bool userFunc();							//Function which handles user menu and options
 	bool addEvent();							//Prompts the admin to create an event and it to the list
-	std::string monthConv(std::string month)
+	std::string monthConv(std::string month);
 	int listLength = 0;							//Length of the list of events
 	std::string m_name = "";
 	std::string m_month = "";
