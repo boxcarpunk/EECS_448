@@ -48,8 +48,8 @@ m_TimeSlot->sortListTime();
 
 Events::~Events()
 {
-	delete m_TimeSlot;
-	m_TimeSlot = nullptr;
+	// delete m_TimeSlot;
+	// m_TimeSlot = nullptr;
 }
 
 bool Events::operator>(const Events& rhs) const
