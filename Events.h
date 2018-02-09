@@ -49,5 +49,3 @@ private:
 	int s_time;
 	int e_time;
 };
-
-#endif
