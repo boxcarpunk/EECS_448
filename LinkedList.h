@@ -102,6 +102,7 @@ class LinkedList
   */
   T& search(std::string name);
 	void sortList();
+	bool compare(T event1, T event2);
 
 	private:
 	Node<T>* m_front;

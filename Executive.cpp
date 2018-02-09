@@ -16,6 +16,7 @@ while(inFile)
 		std::getline(inFile, year);							//Creating list of events from "storage"
 		Events event(name, stoi(month), stoi(day), stoi(year));
 		eventList->addBack(event);
+		eventList -> sortList();
 	}
 }
 
@@ -26,7 +27,7 @@ Executive::~Executive()
 
 void Executive::run()
 {
-	bool programStatus = true;			
+	bool programStatus = true;
 	std::string admin = "unspecified";
 	listLength = eventList->getLength();
 
@@ -59,8 +60,10 @@ bool Executive::adminFunc()
 	std::cin >> adminChoice;
 	if (adminChoice == 1)
 	{
+
 		std::cout << "\nWhat is the name of your event?\n";
-		std::cin >> name;
+		std::cin.ignore();
+		std::getline (std::cin,name);
 		std::cout << "\nWhat year will your event take place?\n";
 		std::cin >> year;
 		std::cout << "\nWhat month will your event take place?\n";
@@ -89,11 +92,11 @@ bool Executive::adminFunc()
 	{
 		return false;
 	}
-	else 
+	else
 	{
 		std::cout << "\nPlease enter a valid choice\n";
 		return true;
-	}	
+	}
 }
 
 bool Executive::userFunc()

@@ -4,6 +4,7 @@
 #include "Events.h"
 #include <fstream>
 #include <vector>
+#include <iostream>
 
 class Executive
 {
@@ -11,9 +12,9 @@ class Executive
 	Executive();
 	~Executive();
 	void run();
-	
+
 	private:
-	std::ifstream inFile; 
+	std::ifstream inFile;
 	LinkedList<Events>* eventList;
 	bool adminFunc();
 	bool userFunc();
@@ -26,5 +27,3 @@ class Executive
 	std::string e_time = "";
 
 };
-	
-

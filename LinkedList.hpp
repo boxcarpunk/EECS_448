@@ -271,7 +271,77 @@ T& LinkedList<T>::search(std::string name)
 template <typename T>
 void LinkedList<T>::sortList()
 {
-  Node<T>* temp = m_front;
+  Node<T>* currentNode = nullptr;
+  Node<T>* prevNode = nullptr;
+  Node<T>* temp = nullptr;
+
+	if(getLength() == 1)
+	{
+	}
+	else if(getLength() == 2)
+	{
+		currentNode = m_front;
+		if (compare(currentNode -> getValue(), currentNode -> getNext() -> getValue()) == true)
+		{
+			addBack(currentNode -> getValue());
+			removeFront();
+		}
+	}
+	else
+	{
+		for(int i = 1; i <= getLength(); i++)
+		{
+			currentNode = m_front;
+			prevNode = m_front;
+
+	    while(currentNode -> getNext() != nullptr)
+		{
+	      if (compare(currentNode -> getValue(), currentNode -> getNext() -> getValue()) == true)
+			{
+	        temp = currentNode -> getNext();
+	        currentNode -> setNext(currentNode -> getNext() -> getNext());
+	        temp -> setNext(currentNode);
+
+	        if(currentNode == m_front)
+					{
+						prevNode = temp;
+						m_front = prevNode;
+					}
+	        else
+					{
+						prevNode -> setNext(temp);
+	        	currentNode = temp;
+					}
+	    	}
+	      prevNode = currentNode;
+	      currentNode = currentNode -> getNext();
+	    }
+	  }
+	}
+}
+
+template <typename T>
+bool LinkedList<T>::compare(T event1, T event2)
+{
+	bool isTrue = false;
+
+	if(event1.getYear() < event2.getYear())
+	{
+		isTrue = true;
+		return(isTrue);
+	}
+	if(event1.getYear() == event2.getYear() && event1.getMonth() < event2.getMonth())
+	{
+		isTrue = true;
+		return(isTrue);
+	}
+	if(event1.getYear() == event2.getYear() && event1.getMonth() == event2.getMonth() && event1.getDay() < event2.getDay())
+	{
+		isTrue = true;
+		return(isTrue);
+	}
+  else{}
+	return(isTrue);
 }
 
 template <typename T>
