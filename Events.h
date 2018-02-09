@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <sstream>
+#include "LinkedList.h"
 #include "TimeSlots.h"
 
 class Events
@@ -50,6 +51,7 @@ public:
 
 
 private:
+	LinkedList<TimeSlots>* m_TimeSlot;
 	std::string name; // event name
 	int month; // month of event
 	int day; // day of event
@@ -60,4 +62,3 @@ private:
 
 
 };
-
