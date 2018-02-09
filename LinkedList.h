@@ -10,7 +10,6 @@
 
 //TODO You need to implement the Node class!
 #include "Node.h"
-#include "Events.h"
 #include <string>
 
 template <typename T>

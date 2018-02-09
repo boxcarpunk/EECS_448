@@ -14,6 +14,8 @@ public:
 	/* Parameterized Constructor **/
 	Events (std::string n, int m, int d, int y);
 
+	~Events();
+
 	/* Operator greater/less than Overloads for comparing instances of class using name variable **/
 	bool operator>(const Events& rhs) const;
 	bool operator<(const Events& rhs) const;
@@ -37,15 +39,15 @@ public:
 	int getYear() const;
 
 	void getInfo();
-	bool addTimeSlots(int s_t, int e_t);
+	void addTimeSlots(int s_t, int e_t);
 
 
 private:
-	LinkedList<TimeSlots>* m_TimeSlot;
 	std::string name; // event name
 	int month; // month of event
 	int day; // day of event
 	int year; // year of event
 	int s_time;
 	int e_time;
+	LinkedList<TimeSlots>* m_TimeSlot;
 };

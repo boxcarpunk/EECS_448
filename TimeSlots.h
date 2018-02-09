@@ -17,12 +17,8 @@ class TimeSlots
 		int getNum();
 		int getTimeslot();
 
-
-
 	private:
 		int m_numOfAtt;
 		int m_TimeSlot;
-
-
 
 };

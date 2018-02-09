@@ -1,4 +1,5 @@
 #include "Events.h"
+#include "LinkedList.h"
 
 Events::Events()
 {
@@ -193,7 +194,7 @@ void Events::getInfo()
 	std::cout << "\n" << name << " is occuring on " << month << "/" << day << "/" << year << " from " << s_time << " to " << e_time << ".\n";
 }
 
-bool Events::addTimeSlots(int s_t, int e_t)
+void Events::addTimeSlots(int s_t, int e_t)
 {
 	s_time = s_t;
 	e_time = e_t;
