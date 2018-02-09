@@ -56,8 +56,8 @@ private:
 	int year; // year of event
 	int s_time; // start time of event
 	int e_time; // end time of event
-	TimeSlots timeSlots[72];
-	TimeSlots daySchedule; // slots for event openings
+	//TimeSlots* timeSlots;
+
 
 };
 

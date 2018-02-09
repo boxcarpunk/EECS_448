@@ -10,17 +10,20 @@
 class TimeSlots
 {
 	public:
+		TimeSlots();
 		TimeSlots(std::string n, int t);
-		getNameOfEvent();
-		getTime();
-		setAvailablity(std::string name);
+		std::string getNameOfEvent();
+		int getTime();
+		void setAvailability(std::string name);
+		bool isAvailable();
 
 	
 	private:
+		bool available = false;
 		std::string nameOfEvent = "";
 		int time = 0;
-		int size = 10;
-		std::string availableNames[size];
+		std::string* availableNames;
+		int size;
 		
 
 };

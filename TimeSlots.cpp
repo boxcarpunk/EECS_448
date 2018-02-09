@@ -1,5 +1,14 @@
 #include "TimeSlots.h"
 
+TimeSlots::TimeSlots()
+{
+		bool avilable = true;
+		std::string nameOfEvent = "";
+		int time = 0;
+		size = 10;
+		availableNames = new std::string[size];
+}
+
 TimeSlots::TimeSlots(std::string n, int t)
 {
 	nameOfEvent = n;
@@ -10,17 +19,17 @@ TimeSlots::TimeSlots(std::string n, int t)
 	}
 }
 
-TimeSlots::getTime()
+int TimeSlots::getTime()
 {
 	return time;
 }
 
-TimeSlots::getNameOfEvent()
+std::string TimeSlots::getNameOfEvent()
 {
 	return nameOfEvent;
 }
 
-TimeSlots::setAvailability(std::string name)
+void TimeSlots::setAvailability(std::string name)
 {
 	for (int i=0; i<size; i++)
 	{

@@ -13,25 +13,22 @@ while(inFile)
 		if (inFile.eof()) break;
 		std::getline(inFile, month, ',');
 		std::getline(inFile, day, ',');
-		std::getline(inFile, year, ',');							//Creating list of events from "storage"
-		std::getline(inFile, s_time, ',');
-		std::getline(inFile, e_time);
-		Events event(name, stoi(month), stoi(day), stoi(year), stoi(s_time), stoi(e_time));
+		std::getline(inFile, year);							//Creating list of events from "storage"
+		Events event(name, stoi(month), stoi(day), stoi(year));
 		eventList->addBack(event);
-		//eventList.push_back(event);
 	}
 }
 
 Executive::~Executive()
 {
-	//delete eventList
+
 }
 
 void Executive::run()
 {
 	bool programStatus = true;			
 	std::string admin = "unspecified";
-	listLength = eventList->getLength();//eventList.Size();
+	listLength = eventList->getLength();
 
 
 	std::cout << "\nWelcome to Cal448! ";
@@ -74,7 +71,7 @@ bool Executive::adminFunc()
 		std::cin >> s_time;
 		std::cout << "\nWhat time will your event end?\n";
 		std::cin >> e_time;
-		Events event(name, stoi(month), stoi(day), stoi(year), stoi(s_time), stoi(e_time));
+		Events event(name, stoi(month), stoi(day), stoi(year));
 		eventList->addBack(event);
 		return true;
 	}

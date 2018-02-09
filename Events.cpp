@@ -3,16 +3,12 @@
 Events::Events()
 {
 	// initialize variables to "" for strings, 0 for ints, false for bools
+	//timeSlots = new TimeSlots[72];
 	name = "";
 	month = 0;
 	day = 0;
 	year = 0;
 	
-
-	for (int i = 0; i < 72; i++)
-	{
-		timeSlots[i] = NULL;
-	}
 }
 
 Events::Events(std::string n, int m, int d, int y)
@@ -21,13 +17,7 @@ Events::Events(std::string n, int m, int d, int y)
 	month = m;
 	day = d;
 	year = y;
-	s_time = s_t;
-	e_time = e_t;
-
-	for (int i = 0; i < 72; i++)
-	{
-		timeSlots[i] = false;
-	}
+	
 }
 
 Events::Events(const Events& object)
@@ -38,10 +28,10 @@ Events::Events(const Events& object)
     year = object.year; // copy year of event
 
 	// copy time slots' boolean values
-	for (int i = 0; i < 72; i++)
+	/*for (int i = 0; i < 72; i++)
 	{
 		timeSlots[i] = object.timeSlots[i];
-	}
+	}*/
 }
 
 void Events::operator=(const Events& rhs)
@@ -52,10 +42,10 @@ void Events::operator=(const Events& rhs)
 	year = rhs.year; // copy year of event
 
 	// copy time slots' boolean values
-	for (int i = 0; i < 72; i++)
+	/*for (int i = 0; i < 72; i++)
 	{
 		timeSlots[i] = rhs.timeSlots[i];
-	}
+	}*/
 }
 
 bool Events::operator>(const Events& rhs) const
@@ -137,3 +127,11 @@ void Events::getInfo()
 {
 	std::cout << "\n" << name << " is occuring on " << month << "/" << day << "/" << year << " from " << s_time << " to " << e_time << ".\n";
 }
+
+bool Events::addTimeSlots(int s_t, int e_t)
+{
+	return true; //TO DO
+}
+
+
+
