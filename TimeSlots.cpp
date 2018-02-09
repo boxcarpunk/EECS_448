@@ -2,41 +2,32 @@
 
 TimeSlots::TimeSlots()
 {
-		bool available = true;
-		std::string nameOfEvent = "";
-		int time = 0;
-		size = 10;
-		availableNames = new std::string[size];
+	m_numOfAtt = 0;
+	m_TimeSlot = 0;
 }
 
-TimeSlots::TimeSlots(std::string n, int t)
+TimeSlots::TimeSlots(int num, int time)
 {
-	nameOfEvent = n;
-	time = t;
-	for (int i=0; i<size; i++)
-	{
-		availableNames[i] = "";
-	}
+		m_numOfAtt = num;
+		m_TimeSlot = time;
 }
 
-int TimeSlots::getTime()
+void TimeSlots::setNum(int num)
 {
-	return time;
+	m_numOfAtt = num;
 }
 
-std::string TimeSlots::getNameOfEvent()
+void TimeSlots::setTimeslot(int time)
 {
-	return nameOfEvent;
+	m_TimeSlot = time;
 }
 
-void TimeSlots::setAvailability(std::string name)
+int TimeSlots::getNum()
 {
-	for (int i=0; i<size; i++)
-	{
-		if (availableNames[i] == "")
-		{
-			availableNames[i] = name;
-			break;
-		}
-	}
+	return m_numOfAtt;
+}
+
+int TimeSlots::getTimeslot()
+{
+	retunr m_TimeSlot;
 }
