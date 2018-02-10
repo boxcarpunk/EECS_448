@@ -1,158 +1,159 @@
 ## File Name
 	- Method Name || Variable Name
-        - Proconditions
-        - Postconditions
-		- Method Parameters || Variable Type
-		- Private || Public
-		- Method Action || Variable Use
+      - Proconditions
+      - Postconditions
+			- Method Parameters || Variable Type
+			- Private || Public
+			- Method Action || Variable Use
         
 ## main.cpp
     - main()
-        - None
-        - None
-        - None
-        - Public
-        - Creates an instance of the Executive class and runs the program
+      - None
+      - None
+      - None
+      - Public
+      - Creates an instance of the Executive class and runs the program
 
 ## LinkedList.h & LinkedList.hpp
 	- LinkedList()
-        - None
-        - An empty LinkedList object is created
-		- None
-		- Public
-		- Assigns private member variables and creates an empty list
+	    - None
+	    - An empty LinkedList object is created
+	    - None
+	    - Public
+	    - Assigns private member variables and creates an empty list
 
 	- ~LinkedList()
-        - None
-        - All nodes in the LinkedList object are deleted
-		- None
-		- Public
-		- Each element in the list is traversed and removed until no more exist
+			- None
+			- All nodes in the LinkedList object are deleted
+			- None
+			- Public
+			- Each element in the list is traversed and removed until no more exist
 
 	- bool isEmpty() const
-        - None
-        - None
-		- None
-		- Public
-		- Checks to see if the value associated with private member variable 'm_length' is greater than 0. If it is, isEmpty() will return 'false', otherwise 'true'
+			- None
+			- None
+			- None
+			- Public
+			- Checks to see if the value associated with private member variable 'm_length' is greater than 0. If it is, isEmpty() will return 'false', otherwise 'true'
 
 	- int getLength() const
-		- None
-        - None
-		- Public
-		- Returns the value associated with the number of nodes that are in the list at the time called
+			- None
+			- None
+			- None
+			- Public
+			- Returns the value associated with the number of nodes that are in the list at the time called
 
 	- int positionOf(T value) const
-        - T's type is overloaded with the '==' operator
-        - None
-		- Templated value, in the case of cal448 this is an event
-		- Public
-		- Returns the index associated with the templated value. If it does not exist in the list, the user is notified
+			- T's type is overloaded with the '==' operator
+			- None
+			- Templated value, in the case of cal448 this is an event
+			- Public
+			- Returns the index associated with the templated value. If it does not exist in the list, the user is notified
 
 	- void addBack(T value)
-		- The value 'T' is valid
-        - A single, new element is created and added to the back of the list
-        - Templated value, in the case of cal448 this is an event
-		- Public
-		- Adds a new element to the end of the list
+			- The value 'T' is valid
+			- A single, new element is created and added to the back of the list
+			- Templated value, in the case of cal448 this is an event
+			- Public
+			- Adds a new element to the end of the list
 
 	- void addFront(T value) 
-        - The value 'T' is valid
-        - A single, new element is created and added to the front of the list
-		- Templated value, in the case of cal448 this is an event.
-		- Public
-		- Adds a new element to the front of the list
+			- The value 'T' is valid
+			- A single, new element is created and added to the front of the list
+			- Templated value, in the case of cal448 this is an event.
+			- Public
+			- Adds a new element to the front of the list
 
 	- bool insert(int position, T value)
-        - None
-        - A single, new element is created and added in the position specified
-		- Templated value and an integer representing the index at which you wish to add the value
-		- Public
-		- Returns 'true' if the value was inserted at the given position, 'false' otherwise. NOTE: Position must fall between 0 and m_size (the number of elements in the list at the time of inserting)
+			- None
+			- A single, new element is created and added in the position specified
+			- Templated value and an integer representing the index at which you wish to add the value
+			- Public
+			- Returns 'true' if the value was inserted at the given position, 'false' otherwise. NOTE: Position must fall between 0 and m_size (the number of elements in the list at the time of inserting)
 
 	- bool removeBack() 
-        - None
-        - One element is removed from the back of the list
-		- None
-		- Public
-		- Returns 'true' if the element at the end of the list is removed, 'false' if the list is empty
+			- None
+			- One element is removed from the back of the list
+			- None
+			- Public
+			- Returns 'true' if the element at the end of the list is removed, 'false' if the list is empty
 
 	- bool removeFont()
-        - None
-        - One element is removed from the front of the list
-		- None
-		- Public
-		- Return 'true' if the element at the front of the list is removed, 'false' if the list is empty
+			- None
+			- One element is removed from the front of the list
+			- None
+			- Public
+			- Return 'true' if the element at the front of the list is removed, 'false' if the list is empty
 
 	- bool removeAt(int position)
-        - None
-        - The element that is in the specified position is removed from the list
-		- Integer representing the index at which you wish to remove a value
-		- Public
-		- Returns 'true' if the element at the given position is removed, 'false' otherwise
+			- None
+			- The element that is in the specified position is removed from the list
+			- Integer representing the index at which you wish to remove a value
+			- Public
+			- Returns 'true' if the element at the given position is removed, 'false' otherwise
 
 	- void setEntry(int position, T value)
-        - None
-        - The value at the given position is overridden with the value passed in
-		- Integer representing the index you wish to change the value and the value you want
-		- Public
-		- The value at the given position is overridden with the value passed in. If the position is beyond the size of the list, the user is notified
+			- None
+			- The value at the given position is overridden with the value passed in
+			- Integer representing the index you wish to change the value and the value you want
+			- Public
+			- The value at the given position is overridden with the value passed in. If the position is beyond the size of the list, the user is notified
 
 	- T& getEntry(int position)
-        - None
-        - None
-		- Integer representing the index you wish to have the value returned
-		- Public
-		- Returns the value associated with the index that is passed in as a parameter
+			- None
+			- None
+			- Integer representing the index you wish to have the value returned
+			- Public
+			- Returns the value associated with the index that is passed in as a parameter
 
 	- bool search(T value) const
-        - The value 'T' is valid
-        - None
-		- Templated value, in the case of cal448 this is an event.
-		- Public
-		- The list is searched and if the value passed in is found 'true' is returned, 'false' signifies that the value does not exist in the list
+			- The value 'T' is valid
+			- None
+			- Templated value, in the case of cal448 this is an event.
+			- Public
+			- The list is searched and if the value passed in is found 'true' is returned, 'false' signifies that the value does not exist in the list
         
-    - void sortListEvent()
-        - None
-        - The LinkedList is sorted by events
-        - None
-        - Public
-        - The list is traversed and sorted by dates
-        
-    - bool compareEvent(T event1, T event2)
-        - Two valid 'T' values
-        - None
-        - Two templated values
-        - Public
-        - The two values are compared, if event1 occurs before event2 'true' is returned, false otherwise
-        
-    - void sortListTime()
-        - None
-        - The LinkedList of times is sorted
-        - None
-        - Public
-        - The list is traversed and sorted by time
-        
-    - void compareTime(T time1, T time2)
-        - Two valid 'T' values
-        - None
-        - Two templated values
-        - Public
-        - The two values are compares, if time1 occurs before time2 'true' is returned, false otherwise
+  - void sortListEvent()
+      - None
+      - The LinkedList is sorted by events
+      - None
+      - Public
+      - The list is traversed and sorted by dates
+      
+  - bool compareEvent(T event1, T event2)
+      - Two valid 'T' values
+      - None
+      - Two templated values
+      - Public
+      - The two values are compared, if event1 occurs before event2 'true' is returned, false otherwise
+      
+  - void sortListTime()
+      - None
+      - The LinkedList of times is sorted
+      - None
+      - Public
+      - The list is traversed and sorted by time
+      
+  - void compareTime(T time1, T time2)
+      - Two valid 'T' values
+      - None
+      - Two templated values
+      - Public
+      - The two values are compares, if time1 occurs before time2 'true' is returned, false otherwise
 
-    - bool isFound(std::string name2)
-        - None
-        - None
-        - String representing the name of a potential event
-        - Public
-        - The list is traversed and if an event exists with the same name as the one passed in 'true' is returned, false otherwise
+  - bool isFound(std::string name2)
+      - None
+      - None
+      - String representing the name of a potential event
+      - Public
+      - The list is traversed and if an event exists with the same name as the one passed in 'true' is returned, false otherwise
 
 	- Node<T>* m_front
-        - N/A
-        - N/A
-		- Node pointer
-		- Private
-		- m_front is used to keep track of the front-most node in the list
+      - N/A
+      - N/A
+			- Node pointer
+			- Private
+			- m_front is used to keep track of the front-most node in the list
 
 	- int m_length
         - N/A
@@ -163,50 +164,50 @@
 
 ##Node.h & Node.hpp
 	- Node(T value)
-        - None
-        - A node with the passed value is created
-		- Templated value
-		- Public
-		- Creates a new node with the value that is passed in as a parameter
+      - None
+      - A node with the passed value is created
+			- Templated value
+			- Public
+			- Creates a new node with the value that is passed in as a parameter
 
 	- T& getValue() 
-        - None
-        - None
-		- None
-		- Public
-		- Returns the value that is associated with any given node
+      - None
+      - None
+			- None
+			- Public
+			- Returns the value that is associated with any given node
 
 	- void setValue(T value)
-        - Valid 'T' value
-        - The value for a node is set
-		- Templated value
-		- Public
-		- Sets the value of a node equal to the value passed in as a parameter
+      - Valid 'T' value
+      - The value for a node is set
+			- Templated value
+			- Public
+			- Sets the value of a node equal to the value passed in as a parameter
 
 	- Node<T>* getNext() const
-        - None
-        - None
-		- None
-		- Public
-		- Returns a pointer to the node that follows the original
+	    - None
+			- None
+			- None
+			- Public
+			- Returns a pointer to the node that follows the original
 
 	- void setNext(Node<T>* next)
-        - None
-        - Sets the next node to a pointer given by the user
-		- A node pointer representing the next value in a list
-		- Public
-		- Sets the next node in a structure equal to the pointer that is passed in as a parameter
+      - None
+      - Sets the next node to a pointer given by the user
+			- A node pointer representing the next value in a list
+			- Public
+			- Sets the next node in a structure equal to the pointer that is passed in as a parameter
 
 	- T m_value
-        - N/A
-        - N/A
-		- Templated value
-		- Private
-		- Stores the value that is to be held by the node
+      - N/A
+      - N/A
+			- Templated value
+			- Private
+			- Stores the value that is to be held by the node
 
 	- Node<T>* m_next
-        - N/A
-        - N/A
-		- Node pointer
-		- Private
-		- Keeps track of the node that follows the original. Set to 'nullptr' until setNext() is called
+      - N/A
+      - N/A
+			- Node pointer
+			- Private
+			- Keeps track of the node that follows the original. Set to 'nullptr' until setNext() is called
