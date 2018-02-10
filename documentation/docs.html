@@ -1,0 +1,586 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>cal448 - Documentation</title>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:700,300" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/prettify.css">
+  
+<script src="js/jquery.min.js"></script>  
+<script type="text/javascript" src="js/prettify/prettify.js"></script> 
+<script src="js/layout.js"></script>
+<script src="js/jquery.localscroll-1.2.7.js" type="text/javascript"></script>
+<script src="js/jquery.scrollTo-1.4.3.1.js" type="text/javascript"></script>
+  
+</head>
+
+<nav>
+  <div class="container">
+    <img class="header-image" src="grey-logo-vector.svg">
+    <div id="menu">
+      <ul class="toplinks">
+        <li><a href="https://github.com/sahilhirani/EECS_448" target="_blank">GitHub Link </a></li>
+      </ul>
+    </div>
+    <a id="menu-toggle" href="#" class=" ">&#9776;</a> 
+  </div>
+</nav>
+<header>
+  <div class="container">
+    <h2 class="docs-header"> <strong>cal</strong>448 - Documentation</h2>
+  </div>
+</header>
+<section>
+  <div class="container">
+    
+<!--  the list below is the side navigation, linking not working properly  -->
+    
+    <ul class="docs-nav" id="menu-left">
+      <li><strong>Getting Started</strong></li>
+      <li><a href="#welcome">Welcome</a></li>
+      <li><a href="#use">How to Use</a></li>
+      <li><a href="#features" class=" ">Features</a></li>
+      <li><a href="#license" class=" ">License</a></li>
+      <li class="separator"></li>
+      <li><strong>cal448 Classes & Files</strong></li>
+      <li><a href="#main-cpp" class=" ">Main.cpp</a></li>
+      <li><a href="#executive" class=" ">Executive Class</a></li>
+      <li><a href="#linked-list" class=" ">LinkedList Class</a></li>
+      <li><a href="#node" class=" ">Node Class</a></li>
+      <li><a href="#event-class" class=" ">Events Class</a></li>
+      <li><a href="#time-slots" class=" ">Time Slots Class</a></li>
+    </ul>
+    
+<!--  getting started/welcome section  -->
+    
+    <div class="docs-content">
+      <h2> Getting Started</h2>
+      <h3 id="welcome"> Welcome</h3>
+      <p> Are you ready to experience truly optimized scheduling?</p>
+      
+      <p>
+        <strong>cal</strong>448 aims to provide users with an efficient and easy to use option to the confusing world of scheduling. Our terminal based application is built using the highest standards and we're sure that you'll love using it! Scroll down to get started and to find in-depth documentation for each of the classes used. With <strong>cal</strong>448 users are able to:
+      </p>
+
+      <ul>
+        <li>Choose between an Admin or User Mode</li>
+        <li>Create truly personalized events</li>
+        <li>Assign availability and view number of attendees</li>
+      </ul>
+      
+      <p>
+        <strong>cal</strong>448 allows users to do all of this and so much more without having to use a convoluted web or desktop application. Everything is as simple as it can possibly be! For instructions on how to use <strong>cal</strong>448, scroll down to the <a href="#use">How to Use</a> section.
+      </p>
+      
+<!--   how to use section   -->
+      
+      <h3 id="use"> How to Use</h3>
+      <p>
+        To install:
+      </p>
+      
+      <ul>
+        <li>Head to the GitHub page linked at the <a onclick="toTop()">top</a> of this site</li>
+        <li>Clone or download a zip of the project</li>
+        <li>Open terminal and navigate to the directory that the project was cloned/downloaded to</li>
+        <li>Once in the correct directory, type "make". The program should now compile</li>
+        <li>After the program completes compiling, simply type "./cal488" and the program will run</li>
+      </ul>
+      
+      <p>In pictures (after clone/download):</p>
+      
+      <img class="instruction-imgs" src="/documentation/images/1.png">
+      <img class="instruction-imgs" src="/documentation/images/2.png">
+      <img class="instruction-imgs" src="/documentation/images/3.png">
+      
+<!--   features section   -->
+      
+      <h3 id="features"> Features</h3>
+      <ul>
+        <li>Scheduling in a simplified and easy manner</li>
+        <li>Ability to see number of attendees for events</li>
+        <li>Codebase in C++ allowing for simple understanding</li>
+        <li>Functional user interface that works (no guessing)</li>
+      </ul>
+      
+<!--   license section   -->
+      
+      <h3 id="license"> License</h3>
+      <p> 
+        <strong>cal</strong>448 holds an <a href="https://opensource.org/licenses/MIT" target="_blank">MIT license.</a> This means that all code provided is free of charge and can be modified to fit the needs of you or your organization. No reference to the project page on GitHub is required. This project's documentation website is sourced from eGrappler. Link provided at the <a onclick="toBottom()">bottom</a> of this site.
+      </p>
+      
+      <hr>
+      
+      <h2> <strong>cal</strong>448 Classes & Files</h2>
+      <p>
+        Below you will find every function/method/class variable used in <strong>cal</strong>448
+      </p>
+      
+<!--   this is where the classes are documented   -->
+      
+      <h3 id="main-cpp"> Main.cpp</h3>
+      <p># main( ) function</p>
+      <ul>
+        <li>Preconditions: None</li>
+        <li>Postconditions: idk</li>
+        <li>Parameters: None</li>
+        <li>Access: Public</li>
+        <li>Action: Creates an instance of the Executive class and runs the program.</li>
+      </ul>
+      
+      <pre class="prettyprint">&lt;code&gt;
+      int main() {
+        Executive exec;
+        exec.run();
+
+        return(0);
+      }
+&lt;/code&gt;</pre>
+      
+<!--   Executive   -->
+      
+      <h3 id="executive"> Executive.h & Executive.cpp</h3>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+     
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+
+<!--  linked list    -->
+
+      <h3 id="linked-list"> LinkedList.h & LinkedList.hpp</h3>
+      
+      <p># LinkedList() method</p>
+      <ul>
+        <li>Preconditions: None</li>
+        <li>Postconditions: An empty LinkedList object is created</li>
+        <li>Parameters: None</li>
+        <li>Access: Public</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+     
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+     
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+     
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+     
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+     
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: ...</li>
+        <li>Postconditions: ...</li>
+        <li>Parameters: ...</li>
+        <li>Access: ...</li>
+        <li>Action: none</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+      
+      
+<!--  node   -->
+
+      <h3 id="node"> Node.h & Node.hpp</h3>
+      <ul>
+        <li>Show</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:true});
+    })	
+&lt;/script&gt;</pre>
+      <ul>
+        <li>Hide</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:false});
+    })	
+ &lt;/script&gt;</pre>
+            
+<!--   Event    -->
+
+      <h3 id="event-class"> Events.h & Events.cpp</h3>
+      <ul>
+        <li>Show</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', show_votes_counter:true});
+    })	
+&lt;/script&gt; </pre>
+      <ul>
+        <li>Hide</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:false});
+    })	
+&lt;/script&gt;</pre>
+      
+<!--   time slots    -->
+
+      <h3 id="time-slots"> TimeSlots.h & TimeSlots.cpp</h3>
+      <ul>
+        <li>Show</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', show_votes_counter:true});
+    })	
+&lt;/script&gt; </pre>
+      <ul>
+        <li>Hide</li>
+      </ul>
+      <pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:false});
+    })	
+&lt;/script&gt;</pre>
+    <p><br><br><br><br><br><br><br><br></p>
+      
+    </div>
+  </div>
+</section>
+<section class="vibrant centered">
+  <div class="container">
+    <h4> This documentation template is provided free by eGrappler.com. <a href="https://www.egrappler.com/free-product-documentation-html-template/" target="_blank">Source.</a></h4>
+  </div>
+</section>
+
+</html>
+
+<script>
+
+  function toTop() {
+    window.scroll(0,0);
+  }
+
+  function toBottom() {
+    window.scroll(0,document.body.scrollHeight);
+  }
+</script>

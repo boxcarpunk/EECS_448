@@ -1,0 +1,218 @@
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: #647A79;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+  line-height: 20px;
+  color: #222;
+  -webkit-font-smoothing: antialiased;
+}
+
+#main {
+  margin: 0;
+  background: #647A79;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+  line-height: 20px;
+  color: #222;
+  -webkit-font-smoothing: antialiased;
+  transition: margin-left .5s;
+}
+
+.menu {
+  position:fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  width:100%; 
+  height: 100px; 
+  background-color: rgba(20, 20, 20, 0.9);
+  z-index:9998;
+  display: none;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.navbar {
+  background-color: rgba(27, 125, 122, 1);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  height: 100px;
+  font-family: "Ubuntu", sans-serif;
+  text-transform: uppercase;
+  text-align: left;
+  position: static;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  z-index: 9998;
+}
+
+.navbar-item {
+  text-align: left;
+  font-family: "Ubuntu", sans-serif;
+  color: #333;
+  text-decoration: none;
+  font-size: 30px;
+  font-variant-caps: all-small-caps;
+  font-weight: bolder;
+  display: inline-block;
+  padding-top: 32px;
+}
+
+.navImage {
+  height: 60px;
+  width: 120px;
+  padding-top: 20px;
+  display: block;
+  margin: auto;
+}
+
+.navImage-clr {
+  height: 60px;
+  width: 120px;
+  padding-top: 20px;
+  display: block;
+  margin: auto;
+}
+
+.navLink {
+  margin: auto;
+  height: 60px;
+  width: 120px;
+  display: block;
+}
+
+.top {
+  background: linear-gradient(to bottom right, #1abc9c, #1b7d7a);
+  height: 1000px;
+  margin-bottom: -30px;
+  z-index: 1;
+}
+
+.about {
+  width: 100%;
+  background: #3E4C4C;
+  z-index: 1;
+  padding-bottom: 30px;
+}
+
+#about h1 {
+  padding-top: 25px;
+  font-size: 45px;
+  color: #1b7d7a;
+  line-height: 47.5px;
+  margin-left: 8px;
+  text-shadow: 0px 1px 3px #444;
+}
+
+.about-text {
+  margin-left: 32px;
+  font-size: 20px;
+  color: #111;
+  text-align: left;
+  line-height: 22.5px;
+  text-shadow: 0px 1px 3px #444;
+}
+
+#about a {
+  color: #ededed;
+}
+
+.top-text {
+  padding-top: 250px;
+  vertical-align: middle;
+  line-height: 47.5px;
+  text-align: center;
+  margin: auto;
+  font-size: 45px;
+  color: #ededed;
+  font-weight: bolder;
+  text-shadow: 0px 1px 3px #444;
+}
+
+.events {
+  height: 600px;
+}
+
+.events h1 {
+  font-size: 45px;
+  color: #ededed;
+  line-height: 47.5px;
+  margin-left: 8px;
+  text-shadow: 0px 1px 3px #444;
+}
+
+.events-text {
+  margin-left: 32px;
+  font-size: 20px;
+  color: #111;
+  text-align: left;
+  line-height: 22.5px;
+  text-shadow: 0px 1px 3px #444;
+}
+
+/* below this comment is the css for the side navigation. link to source in sources.txt under "Side Navigation" */
+
+.side-nav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1; 
+  top: 0; 
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  /**/
+  padding-top: 60px;
+  transition: 0.5s;
+  z-index: 9999;
+}
+
+.side-nav a {
+  font-family: "Ubuntu", sans-serif;
+  padding: 20px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.5s;
+}
+
+.side-nav a:hover {
+  color: #f1f1f1;
+}
+
+.side-nav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.brgrBtn {
+  width: 35px;
+  height: 5px;
+  background-color: #111;
+  margin: 6px 0;
+}
+
+.brgrBtn-wht {
+  width: 35px;
+  height: 5px;
+  background-color: #ededed;
+  margin: 6px 0;
+}
+
+.btnBars {
+  position: static;
+  margin-top: -30px;
+  padding-left: 20px;
+}
