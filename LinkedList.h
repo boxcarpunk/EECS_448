@@ -95,23 +95,41 @@ class LinkedList
 	* 		NOTE: The range of indices is from 1 to n, where n is the number of elements in the list
 	*/
 	T& getEntry(int position);
+  
   /** @pre the value is a valid T.
   *   @post none.
   *   @return intrue is the value is in the list, false otherwise.
   */
   T& search(std::string name);
+	
 	/** @pre none.
   *   @post Sorted LinkedList of Events.
   *   @return none.
 	*/
 	void sortListEvent();
-	/** @pre Two T values
+	
+	/** @pre Two valid T values
   *   @post none.
   *   @return true if event1 comes before event2.
   */
 	bool compareEvent(T event1, T event2);
+	
+	/** @pre None
+  *   @post list of times is sorted
+  *   @return none
+  */
 	void sortListTime();
+	
+	/** @pre Two valid T values
+  *   @post none.
+  *   @return true if time1 comes before time2.
+  */
 	bool compareTime(T time1, T time2);
+	
+	/** @pre None
+  *   @post None
+  *   @return true if an event is found with a matching name
+  */
 	bool isFound(std::string name2);
 
 
