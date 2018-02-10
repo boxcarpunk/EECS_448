@@ -112,6 +112,7 @@ class LinkedList
 	bool compareEvent(T event1, T event2);
 	void sortListTime();
 	bool compareTime(T time1, T time2);
+	bool isFound(std::string name2);
 
 
 	private:

@@ -251,13 +251,11 @@ T& LinkedList<T>::search(std::string name)
 {
 	Node<T>* temp = m_front;
   T temp1 = temp ->getValue();
-	bool isFound = false;
 	while(temp != nullptr)
 	{
     temp1 = temp -> getValue();
 		if(temp1.getName() == name)
 		{
-			isFound = true;
       return(temp1);
 			break;
 		}
@@ -268,6 +266,29 @@ T& LinkedList<T>::search(std::string name)
   T empty;
   return(empty);
 }
+
+template <typename T>
+bool LinkedList<T>::isFound(std::string name2)
+{
+  Node<T>* temp = m_front;
+  T temp1 = temp -> getValue();
+  bool found = false;
+  while(temp != nullptr)
+  {
+    temp1 = temp -> getValue();
+		if(temp1.getName() == name2)
+		{
+      found = true;
+      return(found);
+			break;
+		}
+		else{
+		temp = temp -> getNext();
+    }
+  }
+  return(found);
+}
+
 
 template <typename T>
 void LinkedList<T>::sortListEvent()
