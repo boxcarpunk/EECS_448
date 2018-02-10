@@ -1,3 +1,7 @@
 ## LinkedList.h
   - LinkedList.h has been sourced from EECS 268 at the University of Kansas by Dr. John Gibbons.
   - Methods have been implemented by EECS 448 Team 7 Spring 2018 Semester
+  
+## Documentation Website 
+  - Built around template provided by: https://www.egrappler.com/free-product-documentation-html-template/
+  - Website structure has remained, however colors, fonts and text have all been implemented by EECS 448 Team 7 Spring 2018 Semester
