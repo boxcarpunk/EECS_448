@@ -25,33 +25,6 @@ Events::Events(std::string n, int m, int d, int y)
 	e_time = 0;
 }
 
-// For right now we don't need a copy constructor for Events.cpp, but I will leave its unfinished implementation
-// here in case we need it for some reason later on
-/*
-Events::Events(const Events& object)
-{
-name = object.name; // copy event name
-month = object.month; // copy month of event
-day = object.day; // copy day of event
-year = object.year; // copy year of event
-m_TimeSlot = new LinkedList<TimeSlots>();
-
-// copy time slots' values
-for (int i = s_t; i <= e_t; i += 20)
-{
-TimeSlots newSlot(0, i);
-m_TimeSlot->addBack(newSlot);
-}
-
-m_TimeSlot->sortListTime();
-} */
-
-Events::~Events()
-{
-	// delete m_TimeSlot;
-	// m_TimeSlot = nullptr;
-}
-
 bool Events::operator>(const Events& rhs) const
 {
 	if (year > rhs.getYear())
