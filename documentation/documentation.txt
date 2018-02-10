@@ -9,6 +9,8 @@
 ## main.cpp
     - main()
         - None
+        - None
+        - None
         - Public
         - Creates an instance of the Executive class and runs the program
 
@@ -146,47 +148,65 @@
         - The list is traversed and if an event exists with the same name as the one passed in 'true' is returned, false otherwise
 
 	- Node<T>* m_front
+        - N/A
+        - N/A
 		- Node pointer
 		- Private
 		- m_front is used to keep track of the front-most node in the list
 
 	- int m_length
+        - N/A
+        - N/A
 		- Integer
 		- Private
 		- m_length is used to keep track of the number of elements in the list
 
 ##Node.h & Node.hpp
 	- Node(T value)
+        - None
+        - A node with the passed value is created
 		- Templated value
 		- Public
 		- Creates a new node with the value that is passed in as a parameter
 
 	- T& getValue() 
+        - None
+        - None
 		- None
 		- Public
 		- Returns the value that is associated with any given node
 
 	- void setValue(T value)
+        - Valid 'T' value
+        - The value for a node is set
 		- Templated value
 		- Public
 		- Sets the value of a node equal to the value passed in as a parameter
 
 	- Node<T>* getNext() const
+        - None
+        - None
 		- None
 		- Public
 		- Returns a pointer to the node that follows the original
 
 	- void setNext(Node<T>* next)
+        - None
+        - Sets the next node to a pointer given by the user
 		- A node pointer representing the next value in a list
 		- Public
 		- Sets the next node in a structure equal to the pointer that is passed in as a parameter
 
 	- T m_value
+        - N/A
+        - N/A
 		- Templated value
 		- Private
 		- Stores the value that is to be held by the node
 
 	- Node<T>* m_next
+        - N/A
+        - N/A
 		- Node pointer
 		- Private
 		- Keeps track of the node that follows the original. Set to 'nullptr' until setNext() is called
