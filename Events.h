@@ -14,7 +14,7 @@ public:
 	/* Parameterized Constructor **/
 	Events (std::string n, int m, int d, int y);
 
-	/* Operator greater/less than Overloads for comparing instances of class using name variable **/
+	/* Operator greater/less than overloads for comparing instances of class using name variable **/
 	bool operator>(const Events& rhs) const;
 	bool operator<(const Events& rhs) const;
 
@@ -36,8 +36,14 @@ public:
 	int getDay() const;
 	int getYear() const;
 
+	/* getInfo prints info abour event to the screen. Does not actually return any value.*/
 	void getInfo();
-	void addTimeSlots(int s_t, int e_t);
+
+	/* Adds time slot for event. Executive.cpp controls how many time slots are filled for an event.
+	@post new TimeSlots object added to m_TimeSlot list for an event
+	@param s_t the start time of a time slot
+	@param numOfAtt the number of attendants for a certain event**/
+	void addTimeSlots(int s_t, int numOfAtt);
 
 
 private:
@@ -45,7 +51,7 @@ private:
 	int month; // month of event
 	int day; // day of event
 	int year; // year of event
-	int s_time;
+	int s_time; 
 	int e_time;
-	LinkedList<TimeSlots>* m_TimeSlot;
+	LinkedList<TimeSlots>* m_TimeSlot; // pointer to list of timeslots for this event
 };

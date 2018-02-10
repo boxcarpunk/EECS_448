@@ -119,63 +119,57 @@ bool Events::operator==(const Events& rhs) const
 	{
 		return false;
 	}
-	return 0;
 }
 
 void Events::setName(std::string n)
 {
-	name = n;
+	name = n; // set name
 }
 
 void Events::setMonth(int m)
 {
-	month = m;
+	month = m; //set month
 }
 
 void Events::setDay(int d)
 {
-	day = d;
+	day = d; // set day
 }
 
 void Events::setYear(int y)
 {
-	year = y;
+	year = y; // set year
 }
 
 std::string Events::getName() const
 {
-	return name;
+	return name; // return name of event
 }
 
 int Events::getMonth() const
 {
-	return month;
+	return month; ///return month
 }
 
 int Events::getDay() const
 {
-	return day;
+	return day; //return day
 }
 
 int Events::getYear() const
 {
-	return year;
+	return year; // return year
 }
 
 void Events::getInfo()
 {
+	// output info for this event to std::cout
 	std::cout << "\n" << name << " is occuring on " << month << "/" << day << "/" << year << " from " << s_time << " to " << e_time << ".\n";
 }
 
-void Events::addTimeSlots(int s_t, int e_t)
+void Events::addTimeSlots(int s_t, int numOfAtt)
 {
-	s_time = s_t;
-	e_time = e_t;
-	for (int i = s_t; i <= e_t; i += 20)
-	{
-		TimeSlots newSlot(0, i);
-		m_TimeSlot->addBack(newSlot);
-	}
-
-	m_TimeSlot->sortListTime();
+	TimeSlots newSlot(numOfAtt, s_t); // instantiate new time slot
+	m_TimeSlot->addBack(newSlot); // add new time slot to end of linked list
+	m_TimeSlot->sortListTime(); // call sort list method to ensure that list is sorted after insertion of new time slot
 }
