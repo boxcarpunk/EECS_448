@@ -31,3 +31,8 @@ int TimeSlots::getTimeslot()
 {
 	return m_TimeSlot;
 }
+
+TimeSlots::~TimeSlots()
+{
+	//Destructor for good coding practice
+}
