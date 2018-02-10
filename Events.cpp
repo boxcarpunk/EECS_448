@@ -5,21 +5,21 @@ Events::Events()
 {
 	// initialize variables to "" for strings, 0 for ints
 	//timeSlots = new TimeSlots[72];
-	name = "";
-	month = 0;
-	day = 0;
-	year = 0;
+	m_name = "";
+	m_month = 0;
+	m_day = 0;
+	m_year = 0;
 	m_TimeSlot = new LinkedList<TimeSlots>();
 	s_time = 0;
 	e_time = 0;
 }
 
-Events::Events(std::string n, int m, int d, int y)
+Events::Events(std::string name, int month, int day, int year)
 {
-	name = n;
-	month = m;
-	day = d;
-	year = y;
+	m_name = name;
+	m_month = month;
+	m_day = day;
+	m_year = year;
 	m_TimeSlot = new LinkedList<TimeSlots>();
 	s_time = 0;
 	e_time = 0;
@@ -27,27 +27,27 @@ Events::Events(std::string n, int m, int d, int y)
 
 bool Events::operator>(const Events& rhs) const
 {
-	if (year > rhs.getYear())
+	if (m_year > rhs.getYear())
 	{
 		return true;
 	}
-	else if (year < rhs.getYear())
+	else if (m_year < rhs.getYear())
 	{
 		return false;
 	}
 	else
 	{
-		if (month > rhs.getMonth())
+		if (m_month > rhs.getMonth())
 		{
 			return true;
 		}
-		else if (month < rhs.getMonth())
+		else if (m_month < rhs.getMonth())
 		{
 			return false;
 		}
 		else
 		{
-			if (day > rhs.getDay())
+			if (m_day > rhs.getDay())
 			{
 				return true;
 			}
@@ -62,27 +62,27 @@ bool Events::operator>(const Events& rhs) const
 
 bool Events::operator<(const Events& rhs) const
 {
-	if (year < rhs.getYear())
+	if (m_year < rhs.getYear())
 	{
 		return true;
 	}
-	else if (year > rhs.getYear())
+	else if (m_year > rhs.getYear())
 	{
 		return false;
 	}
 	else
 	{
-		if (month < rhs.getMonth())
+		if (m_month < rhs.getMonth())
 		{
 			return true;
 		}
-		else if (month > rhs.getMonth())
+		else if (m_month > rhs.getMonth())
 		{
 			return false;
 		}
 		else
 		{
-			if (day < rhs.getDay())
+			if (m_day < rhs.getDay())
 			{
 				return true;
 			}
@@ -97,11 +97,11 @@ bool Events::operator<(const Events& rhs) const
 
 bool Events::operator==(const Events& rhs) const
 {
-	if (year == rhs.getYear())
+	if (m_year == rhs.getYear())
 	{
-		if (month == rhs.getMonth())
+		if (m_month == rhs.getMonth())
 		{
-			if (day == rhs.getDay())
+			if (m_day == rhs.getDay())
 			{
 				// TODO need to compare time slots;
 			}
@@ -121,50 +121,50 @@ bool Events::operator==(const Events& rhs) const
 	}
 }
 
-void Events::setName(std::string n)
+void Events::setName(std::string name)
 {
-	name = n; // set name
+	m_name = name; // set name
 }
 
-void Events::setMonth(int m)
+void Events::setMonth(int month)
 {
-	month = m; //set month
+	m_month = month; //set month
 }
 
-void Events::setDay(int d)
+void Events::setDay(int day)
 {
-	day = d; // set day
+	m_day = day; // set day
 }
 
-void Events::setYear(int y)
+void Events::setYear(int year)
 {
-	year = y; // set year
+	m_year = year; // set year
 }
 
 std::string Events::getName() const
 {
-	return name; // return name of event
+	return m_name; // return name of event
 }
 
 int Events::getMonth() const
 {
-	return month; ///return month
+	return m_month; ///return month
 }
 
 int Events::getDay() const
 {
-	return day; //return day
+	return m_day; //return day
 }
 
 int Events::getYear() const
 {
-	return year; // return year
+	return m_year; // return year
 }
 
 void Events::getInfo()
 {
 	// output info for this event to std::cout
-	std::cout << "\n" << name << " is occuring on " << month << "/" << day << "/" << year << " from " << s_time << " to " << e_time << ".\n";
+	std::cout << "\n" << m_name << " is occuring on " << m_month << "/" << m_day << "/" << m_year << " from " << s_time << " to " << e_time << ".\n";
 }
 
 void Events::addTimeSlots(int s_t, int numOfAtt)

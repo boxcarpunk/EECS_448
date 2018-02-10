@@ -297,13 +297,14 @@ void LinkedList<T>::sortListEvent()
   Node<T>* prevNode = nullptr;
   Node<T>* temp = nullptr;
 
-	if(getLength() == 1)
+	if(m_length == 1)
 	{
+    //already sorted since there is only one
 	}
-	else if(getLength() == 2)
+	else if(m_length == 2)
 	{
 		currentNode = m_front;
-		if (compareEvent(currentNode -> getValue(), currentNode -> getNext() -> getValue()) == true)
+		if (compareEvent((currentNode -> getValue()), (currentNode -> getNext() -> getValue())) == true)
 		{
 			addBack(currentNode -> getValue());
 			removeFront();
@@ -311,7 +312,7 @@ void LinkedList<T>::sortListEvent()
 	}
 	else
 	{
-		for(int i = 1; i <= getLength(); i++)
+		for(int i = 1; i <= m_length; i++)
 		{
 			currentNode = m_front;
 			prevNode = m_front;
@@ -362,7 +363,9 @@ bool LinkedList<T>::compareEvent(T event1, T event2)
 		isTrue = true;
 		return(isTrue);
 	}
-  else{}
+  else{
+    //nothing happens, false is returned outside the if statements
+  }
 	return(isTrue);
 }
 
@@ -373,10 +376,11 @@ void LinkedList<T>::sortListTime()
   Node<T>* prevNode = nullptr;
   Node<T>* temp = nullptr;
 
-	if(getLength() == 1)
+	if(m_length == 1)
 	{
+    //already sorted since there is only one
 	}
-	else if(getLength() == 2)
+	else if(m_length == 2)
 	{
 		currentNode = m_front;
 		if (compareTime(currentNode -> getValue(), currentNode -> getNext() -> getValue()) == true)
@@ -387,7 +391,7 @@ void LinkedList<T>::sortListTime()
 	}
 	else
 	{
-		for(int i = 1; i <= getLength(); i++)
+		for(int i = 1; i <= m_length; i++)
 		{
 			currentNode = m_front;
 			prevNode = m_front;
@@ -428,7 +432,9 @@ bool LinkedList<T>::compareTime(T time1, T time2)
 		isTrue = true;
 		return(isTrue);
 	}
-  else{}
+  else{
+    //nothing happens, false is returned after this
+  }
 	return(isTrue);
 }
 

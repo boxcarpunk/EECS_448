@@ -12,7 +12,7 @@ public:
 	Events();
 
 	/* Parameterized Constructor **/
-	Events (std::string n, int m, int d, int y);
+	Events (std::string name, int motnh, int day, int year);
 
 	/* Operator greater/less than overloads for comparing instances of class using name variable **/
 	bool operator>(const Events& rhs) const;
@@ -24,10 +24,10 @@ public:
 	/* set methods set private variables
 	@post respective instance variables set equal to argument passed to set methods
 	@param new values for respective instance variables **/
-	void setName(std::string n);
-	void setMonth(int m);
-	void setDay(int d);
-	void setYear(int y);
+	void setName(std::string name);
+	void setMonth(int month);
+	void setDay(int day);
+	void setYear(int year);
 
 	/* get methods return their respective instance variables
 	@return repective instance variables**/
@@ -47,11 +47,11 @@ public:
 
 
 private:
-	std::string name; // event name
-	int month; // month of event
-	int day; // day of event
-	int year; // year of event
-	int s_time; 
+	std::string m_name; // event name
+	int m_month; // month of event
+	int m_day; // day of event
+	int m_year; // year of event
+	int s_time;
 	int e_time;
 	LinkedList<TimeSlots>* m_TimeSlot; // pointer to list of timeslots for this event
 };
