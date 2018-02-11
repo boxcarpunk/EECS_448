@@ -46,21 +46,21 @@
 	- int positionOf(T value) const
 			- T's type is overloaded with the '==' operator
 			- None
-			- Templated value, in the case of cal448 this is an event
+			- Templated value
 			- Public
 			- Returns the index associated with the templated value. If it does not exist in the list, the user is notified
 
 	- void addBack(T value)
 			- The value 'T' is valid
 			- A single, new element is created and added to the back of the list
-			- Templated value, in the case of cal448 this is an event
+			- Templated value
 			- Public
 			- Adds a new element to the end of the list
 
 	- void addFront(T value) 
 			- The value 'T' is valid
 			- A single, new element is created and added to the front of the list
-			- Templated value, in the case of cal448 this is an event.
+			- Templated value
 			- Public
 			- Adds a new element to the front of the list
 
@@ -109,7 +109,7 @@
     - bool search(T value) const
 			- The value 'T' is valid
 			- None
-			- Templated value, in the case of cal448 this is an event.
+			- Templated value
 			- Public
 			- The list is searched and if the value passed in is found 'true' is returned, 'false' signifies that the value does not exist in the list
         

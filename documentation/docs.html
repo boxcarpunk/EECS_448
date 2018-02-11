@@ -128,19 +128,20 @@
       <p># main( ) function</p>
       <ul>
         <li>Preconditions: None</li>
-        <li>Postconditions: idk</li>
+        <li>Postconditions: None</li>
         <li>Parameters: None</li>
         <li>Access: Public</li>
         <li>Action: Creates an instance of the Executive class and runs the program.</li>
       </ul>
       
       <pre class="prettyprint">&lt;code&gt;
-      int main() {
-        Executive exec;
-        exec.run();
+    int main() 
+    {
+      Executive exec;
+      exec.run();
 
-        return(0);
-      }
+      return(0);
+    }
 &lt;/code&gt;</pre>
       
 <!--   Executive   -->
@@ -149,378 +150,770 @@
       
       <p># .... method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: None </li>
+        <li>Access: None </li>
+        <li>Action: None</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
+      <pre class="prettyprint">&lt;code&gt;
     $(document).ready(function (){
     $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
     })	
-&lt;/script&gt; </pre>
+&lt;/code&gt; </pre>
       
       <p># .... method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: None </li>
+        <li>Access: None </li>
+        <li>Action: None</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
+      <pre class="prettyprint">&lt;code&gt;
     $(document).ready(function (){
     $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
     })	
-&lt;/script&gt; </pre>
+&lt;/code&gt; </pre>
       
       <p># .... method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: None </li>
+        <li>Access: None </li>
+        <li>Action: None</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
+      <pre class="prettyprint">&lt;code&gt;
     $(document).ready(function (){
     $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
     })	
-&lt;/script&gt; </pre>
+&lt;/code&gt; </pre>
       
       <p># .... method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: None </li>
+        <li>Access: None </li>
+        <li>Action: None</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
+      <pre class="prettyprint">&lt;code&gt;
     $(document).ready(function (){
     $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
     })	
-&lt;/script&gt; </pre>
+&lt;/code&gt; </pre>
      
       <p># .... method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: None </li>
+        <li>Access: None </li>
+        <li>Action: None</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
+      <pre class="prettyprint">&lt;code&gt;
     $(document).ready(function (){
     $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
     })	
-&lt;/script&gt; </pre>
+&lt;/code&gt; </pre>
 
 <!--  linked list    -->
 
       <h3 id="linked-list"> LinkedList.h & LinkedList.hpp</h3>
       
-      <p># LinkedList() method</p>
+      <p># LinkedList( ) method</p>
       <ul>
         <li>Preconditions: None</li>
         <li>Postconditions: An empty LinkedList object is created</li>
         <li>Parameters: None</li>
         <li>Access: Public</li>
-        <li>Action: none</li>
+        <li>Action: Assigns private member variables and creates an empty list</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    LinkedList&lt;T&gt;::LinkedList()
+    {
+      m_front = nullptr;
+      m_length = 0;
+    }
+&lt;/code&gt; </pre>
       
-      <p># .... method</p>
+      <p># ~LinkedList( ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None</li>
+        <li>Postconditions: All nodes in the LinkedList object are deleted</li>
+        <li>Parameters: None</li>
+        <li>Access: Public</li>
+        <li>Action: Each element in the list is traversed and removed until no more exist</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    LinkedList&lt;T&gt;::~LinkedList( )
+    {
+      while(m_front != nullptr) 
+      {
+        removeFront();
+      }
+    }
+&lt;/code&gt; </pre>
       
-      <p># .... method</p>
+      <p># isEmpty( ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: None </li>
+        <li>Access: Public </li>
+        <li>Action: Checks to see if the value associated with the private member variable 'm_length' is greater than 0. If it is, 'false' will be returned. 'true' otherwise. </li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    bool LinkedList&lt;T&gt;::isEmpty( )
+    {
+      if(m_length == 0) 
+      {
+        return(true);
+      }
+      else
+      {
+        return(false);
+      }
+    }	
+&lt;/code&gt; </pre>
      
-      <p># .... method</p>
+      <p># getLength( ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: None </li>
+        <li>Access: Public </li>
+        <li>Action: Returns the value associated with the number of nodes that are in the list at the time called.</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    int LinkedList&lt;T&gt;::getLength( ) const
+    {
+      return(m_length);
+    }
+&lt;/code&gt; </pre>
       
-      <p># .... method</p>
+      <p># positionOf( T value ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: T's type is overloaded with the '==' operator </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: Templated value </li>
+        <li>Access: Public </li>
+        <li>Action: Returns the index associated with the templated value. If it does not exist in the list, the user is notified.</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    int LinkedList&lt;T&gt;::positionOf( T value ) const
+    {
+      int val = 0;
+      Node&lt;T&gt;* temp = m_front;
+      for(int i = 1; i &lt;= m_length; i++)
+      {
+        val++;
+        if( value == temp->getValue())
+        {
+          return(val);
+        }
+        else
+        {
+          temp = temp->getNext();
+        }
+      }
+      return(0);
+    }	
+&lt;/code&gt; </pre>
       
-      <p># .... method</p>
+      <p># addBack( T value ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: The value 'T' is valid </li>
+        <li>Postconditions: A single, new element is created and added to the back of the list </li>
+        <li>Parameters: Templated value </li>
+        <li>Access: Public </li>
+        <li>Action: Add a new element to the end of the list</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    void LinkedList&lt;T&gt;::addBack( T value ) const
+    {
+      if(m_length == 0)
+      {
+        addFront(value);
+      }
+      else 
+      {
+        Node&lt;T&gt;* newNode = new Node&lt;T&gt;(value);
+        Node&lt;T&gt;* temp = m_front;
+        while(temp -> getNext() != nullptr)
+        {
+          temp = temp -> getNext();
+        }
+        temp -> setNext(newNode);
+        m_length++;
+      }
+    }	
+&lt;/code&gt; </pre>
      
-      <p># .... method</p>
+      <p># addFront( T value ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: The value 'T' is valid </li>
+        <li>Postconditions: A single, new element is created and added to the front of the list </li>
+        <li>Parameters: Templated value </li>
+        <li>Access: Public </li>
+        <li>Action: Adds a new element to the front of the list</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    void LinkedList&lt;T&gt;::addFront( T value ) const
+    {
+      Node&lt;T&gt; temp = new Node&lt;T&gt;(value);
+      if(m_length == 0)
+      {
+        m_front = temp;
+      }
+      else 
+      {
+        temp -> setNext(m_front);
+        m_front = temp;
+      }
+      m_length++;
+    }
+&lt;/code&gt; </pre>
      
-      <p># .... method</p>
+      <p># insert( int position, T value ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: A single, new element is created and added in the position specified </li>
+        <li>Parameters: Templated value and an integer representing the index at which the value is to be added</li>
+        <li>Access: Public </li>
+        <li>Action: Returns 'true' if the value was inserted at the given position, 'false' otherwise. NOTE: Position must fall between 0 and m_size (the number of elements in the list at the time of inserting)</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    bool LinkedList&lt;T&gt;::insert(int position, T value)
+    {
+      if((position &lt;= 0) || (position > (m_length+1)))
+      {
+        return(false);
+      }
+      else if(position == 1)
+      {
+        addFront(value);
+        return(true);
+      }
+      else if(position == (m_length+1))
+      {
+        addBack(value);
+        return(true);
+      }
+      else
+      {
+        Node&lt;T&gt;* newNode = new Node&lt;T&gt;(value);
+        Node&lt;T&gt;* temp = m_front;
+        Node&lt;T&gt;* temp2 = m_front;
+        for(int i = 1; i &lt;= (position-1); i++)
+        {
+          temp = temp->getNext();
+        }
+        for(int i = 1; i &lt; (position-1); i++)
+        {
+          temp2 = temp2 -> getNext();
+        }
+
+        temp2 -> setNext(newNode);
+        newNode -> setNext(temp);
+        m_length++;
+        return(true);
+      }
+    }
+&lt;/code&gt; </pre>
      
-      <p># .... method</p>
+      <p># removeBack( ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: One element is removed from the back of the list </li>
+        <li>Parameters: None </li>
+        <li>Access: Public </li>
+        <li>Action: Returns 'true' if the element at the end of the list is removed, 'false' if the list is empty</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    bool LinkedList&lt;T&gt;::removeBack( )
+    {
+      if(m_length == 0)
+      {
+        return(false);
+      }
+      else if(m_length == 1)
+      {
+        removeFront();
+        return(true);
+      }
+      else
+      {
+        Node&lt;T&gt;* temp = m_front;
+        Node&lt;T&gt;* temp2 = m_front;
+        for(int i = 1; i &lt;= (m_length-1); i++)
+        {
+          temp = temp -> getNext();
+        }
+        for(int i = 1; i &lt; m_length-1; i++)
+        {
+          temp2 = temp2 -> getNext();
+        }
+        delete temp;
+        temp2 -> setNext(nullptr);
+        m_length = m_length - 1;
+        return(true);
+      }
+    }
+&lt;/code&gt; </pre>
       
-      <p># .... method</p>
+      <p># removeFront( ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: One element is removed from the front of the list </li>
+        <li>Parameters: None </li>
+        <li>Access: Public </li>
+        <li>Action: Return 'true' if the element at the front of the list is removed, 'false' if the list is empty</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    bool LinkedList&lt;T&gt;::removeFront( )
+    {
+      if(m_length == 0)
+      {
+        return(false);
+      }
+      else
+      {
+        Node&lt;T&gt;* temp = m_front -> getNext();
+        delete m_front;
+        m_front = temp;
+        m_length--;
+        return(true);
+      }
+    }
+&lt;/code&gt; </pre>
       
-      <p># .... method</p>
+      <p># removeAt( int position ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: The element that is in the specified position is removed from the list </li>
+        <li>Parameters: Integer representing the index at which you wish to remove a value </li>
+        <li>Access: Public </li>
+        <li>Action: Returns 'true' if the element at the given position is removed, 'false' otherwise</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    bool LinkedList&lt;T&gt;::removeAt(int position)
+    {
+      if((m_length == 0) || (position &lt;= 0) || (position > m_length))
+      {
+        return(false);
+      }
+      else if(position == 1)
+      {
+        removeFront();
+        return(true);
+      }
+      else if( position == m_length)
+      {
+        removeBack();
+        return(true);
+      }
+      else
+      {
+        Node&lt;T&gt;* temp = m_front;
+        Node&lt;T&gt;* temp2 = m_front;
+        for(int i = 1; i &lt;= position; i++)
+        {
+          temp = temp -> getNext();
+        }
+        for(int i = 1; i &lt; (position-1); i++)
+        {
+          temp2 = temp2 -> getNext();
+        }
+        delete temp2 -> getNext();
+        temp2 -> setNext(temp);
+        m_length--;
+        return(true);
+      }
+    }
+&lt;/code&gt; </pre>
       
-      <p># .... method</p>
+      <p># setEntry( int position, T value ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: The value at the given position is overridden with the value passed in </li>
+        <li>Parameters: Integer representing the index you wish to change the value and the value you want </li>
+        <li>Access: Public </li>
+        <li>Action: The value at the given position is overridden with the value passed in. If the position is beyond the size of the list, the user is notified</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    void LinkedList&lt;T&gt;::setEntry(int position, T value)
+    {
+      Node&lt;T&gt;* temp = m_front;
+        for(int i = 1; i &lt; position; i++)
+        {
+          temp = temp -> getNext();
+        }
+        temp -> setValue(value);
+    }
+&lt;/code&gt; </pre>
       
-      <p># .... method</p>
-      <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
-      </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+<!--   =============================   -->
       
-      <p># .... method</p>
+      <p># getEntry( int position ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: Interger representing the index you wish to have the value returned </li>
+        <li>Access: Public </li>
+        <li>Action: Returns the value associated with the index that is passed in</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    T& LinkedList&lt;T&gt;::getEntry(int position)
+    {
+        Node&lt;T&gt;* temp = m_front;
+        if (position&lt;1 || position>m_length)
+        {
+        std::cout&lt;&lt;"Invalid Entry - Out of range.\n";
+            //throw(std::runtime_error("Invalid Entry - Out of range"));
+        }
+        else if (position == 1)
+        {
+            return m_front->getValue();
+        }
+        else
+        {
+            for (int i=0; i&lt;position-1; i++)
+            {
+                temp = temp->getNext();
+            }
+            return temp->getValue();
+        }
+    }
+&lt;/code&gt; </pre>
       
-      <p># .... method</p>
+<!--   =============================   -->      
+
+      <p># isFound( std::string name2 ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: Stirng representing the name of a potential event</li>
+        <li>Access: Public </li>
+        <li>Action: The list is traversed and if an event exists with the same name as the one passed in 'true' is returned, 'false' otherwise</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    bool LinkedList&lt;T&gt;::isFound(std::string name2)
+    {
+      Node&lt;T&gt;* temp = m_front;
+      T temp1 = temp -> getValue();
+      bool found = false;
+      while(temp != nullptr)
+      {
+        temp1 = temp -> getValue();
+        if(temp1.getName() == name2)
+        {
+          found = true;
+          return(found);
+          break;
+        }
+        else{
+          temp = temp -> getNext();
+        }
+      }
+      return(found);
+    }
+&lt;/code&gt; </pre>
       
-      <p># .... method</p>
+      <p># search( T value ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: The value for 'T' is valid </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: Templated value </li>
+        <li>Access: Public </li>
+        <li>Action: The list is searched and if the value passed in is found 'true' is returned, 'false' signifies that the value does not exist in the lsit</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    T& LinkedList&lt;T&gt;::search(std::string name)
+    {
+      Node&lt;T&gt;* temp = m_front;
+      T temp1 = temp ->getValue();
+      while(temp != nullptr)
+      {
+        temp1 = temp -> getValue();
+        if(temp1.getName() == name)
+        {
+          return(temp1);
+          break;
+        }
+        else{
+          temp = temp -> getNext();
+        }
+      }
+      T empty;
+      return(empty);
+    }
+&lt;/code&gt; </pre>
       
-      <p># .... method</p>
+      <p># sortListEvent( ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: The LinkedList is sorted by events </li>
+        <li>Parameters: None </li>
+        <li>Access: Public </li>
+        <li>Action: The list is traversed and sorted by dates</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    void LinkedList&lt;T&gt;::sortListEvent()
+    {
+      Node&lt;T&gt;* currentNode = nullptr;
+      Node&lt;T&gt;* prevNode = nullptr;
+      Node&lt;T&gt;* temp = nullptr;
+
+        if(m_length == 1)
+        {
+        //already sorted since there is only one
+        }
+        else if(m_length == 2)
+        {
+            currentNode = m_front;
+            if (compareEvent((currentNode -> getValue()), (currentNode -> getNext() -> getValue())) == true)
+            {
+                addBack(currentNode -> getValue());
+                removeFront();
+            }
+        }
+        else
+        {
+            for(int i = 1; i &lt;= m_length; i++)
+            {
+                currentNode = m_front;
+                prevNode = m_front;
+
+                while(currentNode -> getNext() != nullptr)
+                {
+                  if (compareEvent(currentNode -> getValue(), currentNode -> getNext() -> getValue()) == true)
+                    {
+                    temp = currentNode -> getNext();
+                    currentNode -> setNext(currentNode -> getNext() -> getNext());
+                    temp -> setNext(currentNode);
+
+                    if(currentNode == m_front)
+                            {
+                                prevNode = temp;
+                                m_front = prevNode;
+                            }
+                    else
+                            {
+                                prevNode -> setNext(temp);
+                        currentNode = temp;
+                            }
+                    }
+                  prevNode = currentNode;
+                  currentNode = currentNode -> getNext();
+                }
+              }
+        }
+    }
+&lt;/code&gt; </pre>
+      
+      <p># compareEvent( T event1, T event2 ) method</p>
+      <ul>
+        <li>Preconditions: Both 'T' values are valid </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: Two templated values </li>
+        <li>Access: Public </li>
+        <li>Action: The two values are compared, if event1 occurs before event2 'true' is returned, 'false' otherwise</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    bool LinkedList&lt;T&gt;::compareEvent(T event1, T event2)
+    {
+        bool isTrue = false;
+
+        if(event1.getYear() > event2.getYear())
+        {
+            isTrue = true;
+            return(isTrue);
+        }
+        if(event1.getYear() == event2.getYear() && event1.getMonth() > event2.getMonth())
+        {
+            isTrue = true;
+            return(isTrue);
+        }
+        if(event1.getYear() == event2.getYear() && event1.getMonth() == event2.getMonth() && event1.getDay() > event2.getDay())
+        {
+            isTrue = true;
+            return(isTrue);
+        }
+      else{
+        //nothing happens, false is returned outside the if statements
+      }
+        return(isTrue);
+    }
+&lt;/code&gt; </pre>
      
-      <p># .... method</p>
+      <p># sortListTime( ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: The LinkedList of times is sorted </li>
+        <li>Parameters: None </li>
+        <li>Access: Public </li>
+        <li>Action: The list is traversed and sorted by time</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
+      <pre class="prettyprint">&lt;code&gt;
+    void LinkedList&lt;T&gt;::sortListTime()
+    {
+      Node&lt;T&gt;* currentNode = nullptr;
+      Node&lt;T&gt;* prevNode = nullptr;
+      Node&lt;T&gt;* temp = nullptr;
+
+        if(m_length == 1)
+        {
+        //already sorted since there is only one
+        }
+        else if(m_length == 2)
+        {
+            currentNode = m_front;
+            if (compareTime(currentNode -> getValue(), currentNode -> getNext() -> getValue()) == true)
+            {
+                addBack(currentNode -> getValue());
+                removeFront();
+            }
+        }
+        else
+        {
+            for(int i = 1; i &lt;= m_length; i++)
+            {
+                currentNode = m_front;
+                prevNode = m_front;
+
+            while(currentNode -> getNext() != nullptr)
+            {
+              if (compareTime(currentNode -> getValue(), currentNode -> getNext() -> getValue()) == true)
+                {
+                temp = currentNode -> getNext();
+                currentNode -> setNext(currentNode -> getNext() -> getNext());
+                temp -> setNext(currentNode);
+
+                if(currentNode == m_front)
+                        {
+                            prevNode = temp;
+                            m_front = prevNode;
+                        }
+                else
+                        {
+                            prevNode -> setNext(temp);
+                    currentNode = temp;
+                        }
+                }
+              prevNode = currentNode;
+              currentNode = currentNode -> getNext();
+            }
+          }
+        }
+    }
+&lt;/code&gt; </pre>
       
-      <p># .... method</p>
+      <p># compareTime( T time1, T time2 ) method</p>
       <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
+        <li>Preconditions: Both 'T' values are valid </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: Two templated values </li>
+        <li>Access: Public </li>
+        <li>Action: The two values are compared, if time1 occurs before time2 'true' is returnd, 'false' otherwise</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
-      
-      <p># .... method</p>
-      <ul>
-        <li>Preconditions: ...</li>
-        <li>Postconditions: ...</li>
-        <li>Parameters: ...</li>
-        <li>Access: ...</li>
-        <li>Action: none</li>
-      </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
-&lt;/script&gt; </pre>
-      
+      <pre class="prettyprint">&lt;code&gt;
+    bool LinkedList&lt;T&gt;::compareTime(T time1, T time2)
+    {
+      bool isTrue = false;
+
+        if(time1.getTimeslot() > time2.getTimeslot())
+        {
+            isTrue = true;
+            return(isTrue);
+        }
+      else{
+        //nothing happens, false is returned after this
+      }
+        return(isTrue);
+    }
+&lt;/code&gt; </pre>
       
 <!--  node   -->
 
       <h3 id="node"> Node.h & Node.hpp</h3>
+      
+      <p># Node( T value ) method</p>
       <ul>
-        <li>Show</li>
+        <li>Preconditions: Node </li>
+        <li>Postconditions: A node with the passed value is created </li>
+        <li>Parameters: Templated value </li>
+        <li>Access: Public </li>
+        <li>Action: Creates a new node with the vallue that is passed in</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:true});
-    })	
-&lt;/script&gt;</pre>
+      <pre class="prettyprint">&lt;code&gt;
+    Node&lt;T&gt;::Node(T value)
+    {
+      m_next = nullptr;
+      m_value = value;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># T& getValue() method</p>
       <ul>
-        <li>Hide</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: None </li>
+        <li>Access: Public </li>
+        <li>Action: Returns the value that is associate with any given node</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:false});
-    })	
- &lt;/script&gt;</pre>
+      <pre class="prettyprint">&lt;code&gt;
+    T& Node&lt;T&gt;::getValue()
+    {
+      return(m_value);
+    }
+&lt;/code&gt; </pre>
+      
+      <p># setValue( T value ) method</p>
+      <ul>
+        <li>Preconditions: The value for 'T' is valid </li>
+        <li>Postconditions: The value for a node is set </li>
+        <li>Parameters: Templated value </li>
+        <li>Access: Public </li>
+        <li>Action: Sets the value of a node equal to the value passed in</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    void Node&lt;T&gt;::setValue(T value)
+    {
+      m_value = value;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># getNext( ) method</p>
+      <ul>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: None </li>
+        <li>Access: Public </li>
+        <li>Action: Returns a pointer to the node that follows the current</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    Node&lt;T&gt;* Node&lt;T&gt;::getNext() const
+    {
+      return(m_next);
+    }
+&lt;/code&gt; </pre>
+      
+      <p># setNext( Node&lt;T&gt; next ) method</p>
+      <ul>
+        <li>Preconditions: None </li>
+        <li>Postconditions: Sets the next node to a pointer given by the user </li>
+        <li>Parameters: A node pointer representing the next value in a data structure </li>
+        <li>Access: Public </li>
+        <li>Action: Sets the next node in a structure equal to the pointer that is passed in a parameter</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    void Node&lt;T&gt;::setNext(Node&lt;T&gt;* next)
+    {
+      m_next = next;
+    }
+&lt;/code&gt; </pre>
             
 <!--   Event    -->
 
@@ -528,40 +921,67 @@
       <ul>
         <li>Show</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
+      <pre class="prettyprint">&lt;code&gt;
     $(document).ready(function (){
     $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', show_votes_counter:true});
     })	
-&lt;/script&gt; </pre>
+&lt;/code&gt; </pre>
       <ul>
         <li>Hide</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
+      <pre class="prettyprint">&lt;code&gt;
     $(document).ready(function (){
     $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:false});
     })	
-&lt;/script&gt;</pre>
+&lt;/code&gt;</pre>
       
 <!--   time slots    -->
 
       <h3 id="time-slots"> TimeSlots.h & TimeSlots.cpp</h3>
+      
+      <p># .... method</p>
       <ul>
-        <li>Show</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: None </li>
+        <li>Access: None </li>
+        <li>Action: None</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
+      <pre class="prettyprint">&lt;code&gt;
     $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', show_votes_counter:true});
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
     })	
-&lt;/script&gt; </pre>
+&lt;/code&gt; </pre>
+      
+      <p># .... method</p>
       <ul>
-        <li>Hide</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: None </li>
+        <li>Access: None </li>
+        <li>Action: None</li>
       </ul>
-      <pre class="prettyprint">&lt;script&gt;
+      <pre class="prettyprint">&lt;code&gt;
     $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:false});
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
     })	
-&lt;/script&gt;</pre>
-    <p><br><br><br><br><br><br><br><br></p>
+&lt;/code&gt; </pre>
+      
+      <p># .... method</p>
+      <ul>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None </li>
+        <li>Parameters: None </li>
+        <li>Access: None </li>
+        <li>Action: None</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/code&gt; </pre>
+      
+    <p><br><br><br><br><br></p>
       
     </div>
   </div>
