@@ -39,11 +39,12 @@ public:
 	void setYear(int year);
 
 	/* get methods return their respective instance variables
-	@return repective instance variables**/
+	@return repective instance variables/pointers**/
 	std::string getName() const;
 	int getMonth() const;
-	int getDay() const;
-	int getYear() const;
+	int getDay() const; 
+	int getYear() const; 
+	LinkedList<TimeSlots>* getTimeSlots() const; // returns head pointer to m_TimeSlot. Specifically created for >, <, == operator overloads
 
 	/* getInfo prints info abour event to the screen. Does not actually return any value.*/
 	void getInfo();
@@ -60,7 +61,5 @@ private:
 	int m_month; // month of event
 	int m_day; // day of event
 	int m_year; // year of event
-	int s_time;
-	int e_time;
 	LinkedList<TimeSlots>* m_TimeSlot; // pointer to list of timeslots for this event
 };

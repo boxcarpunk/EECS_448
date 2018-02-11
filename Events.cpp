@@ -16,8 +16,6 @@ Events::Events()
 	m_day = 0;
 	m_year = 0;
 	m_TimeSlot = new LinkedList<TimeSlots>();
-	s_time = 0;
-	e_time = 0;
 }
 
 Events::Events(std::string name, int month, int day, int year)
@@ -27,45 +25,72 @@ Events::Events(std::string name, int month, int day, int year)
 	m_day = day;
 	m_year = year;
 	m_TimeSlot = new LinkedList<TimeSlots>();
-	s_time = 0;
-	e_time = 0;
 }
 
-Events::~Events
+Events::~Events()
 {
-	; 
+	; // empty destructor
 }
 
 bool Events::operator>(const Events& rhs) const
 {
+	// if year on left is greater, then left event starts later. return true
 	if (m_year > rhs.getYear())
 	{
 		return true;
 	}
+	// if year on left is less than, then right event starts later. return false
 	else if (m_year < rhs.getYear())
 	{
 		return false;
 	}
+	// else, both events occur in the same year.  Start next set of if-else statements to test for months
 	else
 	{
+		// if month on left is greater, then left event starts later. return true
 		if (m_month > rhs.getMonth())
 		{
 			return true;
 		}
+		// if month on left is less than, then right event starts later. return false
 		else if (m_month < rhs.getMonth())
 		{
 			return false;
 		}
+		// else, both events occur in the same month. Start next set of if-else statements to test for days
 		else
 		{
+			// if day on left is greater, then left event starts later. return true
 			if (m_day > rhs.getDay())
 			{
 				return true;
 			}
+			// if day on right is greater, then right event starts later. return false
+			else if (m_day < rhs.getDay())
+			{
+				return false;
+			}
+			// else, both events occur on the same day. Start next set of if-else statements to test for timeslots
 			else
 			{
-				// TODO need to compare timeslots
-				return false;
+				// compare the start time of the event on the left side to the start time of the event on the right side.
+				// If the start time on the left is greater than the start time on the right, then it is the later event,
+				// and thus the > operation is true
+				if ((m_Timeslot->getEntry(1)->getTimeslot()) > (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+				{
+					return true;
+				}
+				// If the start time on the left is less than the start time on the right, then it is not the later event,
+				// and thus the > operation is false
+				else if ((m_Timeslot->getEntry(1)->getTimeslot()) < (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+				{
+					return false;
+				}
+				// else, these events start at the same time. return false for now, need to discuss this with group before moving forward
+				else
+				{
+					return false;
+				}
 			}
 		}
 	}
@@ -73,34 +98,63 @@ bool Events::operator>(const Events& rhs) const
 
 bool Events::operator<(const Events& rhs) const
 {
+	// if year on left is less than, then right event starts later. return true
 	if (m_year < rhs.getYear())
 	{
 		return true;
 	}
+	// if year on left is greater, then left event starts later. return false
 	else if (m_year > rhs.getYear())
 	{
 		return false;
 	}
+	// else, both events occur in the same year.  Start next set of if-else statements to test for months
 	else
 	{
+		// if month on left is less than, then right event starts later. return true
 		if (m_month < rhs.getMonth())
 		{
 			return true;
 		}
+		// if month on left is greater, then left event starts later. return false
 		else if (m_month > rhs.getMonth())
 		{
 			return false;
 		}
+		// else, both events occur in the same month. Start next set of if-else statements to test for days
 		else
 		{
+			// if day on left is less than, then right event starts later. return true
 			if (m_day < rhs.getDay())
 			{
 				return true;
 			}
+			// if day on left is greater, then left event starts later. return false
+			else if (m_day > rhs.getDay())
+			{
+				return false;
+			}
+			// else, both events occur on the same day. Start next set of if-else statements to test for timeslots
 			else
 			{
-				// TODO need to compare timeslots
-				return false;
+				// compare the start time of the event on the left side to the start time of the event on the right side.
+				// If the start time on the left is less than to the start time on the right, then the right is the later event,
+				// and thus the < operation is true
+				if ((m_Timeslot->getEntry(1)->getTimeslot()) < (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+				{
+					return true;
+				}
+				// If the start time on the left is greater than the start time on the right, then it is the later event,
+				// and thus the < operation is false
+				else if ((m_Timeslot->getEntry(1)->getTimeslot()) > (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+				{
+					return false;
+				}
+				// else, these events start at the same time. return false for now, need to discuss this with group before moving forward
+				else
+				{
+					return false;
+				}
 			}
 		}
 	}
@@ -108,24 +162,40 @@ bool Events::operator<(const Events& rhs) const
 
 bool Events::operator==(const Events& rhs) const
 {
+	// test to see if years are equal
 	if (m_year == rhs.getYear())
 	{
+		// if years are equal, test for months
 		if (m_month == rhs.getMonth())
 		{
+			// if months are equal, test for days
 			if (m_day == rhs.getDay())
 			{
-				// TODO need to compare time slots;
+				// if days are equal, test for start times
+				if ((m_Timeslot->getEntry(1)->getTimeslot()) == (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+				{
+					// start times are equal, return true
+					return true;
+				}
+				else
+				{
+					// start times are not equal, return false
+					return false;
+				}
 			}
+			// days are not equal, return false
 			else
 			{
 				return false;
 			}
 		}
+		// months are not equal, return false
 		else
 		{
 			return false;
 		}
 	}
+	// years are not equal, return false
 	else
 	{
 		return false;
@@ -170,6 +240,11 @@ int Events::getDay() const
 int Events::getYear() const
 {
 	return m_year; // return year
+}
+
+LinkedList<TimeSlots>* Events::getTimeSlots() const
+{
+	return m_TimeSlot; // return m_TimeSlot
 }
 
 void Events::getInfo()
