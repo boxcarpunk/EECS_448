@@ -1,5 +1,4 @@
 #include "Events.h"
-#include "LinkedList.h"
 
 Events::Events()
 {
@@ -23,6 +22,11 @@ Events::Events(std::string name, int month, int day, int year)
 	m_TimeSlot = new LinkedList<TimeSlots>();
 	s_time = 0;
 	e_time = 0;
+}
+
+Events::~Events
+{
+	; 
 }
 
 bool Events::operator>(const Events& rhs) const

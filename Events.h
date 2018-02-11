@@ -14,6 +14,9 @@ public:
 	/* Parameterized Constructor **/
 	Events (std::string name, int motnh, int day, int year);
 
+	/*Destructor*/
+	~Events();
+
 	/* Operator greater/less than overloads for comparing instances of class using name variable **/
 	bool operator>(const Events& rhs) const;
 	bool operator<(const Events& rhs) const;
