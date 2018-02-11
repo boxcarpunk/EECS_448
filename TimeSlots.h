@@ -24,13 +24,13 @@ class TimeSlots
 		/* setTimeslot sets m_Timeslot variable
 		@post m_Timeslot = time
 		@param time the timeslot for an event**/
-		void setTimeslot(int time);
+		void setTimeSlot(int time);
 		/* Get method for number of attendantsfor a time slot
 		@return m_numOfAtt**/
 		int getNum();
 		/* Get method for the timeslot of an event
 		@return m_numOfAtt**/
-		int getTimeslot();
+		int getTimeSlot();
 
 	private:
 		int m_numOfAtt;  // the number of attendants for a certain timeslot in an event

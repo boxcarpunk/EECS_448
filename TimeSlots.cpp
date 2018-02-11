@@ -24,7 +24,7 @@ void TimeSlots::setNum(int num)
 	m_numOfAtt = num;
 }
 
-void TimeSlots::setTimeslot(int time)
+void TimeSlots::setTimeSlot(int time)
 {
 	m_TimeSlot = time;
 }
@@ -34,7 +34,7 @@ int TimeSlots::getNum()
 	return m_numOfAtt;
 }
 
-int TimeSlots::getTimeslot()
+int TimeSlots::getTimeSlot()
 {
 	return m_TimeSlot;
 }
