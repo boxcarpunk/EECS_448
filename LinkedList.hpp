@@ -428,7 +428,7 @@ bool LinkedList<T>::compareTime(T time1, T time2)
 {
   bool isTrue = false;
 
-	if(time1.getTimeslot() > time2.getTimeslot())
+	if(time1.getTimeSlot() > time2.getTimeSlot())
 	{
 		isTrue = true;
 		return(isTrue);
