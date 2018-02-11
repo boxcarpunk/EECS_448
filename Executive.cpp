@@ -32,6 +32,7 @@ Executive::Executive()
 		eventList->addBack(event);
 		eventList -> sortListEvent();
 	}
+	
 }
 
 Executive::~Executive()
@@ -79,7 +80,7 @@ bool Executive::adminFunc()
 	while (1)
 	{
 		std::cout << "\nWelcome, Admin! How would you like to proceed?\n\n";
-		std::cout << "  (1) Add an event\n  (2) Print all events\n  (3) Find a specific event\n  (4) Quit\n\n  Choice: ";
+		std::cout << "(1) Add an event\n(2) Print all events\n(3) Find a specific event\n(4) Main Menu\n(5) Quit\n\n  Choice: ";
 		std::cin >> adminChoice;
 		if (adminChoice == 1)
 		{
@@ -98,6 +99,10 @@ bool Executive::adminFunc()
 		}
 		else if (adminChoice == 4)
 		{
+			return true;
+		}
+		else if (adminChoice == 5)
+		{
 			return false;
 		}
 		else
@@ -114,7 +119,7 @@ bool Executive::userFunc()
 	while(1)
 	{
 		std::cout << "\nWelcome, User! How would you like to proceed?\n";
-		std::cout << "  (1) Print all events\n  (2) Find a specific event\n  (3) Quit\n\n  Choice: ";
+		std::cout << "(1) Print all events\n(2) Find a specific event\n(3) Main Menu(4) Quit\n\n  Choice: ";
 		std::cin >> userChoice;
 
 		if (userChoice == 1)
@@ -127,6 +132,10 @@ bool Executive::userFunc()
 
 		}
 		else if (userChoice == 3)
+		{
+			return true;
+		}
+		else if (userChoice == 4)
 		{
 			return false;
 		}
@@ -157,7 +166,7 @@ bool Executive::addEvent()
 	std::cin >> m_stime;
 	std::cout << "\nWhat time will your event end?\n";
 	std::cin >> m_etime;
-
+	
 	m_intMonth = std::stoi(m_month);
 	m_intDay = std::stoi(m_day);
 	m_intYear = std::stoi(m_year);
@@ -167,10 +176,10 @@ bool Executive::addEvent()
 	m_intSTime = stoi(m_stime);
 	m_intETime = stoi(m_etime);
 	
-	// for (int i = m_intSTime; i <= m_intETime; i += 20)
-	// {
-	// 	event1.addTimeSlots(i, stoi(m_attNum));
-	// }
+	for (int i = m_intSTime; i <= m_intETime; i += 20)
+	{
+		event1.addTimeSlots(i, 1);
+	}
 	eventList->addBack(event1);
 	
 	return true;
@@ -186,8 +195,4 @@ void Executive::printEvents()
 	std::cout << "\n";
 }
 
-std::string Executive::monthConv(std::string month)
-{
-	return month;
-}
 
