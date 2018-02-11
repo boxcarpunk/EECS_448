@@ -1,3 +1,10 @@
+/**
+* @author Sahil Hirani
+* @cal448
+* @date 12 February 2017
+* @brief TimeSlots class implementation
+* @file TimeSlots.cpp **/
+
 #include "TimeSlots.h"
 
 TimeSlots::TimeSlots()

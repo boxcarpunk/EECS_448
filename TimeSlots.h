@@ -1,11 +1,12 @@
+/**
+* @author Sahil Hirani
+* @cal448
+* @date 12 February 2017
+* @brief TimeSlots is a class that holds time slots that an event occupies
+* @file TimeSlots.h **/
+
 #pragma once
 #include <iostream>
-/**
-*	@file TimeSlots.h
-*	@author Sahil Hirani
-*	@date 2-12-18
-*	@brief Header file for TimeSlots class, a class that holds time slots that an event occupies
-*/
 
 class TimeSlots
 {

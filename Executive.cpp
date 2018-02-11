@@ -1,4 +1,10 @@
-//EECS448 Project 1 Kleyn
+/**
+* @author Leon Kleyn
+* @cal448
+* @date 10 February 2017
+* @brief Executive class implementation
+* @file Executive.cpp **/
+
 #include "Executive.h"
 #include "Events.h"
 #include "LinkedList.h"

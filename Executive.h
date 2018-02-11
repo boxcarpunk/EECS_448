@@ -1,4 +1,10 @@
-//EECS448 Project 1 Kleyn
+/**
+* @author Leon Kleyn
+* @cal448
+* @date 10 February 2017
+* @brief Executive class that runs UI and implements other classes of cal448 program
+* @file Executives.h **/
+
 #pragma once
 #include "LinkedList.h"
 #include "Events.h"

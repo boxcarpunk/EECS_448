@@ -1,3 +1,10 @@
+/**
+* @author Robert Goss
+* @cal448
+* @date 10 February 2017
+* @brief Events class that represents an event in the cal448 program
+* @file Events.h **/
+
 #pragma once
 #include <iostream>
 #include <sstream>
