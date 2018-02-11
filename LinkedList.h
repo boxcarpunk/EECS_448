@@ -1,9 +1,9 @@
 /**
-*	@file LinkedList.h
-*	@author Sahil Hirani
-*	@date 02/05/2018
-*	@brief A header file for templated LinkedList class
-*/
+* @author Sahil Hirani
+* @cal448
+* @date 12 February 2017
+* @brief A header file for templated LinkedList class
+* @file LinkedList.h **/
 
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H

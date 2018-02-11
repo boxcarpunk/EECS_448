@@ -1,9 +1,9 @@
- /**
-*	@file Node.h
-*	@author Sahil Hirani
-*	@date 02/09/2017
-*	@brief A header file for templated Node class
-*/
+/**
+* @author Sahil Hirani
+* @cal448
+* @date 12 February 2017
+* @brief A header file for templated Node class
+* @file Node.h **/
 
 #ifndef NODE_H
 #define NODE_H

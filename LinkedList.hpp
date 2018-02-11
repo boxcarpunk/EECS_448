@@ -1,9 +1,10 @@
 /**
-*	@author Sahil Hirani
-*	@date 02/05/2018
-*	@file LinkedList.hpp
-*	@brief Implementation file for templated LinkedList class
-*/
+* @author Sahil Hirani
+* @cal448
+* @date 12 February 2017
+* @brief Implementation file for templated LinkedList class
+* @file LinkedList.hpp **/
+
 #include <iostream>
 #include "LinkedList.h"
 #include <string>

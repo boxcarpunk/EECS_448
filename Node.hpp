@@ -1,9 +1,9 @@
 /**
-*	@file Node.hpp
-*	@author Sahil Hirani
-*	@date 02/09/2017
-*	@brief A class file for the Node class
-*/
+* @author Sahil Hirani
+* @cal448
+* @date 12 February 2017
+* @brief A class file for the Node class
+* @file Node.hpp **/
 
 template <typename T>
 Node<T>::Node(T value)

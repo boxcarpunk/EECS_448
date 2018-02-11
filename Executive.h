@@ -1,7 +1,7 @@
 /**
 * @author Leon Kleyn
 * @cal448
-* @date 10 February 2017
+* @date 12 February 2017
 * @brief Executive class that runs UI and implements other classes of cal448 program
 * @file Executives.h **/
 
@@ -28,13 +28,13 @@ class Executive
 	bool addEvent();							//Prompts the admin to create an event and it to the list
 	std::string monthConv(std::string month);
 	int listLength = 0;							//Length of the list of events
-	std::string m_name = "";
-	std::string m_month = "";
-	std::string m_day = "";						//Event variables
-	std::string m_year = "";
-	std::string m_time = "";
-	std::string m_attNum = "";
-	std::string m_stime = "";
-	std::string m_etime = "";
+	std::string m_name = "";                    // placeholder variable for a name of an event, to be passed to Events class as an argument
+	std::string m_month = "";                   // placeholder variable for a month of an event, to be passed to Events class as an argument
+	std::string m_day = "";						// placeholder variable for a day of an event, to be passed to Events class as an argument
+	std::string m_year = "";                    // placeholder variable for a year of an event, to be passed to Events class as an argument
+	std::string m_time = "";                    // placeholder variable for a time of an event, to be passed to Events class as an argument
+	std::string m_attNum = "";                  // placeholder variable for an attencance number of an event, to be passed to Event class as an argument
+	std::string m_stime = "";                   // variable for a start time of an event, used in for loop to determine how many time slots need to be created for an event
+	std::string m_etime = "";                   // variable for a end time of an event, used in for loop to determine how many time slots need to be created for an event
 
 };
