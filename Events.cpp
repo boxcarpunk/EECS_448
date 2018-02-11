@@ -76,7 +76,7 @@ bool Events::operator>(const Events& rhs) const
 				// compare the start time of the event on the left side to the start time of the event on the right side.
 				// If the start time on the left is greater than the start time on the right, then it is the later event,
 				// and thus the > operation is true
-				if ((m_Timeslot->getEntry(1)->getTimeslot()) > (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+				/*if ((m_TimeSlot->getEntry(1)->getTimeSlot()) > (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
 				{
 					return true;
 				}
@@ -90,7 +90,7 @@ bool Events::operator>(const Events& rhs) const
 				else
 				{
 					return false;
-				}
+				}*/
 			}
 		}
 	}
@@ -140,7 +140,7 @@ bool Events::operator<(const Events& rhs) const
 				// compare the start time of the event on the left side to the start time of the event on the right side.
 				// If the start time on the left is less than to the start time on the right, then the right is the later event,
 				// and thus the < operation is true
-				if ((m_Timeslot->getEntry(1)->getTimeslot()) < (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+				/*if ((m_Timeslot->getEntry(1)->getTimeslot()) < (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
 				{
 					return true;
 				}
@@ -154,7 +154,7 @@ bool Events::operator<(const Events& rhs) const
 				else
 				{
 					return false;
-				}
+				}*/
 			}
 		}
 	}
@@ -172,7 +172,7 @@ bool Events::operator==(const Events& rhs) const
 			if (m_day == rhs.getDay())
 			{
 				// if days are equal, test for start times
-				if ((m_Timeslot->getEntry(1)->getTimeslot()) == (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+				/*if ((m_Timeslot->getEntry(1)->getTimeslot()) == (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
 				{
 					// start times are equal, return true
 					return true;
@@ -181,7 +181,7 @@ bool Events::operator==(const Events& rhs) const
 				{
 					// start times are not equal, return false
 					return false;
-				}
+				}*/
 			}
 			// days are not equal, return false
 			else
@@ -250,7 +250,7 @@ LinkedList<TimeSlots>* Events::getTimeSlots() const
 void Events::getInfo()
 {
 	// output info for this event to std::cout
-	std::cout << "\n" << m_name << " is occuring on " << m_month << "/" << m_day << "/" << m_year << " from " << s_time << " to " << e_time << ".\n";
+	std::cout << "\n" << m_name << " is occuring on " << m_month << "/" << m_day << "/" << m_year << ".\n";
 }
 
 void Events::addTimeSlots(int s_t, int numOfAtt)
