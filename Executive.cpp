@@ -22,7 +22,7 @@ Executive::Executive()
 		std::getline(inFile, m_month, ',');
 		std::getline(inFile, m_day, ',');
 		std::getline(inFile, m_year, ',');		//Creating list of events from "storage"
-		Events event(m_name, stoi(m_month), stoi(m_day), stoi(m_year));
+		Events event(m_name, std::stoi(m_month), std::stoi(m_day), std::stoi(m_year));
 		/*while (inFile.peek() == "'");
 		{
 			std::getline(inFile, m_time, ',');
@@ -43,28 +43,34 @@ void Executive::run()
 {
 	bool programStatus = true;
 	std::string admin = "unspecified";
+	int mode = 0;
 
 
-	std::cout << "\nWelcome to Cal448! ";
+	std::cout << "\n-------------------------\nWelcome to cal448!\n-------------------------\n\n";
 	while (programStatus == true)			//main program loop condition
 	{
-		std::cout << "Are you the admin or a user? ";
-		std::cin >> admin;
-		std::transform (admin.begin(), admin.end(), admin.begin(), ::tolower);
-		if (admin == "admin")		//runs if admin logs in
+		std::cout << "First:\n  (1) Are you an admin\n  (2) Are you a user\n  (3) Exit Program\n\n  Choice: ";
+		std::cin >> mode;
+		if (mode == 1)		//runs if admin logs in
 		{
+			std::cout<<"\n--------- Admin Mode Starting ---------\n";
 			programStatus = adminFunc();
 		}
-		else if (admin == "user")			//runs if user logs in
+		else if (mode == 2)			//runs if user logs in
 		{
+			std::cout<<"\n--------- User Mode Starting ---------\n";
 			programStatus = userFunc();
 		}
-		else																//unrecognized input
+		else if(mode == 3)															//unrecognized input
 		{
-			std::cout << "\nYour input was not recognized.\n\n";
+			std::cout << "Thank you for using cal448!\n";
+			break;
+		}
+		else
+		{
+			std::cout<<"\nInvalid input. Try again: \n";
 		}
 	}
-	std::cout << "\n\nThank you for using Cal448! Goodbye!\n";
 }
 
 bool Executive::adminFunc()
@@ -72,8 +78,8 @@ bool Executive::adminFunc()
 	int adminChoice = 0;
 	while (1)
 	{
-		std::cout << "\nCurrently logged in as an admin... How would you like to proceed?\n\n";
-		std::cout << "1) Add an event\n2) Print all events\n3) Find a specific event\n4) Quit\n\nChoice: ";
+		std::cout << "\nWelcome, Admin! How would you like to proceed?\n\n";
+		std::cout << "  (1) Add an event\n  (2) Print all events\n  (3) Find a specific event\n  (4) Quit\n\n  Choice: ";
 		std::cin >> adminChoice;
 		if (adminChoice == 1)
 		{
@@ -107,8 +113,8 @@ bool Executive::userFunc()
 	int userChoice = 0;
 	while(1)
 	{
-		std::cout << "\nCurrently logged in as user... How would you like to proceed?\n";
-		std::cout << "1) Print all events\n2) Find a specific event\n3) Quit\n\nChoice: ";
+		std::cout << "\nWelcome, User! How would you like to proceed?\n";
+		std::cout << "  (1) Print all events\n  (2) Find a specific event\n  (3) Quit\n\n  Choice: ";
 		std::cin >> userChoice;
 
 		if (userChoice == 1)
@@ -140,27 +146,33 @@ bool Executive::addEvent()
 	std::cout << "\nWhat year will your event take place?\n";
 	std::cin >> m_year;
 	std::cout << "\nWhat month will your event take place?\n";
+	for(int i = 0; i < 12; i++) {
+		std::cout<<"  ("<<i+1<<")"<<" "<<m_months[i]<<std::endl;
+	}
 	std::cin >> m_month;
-	if (m_month.length() > 2)		
-	{
-		m_month = monthConv(m_month);								//Converts month string of letters to string of ints to be used in other functions
-	}
-	else if (m_month.at(1) == 0)
-	{
-		m_month = m_month.at(1);									//Converts single 0x inputs to single integers
-	}
+
 	std::cout << "\nWhat day will your event take place?\n";
 	std::cin >> m_day;
 	std::cout << "\nWhat time will your event start?\n";
 	std::cin >> m_stime;
 	std::cout << "\nWhat time will your event end?\n";
 	std::cin >> m_etime;
-	Events event(m_name, stoi(m_month), stoi(m_day), stoi(m_year));
-	for (int i = stoi(m_stime); i <= stoi(m_etime); i += 20)
-	{
-		event.addTimeSlots(i, stoi(m_attNum));
-	}
-	eventList->addBack(event);
+
+	m_intMonth = std::stoi(m_month);
+	m_intDay = std::stoi(m_day);
+	m_intYear = std::stoi(m_year);
+
+	Events event1(m_name, m_intMonth, m_intDay, m_intYear);
+
+	m_intSTime = stoi(m_stime);
+	m_intETime = stoi(m_etime);
+	
+	// for (int i = m_intSTime; i <= m_intETime; i += 20)
+	// {
+	// 	event1.addTimeSlots(i, stoi(m_attNum));
+	// }
+	eventList->addBack(event1);
+	
 	return true;
 }
 
