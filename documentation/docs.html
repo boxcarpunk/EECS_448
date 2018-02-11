@@ -918,22 +918,66 @@
 <!--   Event    -->
 
       <h3 id="event-class"> Events.h & Events.cpp</h3>
+      
+      <p># Events( ) method</p>
       <ul>
-        <li>Show</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: Assigns member variables a default value and creates an event </li>
+        <li>Parameters: None</li>
+        <li>Access: Public </li>
+        <li>Action: Creates an event with default values</li>
       </ul>
       <pre class="prettyprint">&lt;code&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', show_votes_counter:true});
-    })	
+    Events::Events( )
+    {
+      code/////
+    }
 &lt;/code&gt; </pre>
+     
+      <p># Events( std::string name, int month, int day, int year ) method</p>
       <ul>
-        <li>Hide</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: Assigns member variables the corresponding value passed in and creates an event </li>
+        <li>Parameters: String for name and integers for month, day and year</li>
+        <li>Access: Public </li>
+        <li>Action: Creates an event with passed in values</li>
       </ul>
       <pre class="prettyprint">&lt;code&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:false});
-    })	
-&lt;/code&gt;</pre>
+    Events::Events( std::string name, int month, int day, int year )
+    {
+      code/////
+    }
+&lt;/code&gt; </pre>
+      
+      <p># ~Events( ) method</p>
+      <ul>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None</li>
+        <li>Parameters: None</li>
+        <li>Access: Public </li>
+        <li>Action: Empty destructor</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    Events::~Events( )
+    {
+      //empty destructor
+    }
+&lt;/code&gt; </pre>
+
+      <p># operator>( const Events& rhs ) method</p>
+      <ul>
+        <li>Preconditions: Valid event object </li>
+        <li>Postconditions: Two events are compared</li>
+        <li>Parameters: An event reference</li>
+        <li>Access: Public </li>
+        <li>Action: Two events are compared, if the year of the current event occurs earlier than the one passed in 'true' is returned. 'false' otherwise</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    bool Events::operator>(const Events& rhs) const
+    {
+      //empty destructor
+    }
+&lt;/code&gt; </pre>
       
 <!--   time slots    -->
 
