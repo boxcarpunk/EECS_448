@@ -298,41 +298,52 @@
             - The information for an event is printed out so that the user can see it
             
 ## TimeSlots.h & TimeSlots.cpp
+      - TimeSlots( )
+            - None
+            - Private member variables are set to defaults and a time slot is created
+            - None
+            - Public
+            - A new time slot is created with default values
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      - ~TimeSlots( )
+            - None
+            - None
+            - None
+            - Public
+            - Empty destructor
+            
+      - TimeSlots(int num, int time)
+            - Valid number of attendees and valid time
+            - Private member variables are set and a time slot is created
+            - Integers representing the number of attendees and the time chosen
+            - Public
+            - A new time slot is created with passed in values
+            
+      - void setNum(int num) 
+            - Valid number
+            - Private member variable m_numOfAtt is set to passed in value
+            - Integer representing number of attendees
+            - Public
+            - The number of attendees is set
+            
+      - void setTimeSlot(int time)
+            - Valid time
+            - Private member variable m_TimeSlot is set to passed in value
+            - Integer representing time
+            - Public
+            - The time slot for an attendee is set
+            
+      - int getNum( )
+            - None
+            - None
+            - None
+            - Public
+            - The number of attendees is returned to the program
+            
+      - int getTimeSlot( )
+            - None
+            - None
+            - None
+            - Public
+            - The time slot for a user is returned to the program
 

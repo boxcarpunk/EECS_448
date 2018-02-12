@@ -1318,46 +1318,111 @@
 
       <h3 id="time-slots"> TimeSlots.h & TimeSlots.cpp</h3>
       
-      <p># .... method</p>
+      <p># TimeSlots( ) method</p>
       <ul>
         <li>Preconditions: None </li>
-        <li>Postconditions: None </li>
+        <li>Postconditions: Private member variables are set to defaults and a time slot is created </li>
         <li>Parameters: None </li>
-        <li>Access: None </li>
-        <li>Action: None</li>
+        <li>Access: Public </li>
+        <li>Action: A new time slot is created with default values</li>
       </ul>
       <pre class="prettyprint">&lt;code&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
+    TimeSlots::TimeSlots( )
+    {
+      m_numOfAtt = 0;
+      m_TimeSlot = 0;
+    }
 &lt;/code&gt; </pre>
       
-      <p># .... method</p>
+      <p># ~TimeSlots( ) method</p>
       <ul>
         <li>Preconditions: None </li>
         <li>Postconditions: None </li>
         <li>Parameters: None </li>
-        <li>Access: None </li>
-        <li>Action: None</li>
+        <li>Access: Public </li>
+        <li>Action: Empty destructor</li>
       </ul>
       <pre class="prettyprint">&lt;code&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
+    TimeSlots::~TimeSlots 
+    {
+      //Empty destructor
+    }
 &lt;/code&gt; </pre>
       
-      <p># .... method</p>
+      <p># TimeSlots( int num, int time ) method</p>
       <ul>
-        <li>Preconditions: None </li>
-        <li>Postconditions: None </li>
-        <li>Parameters: None </li>
-        <li>Access: None </li>
-        <li>Action: None</li>
+        <li>Preconditions: Valid number of attendees and valid time </li>
+        <li>Postconditions: Private member variables are set and a time slot is created </li>
+        <li>Parameters: Integers representing time and attendees </li>
+        <li>Access: Public </li>
+        <li>Action: A new time slot is created with default values</li>
       </ul>
       <pre class="prettyprint">&lt;code&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
-    })	
+    TimeSlots::TimeSlots( int num, int time )
+    {
+      m_numOfAtt = num;
+      m_TimeSlot = time;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># setNum( int num ) method</p>
+      <ul>
+        <li>Preconditions: Valid number of attendees</li>
+        <li>Postconditions: Private member variable m_numOfAtt is set to passed in value</li>
+        <li>Parameters: Integer representing number of attendees </li>
+        <li>Access: Public </li>
+        <li>Action: The number of attendees is set</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    void TimeSlots::setNum( int num )
+    {
+      m_numOfAtt = num;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># setTimeSlot( int time ) method</p>
+      <ul>
+        <li>Preconditions: Valid time</li>
+        <li>Postconditions: Private member variable m_TimeSlot is set to passed in value</li>
+        <li>Parameters: Integer representing time </li>
+        <li>Access: Public </li>
+        <li>Action: The time slot for an attendee is set</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    void TimeSlots::setTimeSlot( int time )
+    {
+      m_TimeSlot = time;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># getTimeSlot( ) method</p>
+      <ul>
+        <li>Preconditions: None</li>
+        <li>Postconditions: None</li>
+        <li>Parameters: None</li>
+        <li>Access: Public </li>
+        <li>Action: The time slot for an attendee is returned to the program</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    int TimeSlots::getTimeSlot( )
+    {
+      return m_TimeSlot;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># getNum( ) method</p>
+      <ul>
+        <li>Preconditions: None</li>
+        <li>Postconditions: None</li>
+        <li>Parameters: None</li>
+        <li>Access: Public </li>
+        <li>Action: The number of attendees is returned to the program</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    int TimeSlots::getNum( )
+    {
+      return m_numOfAtt;
+    }
 &lt;/code&gt; </pre>
       
     <p><br><br><br><br><br></p>
