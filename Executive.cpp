@@ -65,7 +65,7 @@ Executive::Executive()
 
 Executive::~Executive()
 {
-	
+
 }
 
 void Executive::run()
@@ -227,26 +227,27 @@ bool Executive::userFunc(bool mode12)
 				{
 					std::cout <<"Which Time Slots are you available for?\n";
 					Events temp = eventList -> search(nameToSearch);
+					int availChoice;
 					for(int i = 1; i <= temp.getTimeSlots() -> getLength(); i++)
 					{
 						std::cout <<"(" << i << ") " << temp.getTimeSlots() -> getEntry(i).getTimeSlot() << "\n";
+						std::cout <<"Are you Available for this Time Slot?\n (1)Yes\n (2)No\n";
+						std::cin >> availChoice;
+						while(availChoice != 1 && availChoice != 2)
+						{
+							std::cout <<"Invalid Input Try Again!\n";
+							std::cin >> availChoice;
+						}
+						if(availChoice == 1)
+						{
+							temp.getTimeSlots() -> getEntry(i).increaseAtt();
+							std::cout <<"You have been added to the list. Thank You!\n\n";
+						}
+						else
+						{
+							std::cout << "Thank You! You will not be added to the Attendee list!\n\n";
+						}
 					}
-					std::string userStart;
-					std::string userEnd;
-					std::cout <<"Insert the first number next to the time for which you are available: ";
-					std::cin >> userStart;
-					std::cout <<"Insert the last number next to the time for which you stop being available: ";
-					std::cin >> userEnd;
-					int userStart1 = std::stoi(userStart);
-					int userEnd1 = std::stoi(userEnd);
-					for (int i = userStart1; i <= userEnd1; i ++)
-					{
-						temp.getTimeSlots() -> getEntry(i).increaseAtt();
-					}
-					std::cout <<"You have been added to the list. Thank You!\n\n";
-				}
-				else{
-					std::cout << "Thank You! You will not be added to the Attendee list!\n\n";
 				}
 			}
 			else
