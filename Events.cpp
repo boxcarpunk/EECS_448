@@ -251,6 +251,10 @@ void Events::getInfo()
 {
 	// output info for this event to std::cout
 	std::cout << "\n" << m_name << " is occuring on " << m_month << "/" << m_day << "/" << m_year << ".\n";
+	for (int i=0; i<m_TimeSlot()->getLength(); i++)
+	{
+		std::cout << "There are " << m_TimeSlot->getEntry(i)->getNum() << " people available at " << m_TimeSlot()->getEntry(i)->getTimeSlot() << ".\n";
+	}
 }
 
 void Events::addTimeSlots(int s_t, int numOfAtt)
