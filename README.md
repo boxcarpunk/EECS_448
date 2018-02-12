@@ -9,23 +9,24 @@ These are the instructions for downloading and installing the program on your lo
 ### To Download and Run:
 
 Assuming you are on the GitHub page:
-	Click on the "Clone or download" button and copy the link that appears.
-	Open a terminal window and type:
+
+##### Click on the "Clone or download" button and copy the link that appears.
+##### Open a terminal window and type:
 ```
 ~$ git clone ~URL~
 ```
-	After the process has finished navigate to the directory and type:
+##### After the process has finished navigate to the directory and type:
 ```
 ~$ make
 ```
-	Allow the program to compile and then type:
+##### Allow the program to compile and then type:
 ```
 ~$ ./cal448
 ```
 
 ### Documentation
 
-A step by step series of examples that tell you have to get a development env running
+To view documentation, navigate to the documentation directory located in this repository.
 
 ## Authors
 
