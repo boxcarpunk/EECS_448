@@ -11,6 +11,7 @@ Test comment**/
 #include "LinkedList.h"
 #include <algorithm>
 #include <string>
+#include <math.h>
 
 Executive::Executive()
 {
@@ -74,7 +75,7 @@ void Executive::run()
 	{
 		std::cout << "Are you an admin or a user?\n  (1) Admin\n  (2) User\n  (3) Quit\n\n  Choice: ";
 		std::cin >> mode;
-		
+
 		if (mode == 1)		//runs if admin logs in
 		{
 			std::cout<<"Which time mode?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
@@ -124,7 +125,7 @@ void Executive::run()
 			{
 				outFile << "." << temp.getTimeSlots()->getEntry(j).getTimeSlot() << "," << temp.getTimeSlots()->getEntry(j).getNum() << ",";
 			}
-		}	
+		}
 	}
 	outFile.close();
 }
@@ -262,7 +263,7 @@ bool Executive::userFunc(bool mode12)
 }
 
 bool Executive::addEvent(bool mode12)
-{	
+{
 	std::cout << "\nWhat is the name of your event?\n";
 	std::cin.ignore();
 	std::getline (std::cin, m_name);
@@ -280,7 +281,7 @@ bool Executive::addEvent(bool mode12)
 		m_intMonth = std::stoi(m_month);
 		m_intDay = std::stoi(m_day);
 		m_intYear = std::stoi(m_year);
-		
+
 		if (dateCheck(m_intYear, m_intMonth, m_intDay) == true)
 		{
 			break;
@@ -293,13 +294,13 @@ bool Executive::addEvent(bool mode12)
 
 	if(mode12) {
 		std::cout << "\nWhat time will your event start? (format like 0600AM) \n";
-		
+
 		std::cin.ignore();
 		std::getline(std::cin, m_stime);
 
 		//std::cin >> m_stime;
 		std::cout << "\nWhat time will your event end? (format like 0900PM) \n";
-		
+
 		std::cin.ignore();
 		std::getline(std::cin, m_etime);
 
@@ -340,8 +341,9 @@ bool Executive::addEvent(bool mode12)
 
 	m_intSTime = stoi(m_stime);
 	m_intETime = stoi(m_etime);
-	int numTs = (((m_intETime - m_intSTime)/100) * 3);
-	int tsup = m_intSTime;
+	double numTs = ceil(((std::stod(m_etime) - std::stod(m_stime))/100) * 3);
+	std::cout << numTs << "\n";
+	int tsup = ceil(m_intSTime);
 	for (int i = 0; i < numTs; i ++)
 	{
 		if(tsup % 100 == 60)
@@ -418,19 +420,3 @@ bool Executive::dateCheck(int y, int m, int d)
 	}
 	return true;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
