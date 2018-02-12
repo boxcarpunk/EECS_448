@@ -219,7 +219,7 @@ bool Executive::addEvent()
 	eventList->sortListEvent();
 	
 	event1.getInfo();
-	for (int i=0; i<event1.getTimeSlots()->getLength(); i++)
+	for (int i=1; i==event1.getTimeSlots()->getLength(); i++)
 	{
 		std::cout << "There are " << event1.getTimeSlots()->getEntry(i).getNum() << " people available at " << event1.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
 	}
