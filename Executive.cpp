@@ -151,7 +151,7 @@ bool Executive::userFunc()
 	while(1)
 	{
 		std::cout << "\nCurrently logged in as user... How would you like to proceed?\n";
-		std::cout << "(1) Print all events\n(2) Find a specific event\n(3) Main Menu(4) Quit\n\n  Choice: ";
+		std::cout << "(1) Print all events\n(2) Find a specific event\n(3) Main Menu\n(4) Quit\n\n  Choice: ";
 		std::cin >> userChoice;
 
 		if (userChoice == 1)
@@ -166,7 +166,41 @@ bool Executive::userFunc()
 			std::getline(std::cin, nameToSearch);
 			if ((eventList->isFound(nameToSearch)) == true)
 			{
+				int attChoice = 0;
 				std::cout << "\nThe event was found: " << nameToSearch << "\n";
+				std::cout <<"Would you like to attend this event?\n";
+				std::cout <<"(1) Yes\n(2) No\n\n";
+				std::cin >> attChoice;
+				while(attChoice != 1 && attChoice != 2)
+				{
+					std::cout <<"Not a Valid Input, Try Again....\n";
+					std::cin >> attChoice;
+				}
+				if(attChoice == 1)
+				{
+					std::cout <<"Which Time Slots are you availbe for?\n";
+					Events temp = eventList -> search(nameToSearch);
+					for(int i = 1; i <= temp.getTimeSlots() -> getLength(); i++)
+					{
+						std::cout <<"(" << i << ") " << temp.getTimeSlots() -> getEntry(i).getTimeSlot() << "\n";
+					}
+					std::string userStart;
+					std::string userEnd;
+					std::cout <<"Insert the first number next to the time for which you are available: ";
+					std::cin >> userStart;
+					std::cout <<"Insert the last number next to the time for which you stop being available: ";
+					std::cin >> userEnd;
+					int userStart1 = std::stoi(userStart);
+					int userEnd1 = std::stoi(userEnd);
+					for (int i = userStart1; i <= userEnd1; i ++)
+					{
+						temp.getTimeSlots() -> getEntry(i).increaseAtt();
+					}
+					std::cout <<"You have been added to the list. Thank You!\n\n";
+				}
+				else{
+					std::cout << "Thank You! You will not be added to the Attendee list!\n\n";
+				}
 			}
 			else
 			{
@@ -201,7 +235,6 @@ bool Executive::addEvent()
 		std::cout<<"  ("<<i+1<<")"<<" "<<m_months[i]<<std::endl;
 	}
 	std::cin >> m_month;
-
 	std::cout << "\nWhat day will your event take place?\n";
 	std::cin >> m_day;
 	std::cout << "\nWhat time will your event start?\n";
