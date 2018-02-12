@@ -18,7 +18,8 @@ class Executive
 	Executive(); 								//Opens a file and creates a list of events that have already been created
 	~Executive();
 	void run(); 								//Main run function
-	void printEvents();							//Prints info on all the events in the event list
+	void printEvents();
+	bool dateCheck(int y, int m, int d);							//Prints info on all the events in the event list
 
 	private:
 	std::ifstream inFile;

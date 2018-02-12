@@ -380,12 +380,14 @@ bool Executive::dateCheck(int y, int m, int d)
 	if (d < 1)
 	{
 		std::cout << "\nThe day must be 1 or higher.\n";
+		return false;
 	}
 	if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
 	{
 		if (d > 31)
 		{
 			std::cout << "\nYou have selected a day outside the range of this month.\n";
+			return false;
 		}
 	}
 	else if (m == 4 || m == 6 || m == 9 || m == 11)
@@ -393,9 +395,43 @@ bool Executive::dateCheck(int y, int m, int d)
 		if (d > 30)
 		{
 			std::cout << "\nYou have selected a day outside the range of this month.\n";
+			return false;
 		}
 	}
 	else if (m == 2)
 	{
-		if 
+		if ((y % 4 == 0 && y % 100 != 0) || (year % 400 == 0)			//Leep year conditions: cite "crazzyguy101 - cplusplus.com"
+		{
+			if (d > 29)
+			{
+				std::cout << "\nYou have selected a day outside the range of this month.\n";
+				return false;
+			}
+		}
+		else
+		{
+			if (d > 28)
+			{
+				std::cout << "\nYou have selected a day outside the range of this month.\n";
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
