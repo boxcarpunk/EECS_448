@@ -211,13 +211,13 @@ bool Executive::addEvent()
 	m_intSTime = stoi(m_stime);
 	m_intETime = stoi(m_etime);
 
-	for (int i = m_intSTime; i <= m_intETime; i += 20)
+	for (int i = m_intSTime; i < m_intETime; i += 20)
 	{
 		event1.addTimeSlots(i, 1);
 	}
 	eventList->addBack(event1);
 	eventList->sortListEvent();
-	
+        std::cout << "\n The length of timeslots is " << event1.getTimeSlots()->getLength() << "\n";	
 	event1.getInfo();
 	for (int i=1; i==event1.getTimeSlots()->getLength(); i++)
 	{
