@@ -83,11 +83,24 @@ void Executive::run()
 	{
 		std::cout << "Are you an admin or a user?\n  (1) Admin\n  (2) User\n  (3) Quit\n\n  Choice: ";
 		std::cin >> mode;
+		if (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore();
+			std::cout << "Invalid input, please select '1'-'3'\n";
+		}
+
 
 		if (mode == 1)		//runs if admin logs in
 		{
 			std::cout<<"Which time mode?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
 			std::cin>>timeChoice;
+			if (std::cin.fail())
+			{
+				std::cin.clear();
+				std::cin.ignore();
+				std::cout << "Invalid input, please select '1'-'2'\n";
+			}
 
 			if(timeChoice == 1) {
 				time12 = true;
@@ -102,7 +115,12 @@ void Executive::run()
 		{
 			std::cout<<"Which time mode?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
 			std::cin>>timeChoice;
-
+			if (std::cin.fail())
+			{
+				std::cin.clear();
+				std::cin.ignore();
+				std::cout << "Invalid input, please select '1'-'2'\n";
+			}
 			if(timeChoice == 1) {
 				time12 = true;
 			}
@@ -146,6 +164,13 @@ bool Executive::adminFunc(bool mode12)
 		std::cout << "\nCurrently logged in as admin... How would you like to proceed?\n\n";
 		std::cout << "(1) Add an event\n(2) Print all events\n(3) Find a specific event\n(4) Main Menu\n(5) Quit\n\n  Choice: ";
 		std::cin >> adminChoice;
+		if (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore();
+			std::cout << "Invalid input, please select '1'-'5'\n";
+		}
+
 		if (adminChoice == 1)
 		{
 			if (addEvent(mode12) == true)
@@ -207,6 +232,12 @@ bool Executive::userFunc(bool mode12)
 		std::cout << "\nCurrently logged in as user... How would you like to proceed?\n";
 		std::cout << "(1) Print all events\n(2) Find a specific event\n(3) Main Menu\n(4) Quit\n\n  Choice: ";
 		std::cin >> userChoice;
+		if (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore();
+			std::cout << "Invalid input, please select '1'-'4'\n";
+		}
 
 		if (userChoice == 1)
 		{
@@ -225,10 +256,18 @@ bool Executive::userFunc(bool mode12)
 				std::cout <<"Would you like to attend this event?\n";
 				std::cout <<"(1) Yes\n(2) No\n\n";
 				std::cin >> attChoice;
+				if (std::cin.fail())
+				{
+					std::cin.clear();
+					std::cin.ignore();
+					std::cout << "Invalid input, please select '1'-'2'\n";
+				}
+
 				while(attChoice != 1 && attChoice != 2)
 				{
 					std::cout <<"Not a Valid Input, Try Again....\n";
 					std::cin >> attChoice;
+
 				}
 				if(attChoice == 1)
 				{
