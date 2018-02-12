@@ -28,10 +28,12 @@ Executive::Executive()
 		{
 			if (inFile.peek() == '.')
 			{
-				std::getline(inFile, m_time, ',');
+				std::string time = "";
+				std::string attendants = "";
+				std::getline(inFile, time, ',');
 				m_time.erase(0,1);
-				std::getline(inFile, m_attNum, ',');
-				event.addTimeSlots(stoi(m_time), stoi(m_attNum));
+				std::getline(inFile, attendants, ',');
+				event.addTimeSlots(stoi(time), stoi(attendants));
 			}
 			else
 			{
