@@ -31,6 +31,8 @@ class TimeSlots
 		/* Get method for the timeslot of an event
 		@return m_numOfAtt**/
 		int getTimeSlot();
+		/* Method to increase num of attendees by 1 */
+		void increaseAtt();
 
 	private:
 		int m_numOfAtt;  // the number of attendants for a certain timeslot in an event

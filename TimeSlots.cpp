@@ -19,6 +19,11 @@ TimeSlots::TimeSlots(int num, int time)
 	m_TimeSlot = time;
 }
 
+void TimeSlots::increaseAtt()
+{
+	m_numOfAtt += 1;
+}
+
 void TimeSlots::setNum(int num)
 {
 	m_numOfAtt = num;
