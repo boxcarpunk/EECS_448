@@ -918,22 +918,401 @@
 <!--   Event    -->
 
       <h3 id="event-class"> Events.h & Events.cpp</h3>
+      
+      <p># Events( ) method</p>
       <ul>
-        <li>Show</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: Assigns member variables a default value and creates an event </li>
+        <li>Parameters: None</li>
+        <li>Access: Public </li>
+        <li>Action: Creates an event with default values</li>
       </ul>
       <pre class="prettyprint">&lt;code&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', show_votes_counter:true});
-    })	
+    Events::Events( )
+    {
+      code/////
+    }
 &lt;/code&gt; </pre>
+     
+      <p># Events( std::string name, int month, int day, int year ) method</p>
       <ul>
-        <li>Hide</li>
+        <li>Preconditions: None </li>
+        <li>Postconditions: Assigns member variables the corresponding value passed in and creates an event </li>
+        <li>Parameters: String for name and integers for month, day and year</li>
+        <li>Access: Public </li>
+        <li>Action: Creates an event with passed in values</li>
       </ul>
       <pre class="prettyprint">&lt;code&gt;
-    $(document).ready(function (){
-    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:false});
-    })	
-&lt;/code&gt;</pre>
+    Events::Events( std::string name, int month, int day, int year )
+    {
+      code/////
+    }
+&lt;/code&gt; </pre>
+      
+      <p># ~Events( ) method</p>
+      <ul>
+        <li>Preconditions: None </li>
+        <li>Postconditions: None</li>
+        <li>Parameters: None</li>
+        <li>Access: Public </li>
+        <li>Action: Empty destructor</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    Events::~Events( )
+    {
+      //empty destructor
+    }
+&lt;/code&gt; </pre>
+
+      <p># operator>( const Events& rhs ) method</p>
+      <ul>
+        <li>Preconditions: Valid event object </li>
+        <li>Postconditions: Two events are compared</li>
+        <li>Parameters: An event reference</li>
+        <li>Access: Public </li>
+        <li>Action: Two events are compared, if the year of the current event occurs earlier than the one passed in 'true' is returned. 'false' otherwise</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    bool Events::operator>(const Events& rhs) const
+    {
+      // if year on left is greater, then left event starts later. return true
+      if (m_year > rhs.getYear())
+      {
+          return true;
+      }
+      // if year on left is less than, then right event starts later. return false
+      else if (m_year &lt; rhs.getYear())
+      {
+          return false;
+      }
+      // else, both events occur in the same year.  Start next set of if-else statements to test for months
+      else
+      {
+          // if month on left is greater, then left event starts later. return true
+          if (m_month > rhs.getMonth())
+          {
+              return true;
+          }
+          // if month on left is less than, then right event starts later. return false
+          else if (m_month &lt; rhs.getMonth())
+          {
+              return false;
+          }
+          // else, both events occur in the same month. Start next set of if-else statements to test for days
+          else
+          {
+              // if day on left is greater, then left event starts later. return true
+              if (m_day > rhs.getDay())
+              {
+                  return true;
+              }
+              // if day on right is greater, then right event starts later. return false
+              else if (m_day &lt; rhs.getDay())
+              {
+                  return false;
+              }
+              // else, both events occur on the same day. Start next set of if-else statements to test for timeslots
+              else
+              {
+                  // compare the start time of the event on the left side to the start time of the event on the right side.
+                  // If the start time on the left is greater than the start time on the right, then it is the later event,
+                  // and thus the > operation is true
+                  /*if ((m_TimeSlot->getEntry(1)->getTimeSlot()) > (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+                  {
+                      return true;
+                  }
+                  // If the start time on the left is less than the start time on the right, then it is not the later event,
+                  // and thus the > operation is false
+                  else if ((m_Timeslot->getEntry(1)->getTimeslot()) &lt; (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+                  {
+                      return false;
+                  }
+                  // else, these events start at the same time. return false for now, need to discuss this with group before moving forward
+                  else
+                  {
+                      return false;
+                  }*/
+              }
+          }
+      }
+    }
+&lt;/code&gt; </pre>
+      
+      <p># operator&lt;( const Events& rhs ) method</p>
+      <ul>
+        <li>Preconditions: Valid event object </li>
+        <li>Postconditions: Two events are compared</li>
+        <li>Parameters: An event reference</li>
+        <li>Access: Public </li>
+        <li>Action: Two events are compared, if the year of the current event occurs before than the one passed in 'true' is returned. 'false' otherwise</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    bool Events::operator&lt;(const Events& rhs) const
+    {
+      // if year on left is less than, then right event starts later. return true
+      if (m_year &lt; rhs.getYear())
+      {
+          return true;
+      }
+      // if year on left is greater, then left event starts later. return false
+      else if (m_year > rhs.getYear())
+      {
+          return false;
+      }
+      // else, both events occur in the same year.  Start next set of if-else statements to test for months
+      else
+      {
+          // if month on left is less than, then right event starts later. return true
+          if (m_month &lt; rhs.getMonth())
+          {
+              return true;
+          }
+          // if month on left is greater, then left event starts later. return false
+          else if (m_month > rhs.getMonth())
+          {
+              return false;
+          }
+          // else, both events occur in the same month. Start next set of if-else statements to test for days
+          else
+          {
+              // if day on left is less than, then right event starts later. return true
+              if (m_day &lt; rhs.getDay())
+              {
+                  return true;
+              }
+              // if day on left is greater, then left event starts later. return false
+              else if (m_day > rhs.getDay())
+              {
+                  return false;
+              }
+              // else, both events occur on the same day. Start next set of if-else statements to test for timeslots
+              else
+              {
+                  // compare the start time of the event on the left side to the start time of the event on the right side.
+                  // If the start time on the left is less than to the start time on the right, then the right is the later event,
+                  // and thus the &lt; operation is true
+                  /*if ((m_Timeslot->getEntry(1)->getTimeslot()) &lt; (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+                  {
+                      return true;
+                  }
+                  // If the start time on the left is greater than the start time on the right, then it is the later event,
+                  // and thus the &lt; operation is false
+                  else if ((m_Timeslot->getEntry(1)->getTimeslot()) > (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+                  {
+                      return false;
+                  }
+                  // else, these events start at the same time. return false for now, need to discuss this with group before moving forward
+                  else
+                  {
+                      return false;
+                  }*/
+              }
+          }
+      }
+    }
+&lt;/code&gt; </pre>
+      
+      <p># operator==( const Events& rhs ) method</p>
+      <ul>
+        <li>Preconditions: Valid event object </li>
+        <li>Postconditions: Two events are compared</li>
+        <li>Parameters: An event reference</li>
+        <li>Access: Public </li>
+        <li>Action: Two events are compared, if the year of the current event is the same as the one passed in 'true' is returned. 'false' otherwise</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    bool Events::operator==(const Events& rhs) const
+    {
+      // test to see if years are equal
+      if (m_year == rhs.getYear())
+      {
+          // if years are equal, test for months
+          if (m_month == rhs.getMonth())
+          {
+              // if months are equal, test for days
+              if (m_day == rhs.getDay())
+              {
+                  // if days are equal, test for start times
+                  /*if ((m_Timeslot->getEntry(1)->getTimeslot()) == (rhs->getTimeSlots()->getEntry(1)->getTimeslot()))
+                  {
+                      // start times are equal, return true
+                      return true;
+                  }
+                  else
+                  {
+                      // start times are not equal, return false
+                      return false;
+                  }*/
+              }
+              // days are not equal, return false
+              else
+              {
+                  return false;
+              }
+          }
+          // months are not equal, return false
+          else
+          {
+              return false;
+          }
+      }
+      // years are not equal, return false
+      else
+      {
+          return false;
+      }
+    }
+&lt;/code&gt; </pre>
+      
+      <p># setName( std::string name ) method</p>
+      <ul>
+        <li>Preconditions: The name is valid </li>
+        <li>Postconditions: The private member variable is set to match the parameter</li>
+        <li>Parameters: String representing the name of an event</li>
+        <li>Access: Public </li>
+        <li>Action: Private member variable is assigned correct value</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    void Events::setName( std::string name )
+    {
+      m_name = name;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># setMonth( int month ) method</p>
+      <ul>
+        <li>Preconditions: The month is valid </li>
+        <li>Postconditions: The private member variable is set to match the parameter</li>
+        <li>Parameters: Int representing the month of an event</li>
+        <li>Access: Public </li>
+        <li>Action: Private member variable is assigned correct value</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    void Events::setMonth( int month )
+    {
+      m_month = month;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># setDay( int day ) method</p>
+      <ul>
+        <li>Preconditions: The day is valid </li>
+        <li>Postconditions: The private member variable is set to match the parameter</li>
+        <li>Parameters: Int representing the day of an event</li>
+        <li>Access: Public </li>
+        <li>Action: Private member variable is assigned correct value</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    void Events::setDay( int day )
+    {
+      m_day = day;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># setYear( int year ) method</p>
+      <ul>
+        <li>Preconditions: The year is valid </li>
+        <li>Postconditions: The private member variable is set to match the parameter</li>
+        <li>Parameters: Int representing the year of an event</li>
+        <li>Access: Public </li>
+        <li>Action: Private member variable is assigned correct value</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    void Events::setYear( int year )
+    {
+      m_year = year;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># getName( ) method</p>
+      <ul>
+        <li>Preconditions: None </li>
+        <li>Postconditions: The name of an event it returned</li>
+        <li>Parameters: None</li>
+        <li>Access: Public </li>
+        <li>Action: The name of the event being accessed is returned to the program</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    std::string Events::getName( )
+    {
+      return m_name;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># getMonth( ) method</p>
+      <ul>
+        <li>Preconditions: None </li>
+        <li>Postconditions: The month of an event it returned</li>
+        <li>Parameters: None</li>
+        <li>Access: Public </li>
+        <li>Action: The month of the event being accessed is returned to the program</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    int Events::getMonth( )
+    {
+      return m_month;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># getDay( ) method</p>
+      <ul>
+        <li>Preconditions: None </li>
+        <li>Postconditions: The day of an event it returned</li>
+        <li>Parameters: None</li>
+        <li>Access: Public </li>
+        <li>Action: The day of the event being accessed is returned to the program</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    int Events::getDay( )
+    {
+      return m_day;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># getYear( ) method</p>
+      <ul>
+        <li>Preconditions: None </li>
+        <li>Postconditions: The year of an event it returned</li>
+        <li>Parameters: None</li>
+        <li>Access: Public </li>
+        <li>Action: The year of the event being accessed is returned to the program</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    int Events::getYear( )
+    {
+      return m_year;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># getTimeSlots( ) method</p>
+      <ul>
+        <li>Preconditions: None </li>
+        <li>Postconditions: The list of time slots for an event it returned</li>
+        <li>Parameters: None</li>
+        <li>Access: Public </li>
+        <li>Action: The list of time slots for the event being accessed is returned to the program</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    LinkedList&lt;T&gt;* Events::getTimeSlots( ) const
+    {
+      return m_TimeSlot;
+    }
+&lt;/code&gt; </pre>
+      
+      <p># getInfo( ) method</p>
+      <ul>
+        <li>Preconditions: None </li>
+        <li>Postconditions: The info for an event is printed</li>
+        <li>Parameters: None</li>
+        <li>Access: Public </li>
+        <li>Action: The information for an event is printed out so that the user can see it</li>
+      </ul>
+      <pre class="prettyprint">&lt;code&gt;
+    void Events::getInfo( )
+    {
+      std::cout &lt;&lt; "\n" &lt;&lt; m_name &lt;&lt; " is occuring on " &lt;&lt; m_month &lt;&lt; "/" &lt;&lt; m_day &lt;&lt; "/" &lt;&lt; m_year &lt;&lt; ".\n";
+    }
+&lt;/code&gt; </pre>
       
 <!--   time slots    -->
 

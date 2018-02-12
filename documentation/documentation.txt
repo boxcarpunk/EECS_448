@@ -1,10 +1,10 @@
 ## File Name
-	- Method Name || Variable Name
+	- Method Name
             - Proconditions
             - Postconditions
-			- Method Parameters || Variable Type
+			- Method Parameters
 			- Private || Public
-			- Method Action || Variable Use
+			- Method Action
         
 ## main.cpp
     - main()
@@ -148,20 +148,6 @@
             - Public
             - The list is traversed and if an event exists with the same name as the one passed in 'true' is returned, false otherwise
 
-	- Node<T>* m_front
-            - N/A
-            - N/A
-            - Node pointer
-            - Private
-            - m_front is used to keep track of the front-most node in the list
-
-	- int m_length
-            - N/A
-            - N/A
-			- Integer
-			- Private
-			- m_length is used to keep track of the number of elements in the list
-
 ##Node.h & Node.hpp
 	- Node(T value)
             - None
@@ -197,17 +183,156 @@
 			- A node pointer representing the next value in a list
 			- Public
 			- Sets the next node in a structure equal to the pointer that is passed in as a parameter
+            
+##Events.h & Events.cpp
+    - Events()
+            - None
+			- Assigns member variables a default value and creates an event
+			- None
+			- Public
+			- Creates an event with default values
+            
+    - Events(std::string name, int month, int day, int year)
+            - None
+			- Assigns member variables values passed in and creates an event
+			- String representing name and integers representing the month, day and year
+			- Public
+			- Creates an event with passed in values
+            
+    - ~Events()
+            - None
+			- None
+			- None
+			- Public
+			- Empty destructor
+            
+    - bool operator>(const Events& rhs) const
+            - Valid event object
+			- Compares two events
+			- An event reference
+			- Public
+			- Two events are compared, if the year of the current event occurs earlier than the one passed in 'true' is returned. 'false' otherwise
 
-	- T m_value
-            - N/A
-            - N/A
-			- Templated value
-			- Private
-			- Stores the value that is to be held by the node
+    - bool operator<(const Events& rhs) const
+            - Valid event object
+			- Compares two events
+			- An event reference
+			- Public
+			- Two events are compared, if the year of the current event occurs after than the one passed in 'true' is returned. 'false' otherwise
 
-	- Node<T>* m_next
-            - N/A
-            - N/A
-			- Node pointer
-			- Private
-			- Keeps track of the node that follows the original. Set to 'nullptr' until setNext() is called
+    - bool operator==(const Events& newEvent) const
+            - Valid event object
+			- Compares two events
+			- An event reference
+			- Public
+			- Two events are compared, if the year of the current event is the same as the one passed in 'true' is returned. 'false' otherwise
+
+      - void setName(std::string name)
+            - The name is valid
+            - The private member variable is set to match the parameter
+            - A string representing the name of an event
+            - Public
+            - Private member variable m_name is set to name
+            
+      - void setMonth(int month)
+            - The month value is valid
+            - The private member variable is set to match the parameter
+            - An integer representing the month
+            - Public
+            - Private member variable m_month is set to name
+
+      - void setDay(int day)
+            - The day value is valid
+            - The private member variable is set to match the parameter
+            - An integer representing the day
+            - Public
+            - Private member variable m_day is set to name
+
+      - void setYear(int year)
+            - The year value is valid
+            - The private member variable is set to match the parameter
+            - An integer representing the year
+            - Public
+            - Private member variable m_year is set to name
+            
+      - std::string getName( )
+            - None
+            - The name of an event is returned
+            - None
+            - Public
+            - The name of the event being accessed is returned to the program
+            
+      - int getMonth( )
+            - None
+            - The month an event occurs is returned
+            - None
+            - Public
+            - The month of the event being accessed is returned to the program
+
+      - int getDay( )
+            - None
+            - The day an event occurs is returned
+            - None
+            - Public
+            - The day of the event being accessed is returned to the progam
+
+      - int getYear( )
+            - None
+            - The year an event occurs is returned
+            - None
+            - Public
+            - The year of the event being accessed is returned to the program
+            
+      - LinkedList<TimeSlots>* getTimeSlots( ) const
+            - None
+            - The list of time slots for an event is returned
+            - None
+            - Public
+            - The list of available time slots for the event being accessed is returned to the program
+            
+      - void getInfo( )
+            - None
+            - The info for an event is printed
+            - None
+            - Public
+            - The information for an event is printed out so that the user can see it
+            
+## TimeSlots.h & TimeSlots.cpp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
