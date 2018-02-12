@@ -51,7 +51,7 @@ Executive::Executive()
 			}
 		}
 		event.getInfo();
-		std::cout << "\nThe length of timeslots is " << event.getTimeSlots()->getLength() << "\n";
+		std::cout << "\nThere are " << event.getTimeSlots()->getLength() << " time slots in this event.\n";
 		for (int i=1; i<=event.getTimeSlots()->getLength(); i++)
 		{
 			std::cout << "There are " << event.getTimeSlots()->getEntry(i).getNum() << " people available at " << event.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
@@ -170,6 +170,13 @@ bool Executive::adminFunc(bool mode12)
 			if (eventList->isFound(nameToSearch) == true)
 			{
 				std::cout << "\nThe event was found: " << nameToSearch << "\n";
+				Events event = eventList->search(nameToSearch);
+				event.getInfo();
+				std::cout << "\nThere are " << event.getTimeSlots()->getLength() << " time slots in this event.\n";
+				for (int i=1; i<=event.getTimeSlots()->getLength(); i++)
+				{
+					std::cout << "There are " << event.getTimeSlots()->getEntry(i).getNum() << " people available at " << event.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
+				}
 			}
 			else
 			{
@@ -225,7 +232,6 @@ bool Executive::userFunc(bool mode12)
 				}
 				if(attChoice == 1)
 				{
-					std::cout <<"Which Time Slots are you available for?\n";
 					Events temp = eventList -> search(nameToSearch);
 					int availChoice;
 					for(int i = 1; i <= temp.getTimeSlots() -> getLength(); i++)
