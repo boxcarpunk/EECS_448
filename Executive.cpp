@@ -14,6 +14,7 @@ Test comment**/
 
 Executive::Executive()
 {
+	std::ifstream inFile;
 	inFile.open("eventslist.txt");
 	eventList = new LinkedList<Events>();
 	while(inFile)
@@ -49,6 +50,7 @@ Executive::Executive()
 		eventList->addBack(event);
 		eventList -> sortListEvent();
 	}
+	inFile.close()
 
 }
 
@@ -62,7 +64,7 @@ void Executive::run()
 	bool programStatus = true;
 	std::string admin = "unspecified";
 	int mode = 0;
-
+	std::ofstream outFile;
 	int timeChoice = 0;
 	bool time12 = false;
 
@@ -72,21 +74,32 @@ void Executive::run()
 	{
 		std::cout << "Are you an admin or a user?\n  (1) Admin\n  (2) User\n  (3) Quit\n\n  Choice: ";
 		std::cin >> mode;
-
-		std::cout<<"Which time mode?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
-		std::cin>>timeChoice;
-
-		if(timeChoice == 1) {
-			time12 = true;
-		}
 		
 		if (mode == 1)		//runs if admin logs in
 		{
+			std::cout<<"Which time mode?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
+			std::cin>>timeChoice;
+
+			if(timeChoice == 1) {
+				time12 = true;
+			}
+			else {
+				time12 = false;				//in case user changes choice when going back to main menu
+			}
 			std::cout<<"\n--------- Admin Mode Starting ---------\n";
 			programStatus = adminFunc(time12);
 		}
 		else if (mode == 2)			//runs if user logs in
 		{
+			std::cout<<"Which time mode?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
+			std::cin>>timeChoice;
+
+			if(timeChoice == 1) {
+				time12 = true;
+			}
+			else {
+				time12 = false;				//in case user changes choice when going back to main menu
+			}
 			std::cout<<"\n--------- User Mode Starting ---------\n";
 			programStatus = userFunc(time12);
 		}
@@ -100,6 +113,20 @@ void Executive::run()
 			std::cout<<"\nInvalid input. Try again: \n";
 		}
 	}
+	outFile.open("eventslist.txt");
+	for (int i=1; i<=eventList->getLength(); i++)
+	{
+		Event temp = eventList->getEntry(i);
+		outFile << temp.getName() << "," << temp.getMonth() << "," << temp.getDay() << "," << temp.getYear() << ",";
+		if (!temp.getTimeSlots()->isEmpty())
+		{
+			for (int j=1; j<=temp.getTimeSlots()->getLength(); j++)
+			{
+				outFile << "." << temp.getTimeSlots()->getEntry(j).getTimeSlot() << "," << temp.getTimeSlots()->getEntry(j).getNum() << ",";
+			}
+		}	
+	}
+	outFile.close();
 }
 
 bool Executive::adminFunc(bool mode12)
@@ -236,18 +263,34 @@ bool Executive::userFunc(bool mode12)
 
 bool Executive::addEvent(bool mode12)
 {
-	std::cout << "\nWhat is the name of your event?\n";
-	std::cin.ignore();
-	std::getline (std::cin, m_name);
-	std::cout << "\nWhat year will your event take place?\n";
-	std::cin >> m_year;
-	std::cout << "\nWhat month will your event take place?\n";
-	for(int i = 0; i < 12; i++) {
-		std::cout<<"  ("<<i+1<<")"<<" "<<m_months[i]<<std::endl;
+	bool valid = false;
+	while (1)
+	{	
+		std::cout << "\nWhat is the name of your event?\n";
+		std::cin.ignore();
+		std::getline (std::cin, m_name);
+		std::cout << "\nWhat year will your event take place?\n";
+		std::cin >> m_year;
+		std::cout << "\nWhat month will your event take place?\n";
+		for(int i = 0; i < 12; i++) {
+			std::cout<<"  ("<<i+1<<")"<<" "<<m_months[i]<<std::endl;
+		}
+		std::cin >> m_month;
+		std::cout << "\nWhat day will your event take place?\n";
+		std::cin >> m_day;
+		m_intMonth = std::stoi(m_month);
+		m_intDay = std::stoi(m_day);
+		m_intYear = std::stoi(m_year);
+		
+		if (dateCheck(m_intYear, m_intMonth, m_intDay) == true)
+		{
+			break;
+		}
+		else
+		{
+			std::cout << "\nThis date is invalid, please enter a valid date\n";
+		}
 	}
-	std::cin >> m_month;
-	std::cout << "\nWhat day will your event take place?\n";
-	std::cin >> m_day;
 
 	if(mode12) {
 		std::cout << "\nWhat time will your event start? (format like 0600AM) \n";
@@ -294,10 +337,6 @@ bool Executive::addEvent(bool mode12)
 		std::cin >> m_etime;
 	}
 
-	m_intMonth = std::stoi(m_month);
-	m_intDay = std::stoi(m_day);
-	m_intYear = std::stoi(m_year);
-
 	Events event1(m_name, m_intMonth, m_intDay, m_intYear);
 
 	m_intSTime = stoi(m_stime);
@@ -335,3 +374,12 @@ void Executive::printEvents()
 	}
 	std::cout << "\n";
 }
+
+bool Executive::dateCheck(int y, int m, int d)
+{
+	if (d < 1)
+	{
+		std::cout << "\nThe day must be 1 or higher.\n";
+	}
+	if (m == 1 | m == 3 | m == 5 | m == 7 | m == 8 | m == 10 | m == 12)
+	
