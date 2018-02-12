@@ -41,7 +41,7 @@ Executive::Executive()
 			}
 		}
 		event.getInfo();
-		std::cout << "\n The length of timeslots is " << event.getTimeSlots()->getLength() << "\n";	
+		std::cout << "\n The length of timeslots is " << event.getTimeSlots()->getLength() << "\n";
 		/*for (int i=1; i==event.getTimeSlots()->getLength(); i++)
 		{
 			std::cout << "There are " << event.getTimeSlots()->getEntry(i).getNum() << " people available at " << event.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
@@ -49,7 +49,7 @@ Executive::Executive()
 		eventList->addBack(event);
 		eventList -> sortListEvent();
 	}
-	
+
 }
 
 Executive::~Executive()
@@ -216,19 +216,20 @@ bool Executive::addEvent()
 
 	m_intSTime = stoi(m_stime);
 	m_intETime = stoi(m_etime);
+	int numTs = (((m_intETime - m_intSTime)/100) * 3);
 
-	for (int i = m_intSTime; i < m_intETime; i += 20)
+	for (int i = 0; i < numTs; i ++)
 	{
 		event1.addTimeSlots(i, 1);
 	}
 	eventList->addBack(event1);
 	eventList->sortListEvent();
-        std::cout << "\n The length of timeslots is " << event1.getTimeSlots()->getLength() << "\n";	
+        std::cout << "\n The length of timeslots is " << event1.getTimeSlots()->getLength() << "\n";
 	event1.getInfo();
-	/*for (int i=1; i==event1.getTimeSlots()->getLength(); i++)
+	for (int i=1; i==event1.getTimeSlots()->getLength(); i++)
 	{
 		std::cout << "There are " << event1.getTimeSlots()->getEntry(i).getNum() << " people available at " << event1.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
-	}*/
+	}
 
 	return true;
 }
