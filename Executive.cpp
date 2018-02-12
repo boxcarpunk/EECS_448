@@ -12,6 +12,7 @@ Test comment**/
 #include <algorithm>
 #include <string>
 #include <math.h>
+#include <ctime>
 
 Executive::Executive()
 {
@@ -316,6 +317,7 @@ bool Executive::addEvent(bool mode12)
 		std::cout<<"Start Time (format like 1000 for 10:00): ";
 		std::cin>>hourMin;
 
+
 		std::cout<<"\nIs this AM or PM (enter AM or PM): ";
 		std::cin>>AMPM;
 
@@ -339,8 +341,18 @@ bool Executive::addEvent(bool mode12)
 	} else {
 		std::cout << "\nWhat time will your event start?\n";
 		std::cin >> m_stime;
+		while(std::stoi(m_stime) >= 2359 || std::stoi(m_stime) < 500 || (std::stoi(m_stime) >= 1201 && std::stoi(m_stime) <= 1259))
+		{
+			std::cout <<"Invalid Time input! Try Again!\n";
+			std::cin >> m_stime;
+		}
 		std::cout << "\nWhat time will your event end?\n";
 		std::cin >> m_etime;
+		while(std::stoi(m_etime) >= 2359 || std::stoi(m_etime) < 500 || (std::stoi(m_etime) >= 1201 && std::stoi(m_etime) <= 1259))
+		{
+			std::cout <<"Invalid Time input! Try Again!\n";
+			std::cin >> m_etime;
+		}
 	}
 
 	Events event1(m_name, m_intMonth, m_intDay, m_intYear);
@@ -383,6 +395,14 @@ void Executive::printEvents()
 
 bool Executive::dateCheck(int y, int m, int d)
 {
+	time_t now = time(0);
+	tm* ltm = localtime(&now);
+	int curY = (1900 + ltm->tm_year);
+	if(y < curY)
+	{
+		std::cout <<"The year needs to be this year or later, you cannot create a past event!\n";
+		return false;
+	}
 	if (d < 1)
 	{
 		std::cout << "\nThe day must be 1 or higher.\n";
