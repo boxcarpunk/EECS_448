@@ -23,13 +23,6 @@ public:
 	/*Destructor*/
 	~Events();
 
-	/* Operator greater/less than overloads for comparing instances of class using name variable **/
-	bool operator>(const Events& rhs) const;
-	bool operator<(const Events& rhs) const;
-
-	/* Operator equal to overload for comparing keys**/
-	bool operator==(const Events& newEvent) const;
-
 	/* set methods set private variables
 	@post respective instance variables set equal to argument passed to set methods
 	@param new values for respective instance variables **/
@@ -42,8 +35,8 @@ public:
 	@return repective instance variables/pointers**/
 	std::string getName() const;
 	int getMonth() const;
-	int getDay() const; 
-	int getYear() const; 
+	int getDay() const;
+	int getYear() const;
 	LinkedList<TimeSlots>* getTimeSlots() const; // returns head pointer to m_TimeSlot. Specifically created for >, <, == operator overloads
 
 	/* getInfo prints info abour event to the screen. Does not actually return any value.*/

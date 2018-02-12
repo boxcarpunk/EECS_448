@@ -26,12 +26,11 @@ class Executive
 	bool adminFunc(); 							//Function which handles admin menu and options
 	bool userFunc();							//Function which handles user menu and options
 	bool addEvent();							//Prompts the admin to create an event and it to the list
-	int listLength = 0;							//Length of the list of events
 	std::string m_name = "";                    // placeholder variable for a name of an event, to be passed to Events class as an argument
 	std::string m_month = "";                   // placeholder variable for a month of an event, to be passed to Events class as an argument
 	std::string m_day = "";						// placeholder variable for a day of an event, to be passed to Events class as an argument
 	std::string m_year = "";                    // placeholder variable for a year of an event, to be passed to Events class as an argument
-	
+
 	int m_intMonth = 0;
 	int m_intDay = 0;
 	int m_intYear = 0;
