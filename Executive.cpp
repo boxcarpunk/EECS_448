@@ -441,16 +441,17 @@ bool Executive::dateCheck(int y, int m, int d)
 	{
 		std::cout <<"The year needs to be this year or later, you cannot create a past event!\n";
 		return false;
-	}
-	if(m <= ltm -> tm_mon)
-	{
-		std::cout <<"The month needs to be this month or later, you cannot create a past event!\n";
-		return false;
-	}
-	if(d <= ltm->tm_mday)
-	{
-		std::cout <<"The day needs to be this day or later, you cannot create a past event!\n";
-		return false;
+		if(m <= ltm -> tm_mon)
+		{
+			std::cout <<"The month needs to be this month or later, you cannot create a past event!\n";
+			return false;
+			if(d <= ltm->tm_mday)
+			{
+				std::cout <<"The day needs to be this day or later, you cannot create a past event!\n";
+				return false;
+			}
+		}
+
 	}
 	if (d < 1)
 	{
