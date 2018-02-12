@@ -32,7 +32,7 @@ Executive::Executive()
 		eventList->addBack(event);
 		eventList -> sortListEvent();
 	}
-	
+
 }
 
 Executive::~Executive()
@@ -140,8 +140,9 @@ bool Executive::userFunc()
 		{
 			std::string nameToSearch = "";
 			std::cout << "\nPlease enter the name of the event you would like to pull up: ";
-			std::cin >> nameToSearch;
-			if (eventList->isFound(nameToSearch) == true)
+			std::cin.ignore();
+			std::getline(std::cin, nameToSearch);
+			if ((eventList->isFound(nameToSearch)) == true)
 			{
 				std::cout << "\nThe event was found: " << nameToSearch << "\n";
 			}
@@ -185,7 +186,7 @@ bool Executive::addEvent()
 	std::cin >> m_stime;
 	std::cout << "\nWhat time will your event end?\n";
 	std::cin >> m_etime;
-	
+
 	m_intMonth = std::stoi(m_month);
 	m_intDay = std::stoi(m_day);
 	m_intYear = std::stoi(m_year);
@@ -194,14 +195,14 @@ bool Executive::addEvent()
 
 	m_intSTime = stoi(m_stime);
 	m_intETime = stoi(m_etime);
-	
+
 	for (int i = m_intSTime; i <= m_intETime; i += 20)
 	{
 		event1.addTimeSlots(i, 1);
 	}
 	eventList->addBack(event1);
 	eventList->sortListEvent();
-	
+
 	return true;
 }
 
@@ -214,5 +215,3 @@ void Executive::printEvents()
 	}
 	std::cout << "\n";
 }
-
-
