@@ -40,12 +40,12 @@ Executive::Executive()
 				break;
 			}
 		}
-		std::cout << "\n The length of timeslots is " << event.getTimeSlots()->getLength() << "\n";	
 		event.getInfo();
-		for (int i=1; i==event.getTimeSlots()->getLength(); i++)
+		std::cout << "\n The length of timeslots is " << event.getTimeSlots()->getLength() << "\n";	
+		/*for (int i=1; i==event.getTimeSlots()->getLength(); i++)
 		{
 			std::cout << "There are " << event.getTimeSlots()->getEntry(i).getNum() << " people available at " << event.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
-		}
+		}*/
 		eventList->addBack(event);
 		eventList -> sortListEvent();
 	}
@@ -225,10 +225,10 @@ bool Executive::addEvent()
 	eventList->sortListEvent();
         std::cout << "\n The length of timeslots is " << event1.getTimeSlots()->getLength() << "\n";	
 	event1.getInfo();
-	for (int i=1; i==event1.getTimeSlots()->getLength(); i++)
+	/*for (int i=1; i==event1.getTimeSlots()->getLength(); i++)
 	{
 		std::cout << "There are " << event1.getTimeSlots()->getEntry(i).getNum() << " people available at " << event1.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
-	}
+	}*/
 
 	return true;
 }
