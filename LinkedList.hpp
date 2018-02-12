@@ -230,8 +230,8 @@ T& LinkedList<T>::getEntry(int position)
 	Node<T>* temp = m_front;
 	if (position<1 || position>m_length)
 	{
-    std::cout<<"Invalid Entry - Out of range.\n";
-		//throw(std::runtime_error("Invalid Entry - Out of range"));
+    //std::cout<<"Invalid Entry - Out of range.\n";
+		throw(std::runtime_error("Invalid Entry - Out of range"));
 	}
 	else if (position == 1)
 	{
