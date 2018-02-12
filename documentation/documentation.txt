@@ -347,3 +347,45 @@
             - Public
             - The time slot for a user is returned to the program
 
+## Executive.h & Executive.cpp
+      - Executive( )
+            - None
+            - Private member variables are set and the list of events is populated
+            - None
+            - Public
+            - The list of events is populated from a file and the member variables are initialized or set up to be used
+            
+      - ~Executive( )
+            - None
+            - None
+            - None
+            - Public
+            - Empty destructor
+            
+      - void run( )
+            - None
+            - Program begins
+            - None
+            - Public
+            - The program begins and the user can interact with it
+            
+      - bool adminFunc(bool mode12)
+            - None
+            - Admin mode begins
+            - Boolean checking whether the user has selected 12 or 24 hour mode
+            - Private
+            - The program initializes the admin mode
+            
+      - bool userFunc(bool mode12)
+            - None
+            - User mode begins
+            - Boolean checking whether the user has selected 12 or 24 hour mode
+            - Private
+            - The program initializes the user mode
+            
+       - bool addEvent(bool mode12)
+            - None
+            - An event is added to the list of events
+            - Boolean checking whether the user has selected 12 or 24 hour mode
+            - Private
+            - The program allows the user to add an event
