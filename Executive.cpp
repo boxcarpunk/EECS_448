@@ -21,7 +21,7 @@ Executive::Executive()
 	while(inFile)
 	{
 		std::string newline = "";
-		while (inFile.peek() == "\n")
+		while (inFile.peek() == '\n')
 		{
 			std::getline(inFile, newline, ',');
 		}
