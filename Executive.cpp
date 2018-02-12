@@ -20,20 +20,19 @@ Executive::Executive()
 	eventList = new LinkedList<Events>();
 	while(inFile)
 	{
-		std::string newline = "";
-		while (inFile.peek() == '\n')
-		{
-			std::getline(inFile, newline, ',');
-		}
 		std::getline(inFile, m_name, ',');
 		if (inFile.eof()) break;
-		if (m_name[0] == ',')
+		if (m_name[0] == '\n')
 		{
 			m_name.erase(0,1);
 		}
+		std::cout << "\n" << m_name << "\n";
 		std::getline(inFile, m_month, ',');
+		std::cout << "\n" << m_month << "\n";
 		std::getline(inFile, m_day, ',');
-		std::getline(inFile, m_year, ',');		//Creating list of events from "storage"
+		std::cout << "\n" << m_day << "\n";
+		std::getline(inFile, m_year, ',');
+		std::cout << "\n" << m_year << "\n";		//Creating list of events from "storage"
 		Events event(m_name, std::stoi(m_month), std::stoi(m_day), std::stoi(m_year));
 		while (true)
 		{
@@ -52,7 +51,7 @@ Executive::Executive()
 			}
 		}
 		event.getInfo();
-		std::cout << "\n The length of timeslots is " << event.getTimeSlots()->getLength() << "\n";
+		std::cout << "\nThe length of timeslots is " << event.getTimeSlots()->getLength() << "\n";
 		for (int i=1; i<=event.getTimeSlots()->getLength(); i++)
 		{
 			std::cout << "There are " << event.getTimeSlots()->getEntry(i).getNum() << " people available at " << event.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
@@ -127,7 +126,7 @@ void Executive::run()
 	for (int i=1; i<=eventList->getLength(); i++)
 	{
 		Events temp = eventList->getEntry(i);
-		outFile << "\n," << temp.getName() << "," << temp.getMonth() << "," << temp.getDay() << "," << temp.getYear() << ",";
+		outFile << temp.getName() << "," << temp.getMonth() << "," << temp.getDay() << "," << temp.getYear() << ",";
 		if (!temp.getTimeSlots()->isEmpty())
 		{
 			for (int j=1; j<=temp.getTimeSlots()->getLength(); j++)
@@ -373,7 +372,6 @@ void Executive::printEvents()
 	{
 		eventList->getEntry(i).getInfo();
 	}
-	std::cout << "\n";
 }
 
 bool Executive::dateCheck(int y, int m, int d)
