@@ -50,7 +50,7 @@ void Executive::run()
 	std::cout << "\n-------------------------\nWelcome to cal448!\n-------------------------\n\n";
 	while (programStatus == true)			//main program loop condition
 	{
-		std::cout << "First:\n  (1) Are you an admin\n  (2) Are you a user\n  (3) Exit Program\n\n  Choice: ";
+		std::cout << "First:\n  (1) Are you an admin\n  (2) Are you a user\n  (3) Quit\n\n  Choice: ";
 		std::cin >> mode;
 		if (mode == 1)		//runs if admin logs in
 		{
@@ -79,7 +79,7 @@ bool Executive::adminFunc()
 	int adminChoice = 0;
 	while (1)
 	{
-		std::cout << "\nWelcome, Admin! How would you like to proceed?\n\n";
+		std::cout << "\nCurrently logged in as admin... How would you like to proceed?\n\n";
 		std::cout << "(1) Add an event\n(2) Print all events\n(3) Find a specific event\n(4) Main Menu\n(5) Quit\n\n  Choice: ";
 		std::cin >> adminChoice;
 		if (adminChoice == 1)
@@ -95,7 +95,17 @@ bool Executive::adminFunc()
 		}
 		else if (adminChoice == 3)
 		{
-			std::cout << "\nYou have chosen to find a specific event\n";
+			std::string nameToSearch = "";
+			std::cout << "\nPlease enter the name of the event you would like to pull up: ";
+			std::cin >> nameToSearch;
+			if (eventList->isFound(nameToSearch) == true)
+			{
+				std::cout << "\nThe event was found: " << nameToSearch << "\n";
+			}
+			else
+			{
+				std::cout << "\nThe event was not found\n";
+			}
 		}
 		else if (adminChoice == 4)
 		{
@@ -118,7 +128,7 @@ bool Executive::userFunc()
 	int userChoice = 0;
 	while(1)
 	{
-		std::cout << "\nWelcome, User! How would you like to proceed?\n";
+		std::cout << "\nCurrently logged in as user... How would you like to proceed?\n";
 		std::cout << "(1) Print all events\n(2) Find a specific event\n(3) Main Menu(4) Quit\n\n  Choice: ";
 		std::cin >> userChoice;
 
@@ -128,8 +138,17 @@ bool Executive::userFunc()
 		}
 		else if (userChoice == 2)
 		{
-			std::cout << "\nYou have chosen to find a specific event\n";
-
+			std::string nameToSearch = "";
+			std::cout << "\nPlease enter the name of the event you would like to pull up: ";
+			std::cin >> nameToSearch;
+			if (eventList->isFound(nameToSearch) == true)
+			{
+				std::cout << "\nThe event was found: " << nameToSearch << "\n";
+			}
+			else
+			{
+				std::cout << "\nThe event was not found\n";
+			}
 		}
 		else if (userChoice == 3)
 		{
@@ -181,6 +200,7 @@ bool Executive::addEvent()
 		event1.addTimeSlots(i, 1);
 	}
 	eventList->addBack(event1);
+	eventList->sortListEvent();
 	
 	return true;
 }
