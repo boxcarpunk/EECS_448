@@ -1,4 +1,4 @@
-Test Event 1, 1, 26, 2018,
+Test Event 1, 1, 26, 2018,'1200,4,'1240,2
 Test Event 2, 2, 13, 2019,
 Test Event 3, 7, 05, 2020,
 Test Event 4, 7, 05, 2020,
