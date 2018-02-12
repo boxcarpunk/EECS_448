@@ -245,6 +245,7 @@ T& LinkedList<T>::getEntry(int position)
 		}
 		return temp->getValue();
 	}
+  throw(std::runtime_error("Invalid Entry - Out of range"));
 }
 
 template <typename T>
@@ -256,16 +257,16 @@ T& LinkedList<T>::search(std::string name)
 	{
 		if(temp1.getName() == name)
 		{
-      return(temp1);
+      return(temp -> getValue());
 			break;
+      throw(std::runtime_error("Invalid Entry - Out of range"));
 		}
 		else{
 		temp = temp -> getNext();
     temp1 = temp -> getValue();
     }
 	}
-  T empty;
-  return(empty);
+  throw(std::runtime_error("Event doesn't Exist!\n"));
 }
 
 template <typename T>
