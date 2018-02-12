@@ -40,6 +40,12 @@ Executive::Executive()
 				break;
 			}
 		}
+		std::cout << "\n The length of timeslots is " << event.getTimeSlots()->getLength() << "\n";	
+		event.getInfo();
+		for (int i=1; i==event.getTimeSlots()->getLength(); i++)
+		{
+			std::cout << "There are " << event.getTimeSlots()->getEntry(i).getNum() << " people available at " << event.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
+		}
 		eventList->addBack(event);
 		eventList -> sortListEvent();
 	}
