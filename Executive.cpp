@@ -21,12 +21,16 @@ Executive::Executive()
 	while(inFile)
 	{
 		std::string newline = "";
-		if (inFile.peek() == "\n")
+		while (inFile.peek() == "\n")
 		{
-			std::getline(inFile, newline);
+			std::getline(inFile, newline, ',');
 		}
 		std::getline(inFile, m_name, ',');
 		if (inFile.eof()) break;
+		if (m_name(0) == ",")
+		{
+			m_name.erase(0,1);
+		}
 		std::getline(inFile, m_month, ',');
 		std::getline(inFile, m_day, ',');
 		std::getline(inFile, m_year, ',');		//Creating list of events from "storage"
@@ -123,7 +127,7 @@ void Executive::run()
 	for (int i=1; i<=eventList->getLength(); i++)
 	{
 		Events temp = eventList->getEntry(i);
-		outFile << "\n" << temp.getName() << "," << temp.getMonth() << "," << temp.getDay() << "," << temp.getYear() << ",";
+		outFile << "\n," << temp.getName() << "," << temp.getMonth() << "," << temp.getDay() << "," << temp.getYear() << ",";
 		if (!temp.getTimeSlots()->isEmpty())
 		{
 			for (int j=1; j<=temp.getTimeSlots()->getLength(); j++)
