@@ -284,8 +284,8 @@ bool LinkedList<T>::isFound(std::string name2)
 			break;
 		}
 		else{
-    temp1 = temp -> getValue();
 		temp = temp -> getNext();
+    temp1 = temp -> getValue();
     }
   }
   return(found);

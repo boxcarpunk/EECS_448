@@ -20,8 +20,17 @@ Executive::Executive()
 	eventList = new LinkedList<Events>();
 	while(inFile)
 	{
+		std::string newline = "";
+		while (inFile.peek() == '\n')
+		{
+			std::getline(inFile, newline, ',');
+		}
 		std::getline(inFile, m_name, ',');
 		if (inFile.eof()) break;
+		if (m_name[0] == ',')
+		{
+			m_name.erase(0,1);
+		}
 		std::getline(inFile, m_month, ',');
 		std::getline(inFile, m_day, ',');
 		std::getline(inFile, m_year, ',');		//Creating list of events from "storage"
@@ -118,7 +127,7 @@ void Executive::run()
 	for (int i=1; i<=eventList->getLength(); i++)
 	{
 		Events temp = eventList->getEntry(i);
-		outFile << "\n" << temp.getName() << "," << temp.getMonth() << "," << temp.getDay() << "," << temp.getYear() << ",";
+		outFile << "\n," << temp.getName() << "," << temp.getMonth() << "," << temp.getDay() << "," << temp.getYear() << ",";
 		if (!temp.getTimeSlots()->isEmpty())
 		{
 			for (int j=1; j<=temp.getTimeSlots()->getLength(); j++)
@@ -293,43 +302,34 @@ bool Executive::addEvent(bool mode12)
 	}
 
 	if(mode12) {
-		std::cout << "\nWhat time will your event start? (format like 0600AM) \n";
+		std::cout << "\nWhat time will your event start? \n";
 
-		std::cin.ignore();
-		std::getline(std::cin, m_stime);
+		int hourMin = 0;
+		std::string AMPM = "";
 
-		//std::cin >> m_stime;
-		std::cout << "\nWhat time will your event end? (format like 0900PM) \n";
+		std::cout<<"Start Time (format like 1000 for 10:00): ";
+		std::cin>>hourMin;
 
-		std::cin.ignore();
-		std::getline(std::cin, m_etime);
+		std::cout<<"\nIs this AM or PM (enter AM or PM): ";
+		std::cin>>AMPM;
 
-		//convert to 24 hour for the eventlist
-		//for some reason if the time is 1000xM it goes to 000. Will have to figure in morning
-
-		for(int i = 0; i < m_stime.length(); i++) {
-			if(m_stime[i] == 'A') {
-				m_stime.erase(m_stime.end()-2, m_stime.end());
-			} else if(m_stime[i] == 'P') {
-				m_stime.erase(m_stime.end()-2, m_stime.end());
-				int s_timeIn24 = std::stoi(m_stime) + 1200;
-				m_stime = std::to_string(s_timeIn24);
-			}
+		if(AMPM == "PM") {
+			hourMin = hourMin + 1200;
 		}
 
-		for(int i = 0; i < m_etime.length(); i++) {
-			if(m_etime[i] == 'A') {
-				m_etime.erase(m_etime.end()-2, m_etime.end());
-			} else if(m_etime[i] == 'P') {
-				m_etime.erase(m_etime.end()-2, m_etime.end());
-				int e_timeIn24 = std::stoi(m_etime) + 1200;
-				m_etime = std::to_string(e_timeIn24);
-			}
+		m_stime = std::to_string(hourMin);
+
+		std::cout<<"\nEnd Time (format like 1000 for 10:00): ";
+		std::cin>>hourMin;
+
+		std::cout<<"\nIs this AM or PM (enter AM or PM): ";
+		std::cin>>AMPM;
+
+		if(AMPM == "PM") {
+			hourMin = hourMin + 1200;
 		}
 
-		std::cout<<"START AND END: "<<m_stime<<" - "<<m_etime<<std::endl;
-
-		//std::cin >> m_etime;
+		m_etime = std::to_string(hourMin);
 	} else {
 		std::cout << "\nWhat time will your event start?\n";
 		std::cin >> m_stime;
