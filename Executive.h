@@ -23,9 +23,9 @@ class Executive
 	private:
 	std::ifstream inFile;
 	LinkedList<Events>* eventList; 				//List which holds the event objects
-	bool adminFunc(); 							//Function which handles admin menu and options
-	bool userFunc();							//Function which handles user menu and options
-	bool addEvent();							//Prompts the admin to create an event and it to the list
+	bool adminFunc(bool mode12); 							//Function which handles admin menu and options
+	bool userFunc(bool mode12);							//Function which handles user menu and options
+	bool addEvent(bool mode12);							//Prompts the admin to create an event and it to the list
 	std::string m_name = "";                    // placeholder variable for a name of an event, to be passed to Events class as an argument
 	std::string m_month = "";                   // placeholder variable for a month of an event, to be passed to Events class as an argument
 	std::string m_day = "";						// placeholder variable for a day of an event, to be passed to Events class as an argument

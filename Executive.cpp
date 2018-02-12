@@ -63,21 +63,32 @@ void Executive::run()
 	std::string admin = "unspecified";
 	int mode = 0;
 
+	int timeChoice = 0;
+	bool time12 = false;
+
 
 	std::cout << "\n-------------------------\nWelcome to cal448!\n-------------------------\n\n";
 	while (programStatus == true)			//main program loop condition
 	{
 		std::cout << "Are you an admin or a user?\n  (1) Admin\n  (2) User\n  (3) Quit\n\n  Choice: ";
 		std::cin >> mode;
+
+		std::cout<<"Which time mode?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
+		std::cin>>timeChoice;
+
+		if(timeChoice == 1) {
+			time12 = true;
+		}
+		
 		if (mode == 1)		//runs if admin logs in
 		{
 			std::cout<<"\n--------- Admin Mode Starting ---------\n";
-			programStatus = adminFunc();
+			programStatus = adminFunc(time12);
 		}
 		else if (mode == 2)			//runs if user logs in
 		{
 			std::cout<<"\n--------- User Mode Starting ---------\n";
-			programStatus = userFunc();
+			programStatus = userFunc(time12);
 		}
 		else if(mode == 3)															//unrecognized input
 		{
@@ -91,7 +102,7 @@ void Executive::run()
 	}
 }
 
-bool Executive::adminFunc()
+bool Executive::adminFunc(bool mode12)
 {
 	int adminChoice = 0;
 	while (1)
@@ -101,7 +112,7 @@ bool Executive::adminFunc()
 		std::cin >> adminChoice;
 		if (adminChoice == 1)
 		{
-			if (addEvent() == true)
+			if (addEvent(mode12) == true)
 			{
 				std::cout << "\nYour event has been added!\n";
 			}
@@ -145,7 +156,7 @@ bool Executive::adminFunc()
 	return true;
 }
 // test
-bool Executive::userFunc()
+bool Executive::userFunc(bool mode12)
 {
 	int userChoice = 0;
 	while(1)
@@ -178,7 +189,7 @@ bool Executive::userFunc()
 				}
 				if(attChoice == 1)
 				{
-					std::cout <<"Which Time Slots are you availbe for?\n";
+					std::cout <<"Which Time Slots are you available for?\n";
 					Events temp = eventList -> search(nameToSearch);
 					for(int i = 1; i <= temp.getTimeSlots() -> getLength(); i++)
 					{
@@ -223,7 +234,7 @@ bool Executive::userFunc()
 	return true;
 }
 
-bool Executive::addEvent()
+bool Executive::addEvent(bool mode12)
 {
 	std::cout << "\nWhat is the name of your event?\n";
 	std::cin.ignore();
@@ -237,10 +248,51 @@ bool Executive::addEvent()
 	std::cin >> m_month;
 	std::cout << "\nWhat day will your event take place?\n";
 	std::cin >> m_day;
-	std::cout << "\nWhat time will your event start?\n";
-	std::cin >> m_stime;
-	std::cout << "\nWhat time will your event end?\n";
-	std::cin >> m_etime;
+
+	if(mode12) {
+		std::cout << "\nWhat time will your event start? (format like 0600AM) \n";
+		
+		std::cin.ignore();
+		std::getline(std::cin, m_stime);
+
+		//std::cin >> m_stime;
+		std::cout << "\nWhat time will your event end? (format like 0900PM) \n";
+		
+		std::cin.ignore();
+		std::getline(std::cin, m_etime);
+
+		//convert to 24 hour for the eventlist
+		//for some reason if the time is 1000xM it goes to 000. Will have to figure in morning
+
+		for(int i = 0; i < m_stime.length(); i++) {
+			if(m_stime[i] == 'A') {
+				m_stime.erase(m_stime.end()-2, m_stime.end());
+			} else if(m_stime[i] == 'P') {
+				m_stime.erase(m_stime.end()-2, m_stime.end());
+				int s_timeIn24 = std::stoi(m_stime) + 1200;
+				m_stime = std::to_string(s_timeIn24);
+			}
+		}
+
+		for(int i = 0; i < m_etime.length(); i++) {
+			if(m_etime[i] == 'A') {
+				m_etime.erase(m_etime.end()-2, m_etime.end());
+			} else if(m_etime[i] == 'P') {
+				m_etime.erase(m_etime.end()-2, m_etime.end());
+				int e_timeIn24 = std::stoi(m_etime) + 1200;
+				m_etime = std::to_string(e_timeIn24);
+			}
+		}
+
+		std::cout<<"START AND END: "<<m_stime<<" - "<<m_etime<<std::endl;
+
+		//std::cin >> m_etime;
+	} else {
+		std::cout << "\nWhat time will your event start?\n";
+		std::cin >> m_stime;
+		std::cout << "\nWhat time will your event end?\n";
+		std::cin >> m_etime;
+	}
 
 	m_intMonth = std::stoi(m_month);
 	m_intDay = std::stoi(m_day);
