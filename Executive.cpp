@@ -24,9 +24,9 @@ Executive::Executive()
 		std::getline(inFile, m_day, ',');
 		std::getline(inFile, m_year, ',');		//Creating list of events from "storage"
 		Events event(m_name, std::stoi(m_month), std::stoi(m_day), std::stoi(m_year));
-		while (true);
+		while (true)
 		{
-			if (inFile.peek() == "'")
+			if (inFile.peek() == '.')
 			{
 				std::getline(inFile, m_time, ',');
 				m_time.erase(0,1);
@@ -216,10 +216,10 @@ bool Executive::addEvent()
 	eventList->addBack(event1);
 	eventList->sortListEvent();
 	
-	event1->getInfo();
-	for (int i=0; i<event1->getTimeSlots()->getLength(); i++)
+	event1.getInfo();
+	for (int i=0; i<event1.getTimeSlots()->getLength(); i++)
 	{
-		std::cout << "There are " << event1->getTimeSlots()->getEntry(i)->getNum() << " people available at " << event1->getTimeSlots()->getEntry(i)->getTimeSlot() << ".\n";
+		std::cout << "There are " << event1.getTimeSlots()->getEntry(i)->getNum() << " people available at " << event1.getTimeSlots()->getEntry(i)->getTimeSlot() << ".\n";
 	}
 
 	return true;
