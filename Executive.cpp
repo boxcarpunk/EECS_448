@@ -27,7 +27,7 @@ Executive::Executive()
 		}
 		std::getline(inFile, m_name, ',');
 		if (inFile.eof()) break;
-		if (m_name(0) == ",")
+		if (m_name(0) == ',')
 		{
 			m_name.erase(0,1);
 		}
