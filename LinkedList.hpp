@@ -254,7 +254,6 @@ T& LinkedList<T>::search(std::string name)
   T temp1 = temp ->getValue();
 	while(temp != nullptr)
 	{
-    temp1 = temp -> getValue();
 		if(temp1.getName() == name)
 		{
       return(temp1);
@@ -262,6 +261,7 @@ T& LinkedList<T>::search(std::string name)
 		}
 		else{
 		temp = temp -> getNext();
+    temp1 = temp -> getValue();
     }
 	}
   T empty;
@@ -276,7 +276,6 @@ bool LinkedList<T>::isFound(std::string name2)
   bool found = false;
   while(temp != nullptr)
   {
-    temp1 = temp -> getValue();
 		if(temp1.getName() == name2)
 		{
       found = true;
@@ -284,6 +283,7 @@ bool LinkedList<T>::isFound(std::string name2)
 			break;
 		}
 		else{
+    temp1 = temp -> getValue();
 		temp = temp -> getNext();
     }
   }
