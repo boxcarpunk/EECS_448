@@ -24,16 +24,24 @@ Executive::Executive()
 		std::getline(inFile, m_day, ',');
 		std::getline(inFile, m_year, ',');		//Creating list of events from "storage"
 		Events event(m_name, std::stoi(m_month), std::stoi(m_day), std::stoi(m_year));
-		/*while (inFile.peek() == "'");
+		while (true);
 		{
-			std::getline(inFile, m_time, ',');
-			std::getline(inFile, m_attNum, ',');
-			event.addTimeSlots(m_time, m_attNum);
-		}	*/
+			if (inFile.peek() == "'")
+			{
+				std::getline(inFile, m_time, ',');
+				m_time.erase(0,1);
+				std::getline(inFile, m_attNum, ',');
+				event.addTimeSlots(stoi(m_time), stoi(m_attNum));
+			}
+			else
+			{
+				break;
+			}
+		}
 		eventList->addBack(event);
 		eventList -> sortListEvent();
 	}
-
+	
 }
 
 Executive::~Executive()
@@ -51,7 +59,7 @@ void Executive::run()
 	std::cout << "\n-------------------------\nWelcome to cal448!\n-------------------------\n\n";
 	while (programStatus == true)			//main program loop condition
 	{
-		std::cout << "First:\n  (1) Are you an admin\n  (2) Are you a user\n  (3) Quit\n\n  Choice: ";
+		std::cout << "Are you an admin or a user?\n  (1) Admin\n  (2) User\n  (3) Quit\n\n  Choice: ";
 		std::cin >> mode;
 		if (mode == 1)		//runs if admin logs in
 		{
@@ -88,6 +96,10 @@ bool Executive::adminFunc()
 			if (addEvent() == true)
 			{
 				std::cout << "\nYour event has been added!\n";
+			}
+			else
+			{
+				std::cout << "There was an issue creating your event, please try again\n";
 			}
 		}
 		else if (adminChoice == 2)
@@ -203,6 +215,12 @@ bool Executive::addEvent()
 	}
 	eventList->addBack(event1);
 	eventList->sortListEvent();
+	
+	event1->getInfo();
+	for (int i=0; i<event1->getTimeSlots()->getLength(); i++)
+	{
+		std::cout << "There are " << event1->getTimeSlots()->getEntry(i)->getNum() << " people available at " << event1->getTimeSlots()->getEntry(i)->getTimeSlot() << ".\n";
+	}
 
 	return true;
 }
