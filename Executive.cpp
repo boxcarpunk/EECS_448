@@ -20,6 +20,11 @@ Executive::Executive()
 	eventList = new LinkedList<Events>();
 	while(inFile)
 	{
+		std::string newline = "";
+		if (inFile.peek() == "\n")
+		{
+			std::getline(inFile, newline);
+		}
 		std::getline(inFile, m_name, ',');
 		if (inFile.eof()) break;
 		std::getline(inFile, m_month, ',');
