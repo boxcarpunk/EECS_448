@@ -27,13 +27,13 @@ Executive::Executive()
 		{
 			m_name.erase(0,1);
 		}
-		std::cout << "\n" << m_name << "\n";
+		//std::cout << "\n" << m_name << "\n";
 		std::getline(inFile, m_month, ',');
-		std::cout << "\n" << m_month << "\n";
+		//std::cout << "\n" << m_month << "\n";
 		std::getline(inFile, m_day, ',');
-		std::cout << "\n" << m_day << "\n";
+		//std::cout << "\n" << m_day << "\n";
 		std::getline(inFile, m_year, ',');
-		std::cout << "\n" << m_year << "\n";		//Creating list of events from "storage"
+		//std::cout << "\n" << m_year << "\n";		//Creating list of events from "storage"
 		Events event(m_name, std::stoi(m_month), std::stoi(m_day), std::stoi(m_year));
 		while (true)
 		{
@@ -51,12 +51,12 @@ Executive::Executive()
 				break;
 			}
 		}
-		event.getInfo();
+		/*event.getInfo();
 		std::cout << "\nThere are " << event.getTimeSlots()->getLength() << " time slots in this event.\n";
 		for (int i=1; i<=event.getTimeSlots()->getLength(); i++)
 		{
 			std::cout << "There are " << event.getTimeSlots()->getEntry(i).getNum() << " people available at " << event.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
-		}
+		}*/
 		eventList->addBack(event);
 		eventList -> sortListEvent();
 	}
@@ -94,7 +94,7 @@ void Executive::run()
 
 		if (mode == 1)		//runs if admin logs in
 		{
-			std::cout<<"Which time mode?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
+			std::cout<<"Which time mode would you like to use?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
 			std::cin>>timeChoice;
 			if (std::cin.fail())
 			{
@@ -163,7 +163,7 @@ bool Executive::adminFunc(bool mode12)
 	while (1)
 	{
 		std::cout << "\nCurrently logged in as admin... How would you like to proceed?\n\n";
-		std::cout << "(1) Add an event\n(2) Print all events\n(3) Find a specific event\n(4) Main Menu\n(5) Quit\n\n  Choice: ";
+		std::cout << "  (1) Add an event\n  (2) Print all events\n  (3) Find a specific event\n  (4) Main Menu\n  (5) Quit\n\n  Choice: ";
 		std::cin >> adminChoice;
 		if (std::cin.fail())
 		{
@@ -195,7 +195,7 @@ bool Executive::adminFunc(bool mode12)
 			std::getline(std::cin, nameToSearch);
 			if (eventList->isFound(nameToSearch) == true)
 			{
-				std::cout << "\nThe event was found: " << nameToSearch << "\n";
+				std::cout << "\nThe event was found: " << nameToSearch << "\n\n";
 				Events event = eventList->search(nameToSearch);
 				event.getInfo();
 				std::cout << "\nThere are " << event.getTimeSlots()->getLength() << " time slots in this event.\n";
@@ -231,7 +231,7 @@ bool Executive::userFunc(bool mode12)
 	while(1)
 	{
 		std::cout << "\nCurrently logged in as user... How would you like to proceed?\n";
-		std::cout << "(1) Print all events\n(2) Find a specific event\n(3) Main Menu\n(4) Quit\n\n  Choice: ";
+		std::cout << "  (1) Print all events\n  (2) Find a specific event\n  (3) Main Menu\n  (4) Quit\n\n  Choice: ";
 		std::cin >> userChoice;
 		if (std::cin.fail())
 		{
@@ -253,9 +253,9 @@ bool Executive::userFunc(bool mode12)
 			if ((eventList->isFound(nameToSearch)) == true)
 			{
 				int attChoice = 0;
-				std::cout << "\nThe event was found: " << nameToSearch << "\n";
+				std::cout << "\nThe event was found: " << nameToSearch << "\n\n";
 				std::cout <<"Would you like to attend this event?\n";
-				std::cout <<"(1) Yes\n(2) No\n\n";
+				std::cout <<"  (1) Yes\n  (2) No\n\n";
 				std::cin >> attChoice;
 				if (std::cin.fail())
 				{
