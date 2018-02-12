@@ -50,7 +50,7 @@ Executive::Executive()
 		eventList->addBack(event);
 		eventList -> sortListEvent();
 	}
-	inFile.close()
+	inFile.close();
 
 }
 
@@ -116,7 +116,7 @@ void Executive::run()
 	outFile.open("eventslist.txt");
 	for (int i=1; i<=eventList->getLength(); i++)
 	{
-		Event temp = eventList->getEntry(i);
+		Events temp = eventList->getEntry(i);
 		outFile << temp.getName() << "," << temp.getMonth() << "," << temp.getDay() << "," << temp.getYear() << ",";
 		if (!temp.getTimeSlots()->isEmpty())
 		{
@@ -400,7 +400,7 @@ bool Executive::dateCheck(int y, int m, int d)
 	}
 	else if (m == 2)
 	{
-		if ((y % 4 == 0 && y % 100 != 0) || (year % 400 == 0)			//Leep year conditions: cite "crazzyguy101 - cplusplus.com"
+		if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0))			//Leep year conditions: cite "crazzyguy101 - cplusplus.com"
 		{
 			if (d > 29)
 			{
