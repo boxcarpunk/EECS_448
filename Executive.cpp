@@ -118,7 +118,8 @@ bool Executive::adminFunc()
 		{
 			std::string nameToSearch = "";
 			std::cout << "\nPlease enter the name of the event you would like to pull up: ";
-			std::cin >> nameToSearch;
+			std::cin.ignore();
+			std::getline(std::cin, nameToSearch);
 			if (eventList->isFound(nameToSearch) == true)
 			{
 				std::cout << "\nThe event was found: " << nameToSearch << "\n";
@@ -217,16 +218,22 @@ bool Executive::addEvent()
 	m_intSTime = stoi(m_stime);
 	m_intETime = stoi(m_etime);
 	int numTs = (((m_intETime - m_intSTime)/100) * 3);
-
+	int tsup = m_intSTime;
 	for (int i = 0; i < numTs; i ++)
 	{
-		event1.addTimeSlots(i, 1);
+		if(tsup % 100 == 60)
+		{
+			tsup = tsup + 40;
+		}
+		event1.addTimeSlots(tsup, 1);
+		tsup += 20;
+
 	}
 	eventList->addBack(event1);
 	eventList->sortListEvent();
         std::cout << "\n The length of timeslots is " << event1.getTimeSlots()->getLength() << "\n";
 	event1.getInfo();
-	for (int i=1; i==event1.getTimeSlots()->getLength(); i++)
+	for (int i=1; i <= event1.getTimeSlots()->getLength(); i++)
 	{
 		std::cout << "There are " << event1.getTimeSlots()->getEntry(i).getNum() << " people available at " << event1.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
 	}
