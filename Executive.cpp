@@ -117,7 +117,7 @@ void Executive::run()
 	for (int i=1; i<=eventList->getLength(); i++)
 	{
 		Events temp = eventList->getEntry(i);
-		outFile << temp.getName() << "," << temp.getMonth() << "," << temp.getDay() << "," << temp.getYear() << ",";
+		outFile << "\n" << temp.getName() << "," << temp.getMonth() << "," << temp.getDay() << "," << temp.getYear() << ",";
 		if (!temp.getTimeSlots()->isEmpty())
 		{
 			for (int j=1; j<=temp.getTimeSlots()->getLength(); j++)
@@ -262,13 +262,12 @@ bool Executive::userFunc(bool mode12)
 }
 
 bool Executive::addEvent(bool mode12)
-{
-	bool valid = false;
+{	
+	std::cout << "\nWhat is the name of your event?\n";
+	std::cin.ignore();
+	std::getline (std::cin, m_name);
 	while (1)
-	{	
-		std::cout << "\nWhat is the name of your event?\n";
-		std::cin.ignore();
-		std::getline (std::cin, m_name);
+	{
 		std::cout << "\nWhat year will your event take place?\n";
 		std::cin >> m_year;
 		std::cout << "\nWhat month will your event take place?\n";
