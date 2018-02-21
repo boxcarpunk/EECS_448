@@ -19,7 +19,7 @@ LinkedList<T>::LinkedList()
 template <typename T>
 bool LinkedList<T>::isEmpty() const
 {
-  return(m_length == 0) //returns true if the length is zero and false otherwise
+	return(m_length == 0); //returns true if the length is zero and false otherwise
 }
 
 template <typename T>
@@ -283,9 +283,9 @@ void LinkedList<T>::sortListEvent()
   Node<T>* prevNode = nullptr; //creates a ptr to point to the previous node
   Node<T>* temp = nullptr; //creates a temp ptr
 
-	if(m_length =< 1) //if the list is empty or has one node
+	if(m_length <= 1) //if the list is empty or has one node
 	{
-    //already sorted since it is empty or has one node
+		//already sorted since it is empty or has one node
 	}
 	else if(m_length == 2) //if the list has two nodes
 	{
@@ -361,7 +361,7 @@ void LinkedList<T>::sortListTime()
   Node<T>* prevNode = nullptr; //creates a ptr to point at the previous node
   Node<T>* temp = nullptr; //creates a temp ptr
 
-	if(m_length =< 1) //if the list is empty or only contains one node
+	if(m_length <= 1) //if the list is empty or only contains one node
 	{
     //already sorted since it is empty or has only one node
 	}

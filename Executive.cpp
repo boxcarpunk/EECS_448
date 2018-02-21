@@ -31,9 +31,9 @@ Executive::Executive()
 		{
 			break; //breaks out of the while loop
 		}
-		if (m_name[0] == '\n') //if the first character in the name is a new line
+		if (name[0] == '\n') //if the first character in the name is a new line
 		{
-			m_name.erase(0,1); //deletes the new line character
+			name.erase(0,1); //deletes the new line character
 		}
 		std::getline(inFile, month, ','); //gets the month of the event
 		std::getline(inFile, day, ','); //gets the day of the event
@@ -86,7 +86,7 @@ void Executive::run()
 		}
 
 
-		if (mode == 1) //if an admin logs in
+		if (choice == 1) //if an admin logs in
 		{
 			std::cout<<"Which time mode would you like to use?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
 			std::cin>>choice; //takes in and stores the time input
@@ -109,7 +109,7 @@ void Executive::run()
 				programStatus = adminFunc(false); //goes into admin mode with a 24-hr format
 			}
 		}
-		else if (mode == 2) //if a user logs in
+		else if (choice == 2) //if a user logs in
 		{
 			std::cout<<"Which time mode?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
 			std::cin>>choice; //takes in and stores the time input
@@ -120,7 +120,7 @@ void Executive::run()
 				std::cout << "Invalid input, please select '1'-'2'\n";
 				std::cin >> choice;
 			}
-			if(timeChoice == 1) //if 12hr mode
+			if(choice == 1) //if 12hr mode
 			{
 				std::cout << "\n--------- User Mode Starting ---------\n";
 				programStatus = userFunc(true); //goes into user mode with a 12-hr format
@@ -131,7 +131,7 @@ void Executive::run()
 				programStatus = userFunc(false); //goes into user mode with a 24-hr format
 			}
 		}
-		else if(mode == 3) //if exiting the program
+		else if(choice == 3) //if exiting the program
 		{
 			std::cout << "Thank you for using cal448!\n";
 			break; //breaks out of the while loop
@@ -361,7 +361,7 @@ bool Executive::addEvent(bool mode12)
 		std::cout << "\nWhat month will your event take place?\n";
 		for(int i = 0; i < 12; i++)
 		{
-			std::cout<<"  ("<<i+1<<")"<<" "<<months[i]<<std::endl;
+			std::cout<<"  ("<<i+1<<")"<<" "<<m_months[i]<<std::endl;
 		}
 		std::cin >> month; //takes in the month
 		while (std::cin.fail()) //fail bit code to recover from bad input
@@ -378,10 +378,10 @@ bool Executive::addEvent(bool mode12)
 			std::cin.clear();
 			std::cin.ignore();
 			std::cout << "Invalid input, please enter a day\n";
-			std::cin >> userChoice;
+			std::cin >> day;
 		}
 
-		if (dateCheck(m_intYear, m_intMonth, m_intDay) == true) //if the date is valid
+		if (dateCheck(year, month, day) == true) //if the date is valid
 		{
 			break; //break out of the while loop
 		}
@@ -446,7 +446,7 @@ bool Executive::addEvent(bool mode12)
 		}
 	}
 
-	Events event1(m_name, m_intMonth, m_intDay, m_intYear);
+	Events event1(name, month, day, year);
 
 	m_intSTime = stoi(m_stime);
 	m_intETime = stoi(m_etime);
