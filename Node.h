@@ -12,36 +12,55 @@ template <typename T>
 class Node
 {
 public:
-  /** @pre None
-	*   @post Creates a Node with given value
+	/**
+	*	Creates a new node with the vallue that is passed in
+	*	@pre None
+	*   @post A node with the passed value is created
+	*	@param Templated value
 	*   @return None
 	*/
-  Node(T value);
-  /** @pre None.
-	*   @post None.
-	*   @return returns m_value Private member variable
+	Node(T value);
+
+	/**
+	*	Returns the value that is associate with any given node
+	*	@pre None
+	*   @post None
+	*	@param None
+	*   @return Returns m_value Private member variable
 	*/
-  T& getValue() ;
-  /** @pre None.
-	*   @post Sets New Node value
+	T& getValue();
+
+	/**
+	*	Sets the value of a node equal to the value passed in
+	*	@pre The value for 'T' is valid
+	*   @post The value for a node is set
+	*	@param Templated value
 	*   @return None
 	*/
-  void setValue(T value);
-  /** @pre None.
-	*   @post None.
+	void setValue(T value);
+
+	/**
+	*	Returns a pointer to the node that follows the current
+	*	@pre None
+	*   @post None
+	*	@param None
 	*   @return Returns m_next Node pointer to next node in list
 	*/
-  Node<T>* getNext() const;
-  /** @pre None.
-	*   @post Sets Next Node to a Node pointer given by the user
+	Node<T>* getNext() const;
+
+	/**
+	*	Sets the next node in a structure equal to the pointer that is passed in a parameter
+	*	@pre None
+	*   @post Sets the next node to a pointer given by the user
+	*	@param A node pointer representing the next value in a data structure
 	*   @return None
 	*/
-  void setNext(Node<T>* next);
+	void setNext(Node<T>* next);
 
 private:
 
-  T m_value;
-  Node<T>* m_next;
+	T m_value; //the current value of the node
+	Node<T>* m_next; //a ptr to the next node
 
 };
 

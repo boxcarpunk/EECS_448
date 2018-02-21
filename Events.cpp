@@ -9,81 +9,78 @@
 
 Events::Events()
 {
-	// initialize variables to "" for strings, 0 for ints
-	//timeSlots = new TimeSlots[72];
-	m_name = "";
-	m_month = 0;
-	m_day = 0;
-	m_year = 0;
-	m_TimeSlot = new LinkedList<TimeSlots>();
+	m_name = ""; //sets the name to the empty string
+	m_month = 0; //sets the month to 0
+	m_day = 0; //sets the day to 0
+	m_year = 0; //sets the year to 0
+	m_TimeSlot = new LinkedList<TimeSlots>(); //creates a linked list of time slots
 }
 
 Events::Events(std::string name, int month, int day, int year)
 {
-	m_name = name;
-	m_month = month;
-	m_day = day;
-	m_year = year;
-	m_TimeSlot = new LinkedList<TimeSlots>();
+	m_name = name; //sets the name to what was passed in
+	m_month = month; //sets the month to what was passed in
+	m_day = day; //sets the day to what was passed in
+	m_year = year; //sets the year to what was passed in
+	m_TimeSlot = new LinkedList<TimeSlots>(); //creates a linked list of time slots
 }
 
 Events::~Events()
 {
-	; // empty destructor
+	//empty destructor
 }
 
 void Events::setName(std::string name)
 {
-	m_name = name; // set name
+	m_name = name; //sets the name to what was passed in
 }
 
 void Events::setMonth(int month)
 {
-	m_month = month; //set month
+	m_month = month; //sets the month to what was passed in
 }
 
 void Events::setDay(int day)
 {
-	m_day = day; // set day
+	m_day = day; //sets the day to what was passed in
 }
 
 void Events::setYear(int year)
 {
-	m_year = year; // set year
+	m_year = year; //sets the year to what was passed in
 }
 
 std::string Events::getName() const
 {
-	return m_name; // return name of event
+	return m_name; //returns the name of the event
 }
 
 int Events::getMonth() const
 {
-	return m_month; ///return month
+	return m_month; //returns the month of the event
 }
 
 int Events::getDay() const
 {
-	return m_day; //return day
+	return m_day; //returns the day of the event
 }
 
 int Events::getYear() const
 {
-	return m_year; // return year
+	return m_year; //returns the year of the event
 }
 
 LinkedList<TimeSlots>* Events::getTimeSlots() const
 {
-	return m_TimeSlot; // return m_TimeSlot
+	return m_TimeSlot; //returns the linked list of time slots
 }
 
 void Events::getInfo()
 {
-	// output info for this event to std::cout
-	std::cout << "\n" << m_name << " is occuring on " << m_month << "/" << m_day << "/" << m_year << ".\n";
-	for (int i=1; i == m_TimeSlot->getLength(); i++)
+	std::cout << "\n" << m_name << " is occuring on " << m_month << "/" << m_day << "/" << m_year << ".\n"; //prints the name and date of the event
+	for (int i=1; i == m_TimeSlot->getLength(); i++) //goes through the linked list of time slots
 	{
-		std::cout << "There are " << m_TimeSlot->getEntry(i).getNum() << " people available at " << m_TimeSlot->getEntry(i).getTimeSlot() << ".\n";
+		std::cout << "There are " << m_TimeSlot->getEntry(i).getNum() << " people available at " << m_TimeSlot->getEntry(i).getTimeSlot() << ".\n"; //prints the number of attendees for each relevant time slot
 	}
 }
 

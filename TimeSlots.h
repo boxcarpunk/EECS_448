@@ -10,32 +10,81 @@
 
 class TimeSlots
 {
-	public:
-		/* TimeSlots Default Constructor instantiates values for m_numOfAtt = 0 and m_TimeSlots = 0*/
-		TimeSlots();
-		/* TimeSlots Destructor*/
-		~TimeSlots();
-		/* TimeSlots Parameterized Constructor instantiates values for m_numOfAtt and m_TimeSlots with num and time parameters, respectively*/
-		TimeSlots(int num, int time);
-		/* setNum sets m_numOfAtt variable
-		@post m_numOfAtt = num
-		@param num the number of attendants for a certain timeslot in an event**/
-		void setNum(int num);
-		/* setTimeslot sets m_Timeslot variable
-		@post m_Timeslot = time
-		@param time the timeslot for an event**/
-		void setTimeSlot(int time);
-		/* Get method for number of attendantsfor a time slot
-		@return m_numOfAtt**/
-		int getNum();
-		/* Get method for the timeslot of an event
-		@return m_numOfAtt**/
-		int getTimeSlot();
-		/* Method to increase num of attendees by 1 */
-		void increaseAtt();
+public:
+	/**
+	*	A new time slot is created with default values
+	*	@pre None
+	*	@post Private member variables are set to defaults and a time slot is created
+	*	@param None
+	*	@return None
+	*/
+	TimeSlots();
+	
+	/**
+	*	Empty destructor
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return None
+	*/
+	~TimeSlots();
 
-	private:
-		int m_numOfAtt;  // the number of attendants for a certain timeslot in an event
-		int m_TimeSlot;  // the timeslot for an event
+	/**
+	*	A new time slot is created with default values
+	*	@pre Valid number of attendees and valid time
+	*	@post Private member variables are set and a time slot is created
+	*	@param Integers representing time and attendees
+	*	@return None
+	*/
+	TimeSlots(int num, int time);
+
+	/**
+	*	The number of attendees is set
+	*	@pre Valid number of attendees
+	*	@post Private member variable m_numOfAtt is set to passed in value
+	*	@param Integer representing number of attendees
+	*	@return None
+	*/
+	void setNum(int num);
+
+	/**
+	*	The time slot for an attendee is set
+	*	@pre Valid time
+	*	@post Private member variable m_TimeSlot is set to passed in value
+	*	@param Integer representing time
+	*	@return None
+	*/
+	void setTimeSlot(int time);
+
+	/**
+	*	The number of attendees is returned to the program
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return An int representing the number of attendees
+	*/
+	int getNum();
+
+	/**
+	*	The time slot for an attendee is returned to the program
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return An int representing the timeslot
+	*/
+	int getTimeSlot();
+
+	/**
+	*	Increases the number of attendees by one
+	*	@pre None
+	*	@post The value of m_numOfAtt is increased by one
+	*	@param None
+	*	@return None
+	*/
+	void increaseAtt();
+
+private:
+	int m_numOfAtt;  // the number of attendants for a certain timeslot in an event
+	int m_TimeSlot;  // the timeslot for an event
 
 };

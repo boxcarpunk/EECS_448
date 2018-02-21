@@ -10,10 +10,17 @@
 
 #include "Executive.h"
 
+/**
+*	Creates an instance of the Executive class and runs the program
+*	@pre None
+*	@post None
+*	@param None
+*	@return None
+*/
 int main() 
 {
-	Executive exec;
-	exec.run();
+	Executive exec; //creates an executive object
+	exec.run(); //calls run
 	
 	return(0);
 }
