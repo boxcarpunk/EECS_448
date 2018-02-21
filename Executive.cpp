@@ -76,6 +76,7 @@ void Executive::run()
 	while (programStatus == true) //main program loop condition
 	{
 		std::cout << "Are you an admin or a user?\n  (1) Admin\n  (2) User\n  (3) Quit\n\n  Choice: ";
+		std::cin.ignore(); //wipes cin
 		std::cin >> choice; //takes in and stores the menu input
 		while(std::cin.fail()) //fail bit code to recover bad input
 		{
@@ -89,6 +90,7 @@ void Executive::run()
 		if (choice == 1) //if an admin logs in
 		{
 			std::cout<<"Which time mode would you like to use?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
+			std::cin.ignore(); //wipes cin
 			std::cin>>choice; //takes in and stores the time input
 			while(std::cin.fail()) //fail bit code to recover from bad input
 			{
@@ -112,6 +114,7 @@ void Executive::run()
 		else if (choice == 2) //if a user logs in
 		{
 			std::cout<<"Which time mode?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
+			std::cin.ignore(); //wipes cin
 			std::cin>>choice; //takes in and stores the time input
 			while(std::cin.fail()) //fail bit code to recover from bad input
 			{
@@ -164,6 +167,7 @@ bool Executive::adminFunc(bool mode12)
 	{
 		std::cout << "\nCurrently logged in as admin... How would you like to proceed?\n\n";
 		std::cout << "  (1) Add an event\n  (2) Print all events\n  (3) Find a specific event\n  (4) Main Menu\n  (5) Quit\n\n  Choice: ";
+		std::cin.ignore(); //wipes cin
 		std::cin >> adminChoice; //takes in and stores the menu input
 		while(std::cin.fail()) //fail bit code to recover from bad input
 		{
@@ -232,6 +236,7 @@ bool Executive::userFunc(bool mode12)
 	{
 		std::cout << "\nCurrently logged in as user... How would you like to proceed?\n";
 		std::cout << "  (1) Print all events\n  (2) Find a specific event\n  (3) Main Menu\n  (4) Quit\n\n  Choice: ";
+		std::cin.ignore(); //wipes cin
 		std::cin >> userChoice; //takes in and stores the menu input
 		while(std::cin.fail())
 		{
@@ -256,6 +261,7 @@ bool Executive::userFunc(bool mode12)
 				std::cout << "\nThe event was found: " << nameToSearch << "\n\n";
 				std::cout <<"Would you like to attend this event?\n";
 				std::cout <<"  (1) Yes\n  (2) No\n\n";
+				std::cin.ignore(); //wipes cin
 				std::cin >> userChoice; //takes in and stores the attend input
 				while(std::cin.fail()) //fail bit code to recover from bad input
 				{
@@ -268,6 +274,7 @@ bool Executive::userFunc(bool mode12)
 				while((userChoice != 1) && (userChoice != 2)) //while the input is not 1 or 2
 				{
 					std::cout <<"Not a Valid Input, Try Again....\n";
+					std::cin.ignore(); //wipes cin
 					std::cin >> userChoice; //takes in and stores the attend input
 					while (std::cin.fail()) //fail bit code to recover from bad input
 					{
@@ -285,6 +292,7 @@ bool Executive::userFunc(bool mode12)
 					{
 						std::cout <<"(" << i << ") " << temp.getTimeSlots() -> getEntry(i).getTimeSlot() << "\n"; //prints the time slot
 						std::cout <<"Are you Available for this Time Slot?\n (1)Yes\n (2)No\n";
+						std::cin.ignore(); //wipes cin
 						std::cin >> userChoice; //takes in and stores the availability input
 						while (std::cin.fail()) //fail bit code to recover from bad input
 						{
@@ -296,6 +304,7 @@ bool Executive::userFunc(bool mode12)
 						while(userChoice != 1 && userChoice != 2) //while the input is not 1 or 2
 						{
 							std::cout <<"Invalid Input Try Again!\n";
+							std::cin.ignore(); //wipes cin
 							std::cin >> userChoice; //takes in and stores the availability input
 							while (std::cin.fail()) //fail bit code to recover from bad input
 							{
@@ -350,6 +359,7 @@ bool Executive::addEvent(bool mode12)
 	while (1) //runs infinitely
 	{
 		std::cout << "\nWhat year will your event take place?\n";
+		std::cin.ignore(); //wipes cin
 		std::cin >> year; //takes in the year
 		while (std::cin.fail()) //fail bit code to recover from bad input
 		{
@@ -363,6 +373,7 @@ bool Executive::addEvent(bool mode12)
 		{
 			std::cout<<"  ("<<i+1<<")"<<" "<<m_months[i]<<std::endl;
 		}
+		std::cin.ignore(); //wipes cin
 		std::cin >> month; //takes in the month
 		while (std::cin.fail()) //fail bit code to recover from bad input
 		{
@@ -372,6 +383,7 @@ bool Executive::addEvent(bool mode12)
 			std::cin >> month;
 		}
 		std::cout << "\nWhat day will your event take place?\n";
+		std::cin.ignore(); //wipes cin
 		std::cin >> day; //takes in the day
 		while (std::cin.fail()) //fail bit code to recover from bad input
 		{
@@ -399,6 +411,7 @@ bool Executive::addEvent(bool mode12)
 		std::string AMPM = ""; //a string that stores whether the time is am or pm
 
 		std::cout<<"Start Time (format like 1000 for 10:00): ";
+		std::cin.ignore(); //wipes cin
 		std::cin>>hourMin; //takes in and stores starting the time
 		while (std::cin.fail()) //fail bit code to recover from bad input
 		{
@@ -409,6 +422,7 @@ bool Executive::addEvent(bool mode12)
 		}
 
 		std::cout<<"\nIs this AM or PM (enter AM or PM): ";
+		std::cin.ignore(); //wipes cin
 		std::cin>>AMPM; //takes in whether the time is am or pm
 
 		if(AMPM == "PM") //if the time is pm
@@ -419,9 +433,11 @@ bool Executive::addEvent(bool mode12)
 		m_stime = std::to_string(hourMin);
 
 		std::cout<<"\nEnd Time (format like 1000 for 10:00): ";
+		std::cin.ignore(); //wipes cin
 		std::cin>>hourMin;
 
 		std::cout<<"\nIs this AM or PM (enter AM or PM): ";
+		std::cin.ignore(); //wipes cin
 		std::cin>>AMPM;
 
 		if(AMPM == "PM") {
@@ -431,17 +447,21 @@ bool Executive::addEvent(bool mode12)
 		m_etime = std::to_string(hourMin);
 	} else {
 		std::cout << "\nWhat time will your event start?\n";
+		std::cin.ignore(); //wipes cin
 		std::cin >> m_stime;
 		while(std::stoi(m_stime) >= 2359 || std::stoi(m_stime) < 500 || (std::stoi(m_stime) >= 1201 && std::stoi(m_stime) <= 1259))
 		{
 			std::cout <<"Invalid Time input! Try Again!\n";
+			std::cin.ignore(); //wipes cin
 			std::cin >> m_stime;
 		}
 		std::cout << "\nWhat time will your event end?\n";
+		std::cin.ignore(); //wipes cin
 		std::cin >> m_etime;
 		while(std::stoi(m_etime) >= 2359 || std::stoi(m_etime) < 500 || (std::stoi(m_etime) >= 1201 && std::stoi(m_etime) <= 1259))
 		{
 			std::cout <<"Invalid Time input! Try Again!\n";
+			std::cin.ignore(); //wipes cin
 			std::cin >> m_etime;
 		}
 	}
