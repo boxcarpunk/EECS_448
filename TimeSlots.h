@@ -1,10 +1,3 @@
-/**
-* @author Sahil Hirani
-* @cal448
-* @date 12 February 2017
-* @brief TimeSlots is a class that holds time slots that an event occupies
-* @file TimeSlots.h **/
-
 #pragma once
 #include <iostream>
 
@@ -83,8 +76,26 @@ public:
 	*/
 	void increaseAtt();
 
+	/**
+	*	Operator overload for == between two time slots
+	*	@pre None
+	*	@post None
+	*	@param A TimeSlot to be compared to this one
+	*	@return True if m_TimeSlot and m_numOfAtt are equal, false otherwise
+	*/
+	bool operator==(const TimeSlots& rhs) const;
+
+	/**
+	*	Operator overload for > between two time slots
+	*	@pre None
+	*	@post None
+	*	@param A TimeSlot to be compared to this one
+	*	@return True if the current m_TimeSlot is later than the m_TimeSlot passed in, false otherwise
+	*/
+	bool operator>(const TimeSlots& rhs) const;
+
 private:
-	int m_numOfAtt;  // the number of attendants for a certain timeslot in an event
-	int m_TimeSlot;  // the timeslot for an event
+	int m_numOfAtt;  /**< the number of attendants for a certain timeslot in an event */
+	int m_TimeSlot;  /**< the timeslot for an event */
 
 };

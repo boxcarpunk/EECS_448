@@ -1,10 +1,3 @@
-/**
-* @author Robert Goss
-* @cal448
-* @date 12 February 2017
-* @brief Events class implementation
-* @file Events.cpp **/
-
 #include "Events.h"
 
 Events::Events()
@@ -13,7 +6,7 @@ Events::Events()
 	m_month = 0; //sets the month to 0
 	m_day = 0; //sets the day to 0
 	m_year = 0; //sets the year to 0
-	m_TimeSlot = new LinkedList<TimeSlots>(); //creates a linked list of time slots
+	m_TimeSlot = new LinkedList<TimeSlots, TimeSlots>(); //creates a linked list of time slots
 }
 
 Events::Events(std::string name, int month, int day, int year)
@@ -22,7 +15,7 @@ Events::Events(std::string name, int month, int day, int year)
 	m_month = month; //sets the month to what was passed in
 	m_day = day; //sets the day to what was passed in
 	m_year = year; //sets the year to what was passed in
-	m_TimeSlot = new LinkedList<TimeSlots>(); //creates a linked list of time slots
+	m_TimeSlot = new LinkedList<TimeSlots, TimeSlots>(); //creates a linked list of time slots
 }
 
 Events::~Events()
@@ -70,7 +63,7 @@ int Events::getYear() const
 	return m_year; //returns the year of the event
 }
 
-LinkedList<TimeSlots>* Events::getTimeSlots() const
+LinkedList<TimeSlots, TimeSlots>* Events::getTimeSlots() const
 {
 	return m_TimeSlot; //returns the linked list of time slots
 }
@@ -88,5 +81,39 @@ void Events::addTimeSlots(int s_t, int numOfAtt)
 {
 	TimeSlots newSlot(numOfAtt, s_t); // instantiate new time slot
 	m_TimeSlot->addBack(newSlot); // add new time slot to end of linked list
-	m_TimeSlot->sortListTime(); // call sort list method to ensure that list is sorted after insertion of new time slot
+	m_TimeSlot->sort(); //sort the list
+}
+
+bool Events::operator==(const Events& rhs) const
+{
+	return((m_name == rhs.m_name) && (m_year == rhs.m_year) && (m_month == rhs.m_month) && (m_day == rhs.m_day)); //returns true if the name, year, month, and day are the same
+}
+
+bool Events::operator==(const std::string& rhs) const
+{
+	return(m_name == rhs); //returns true of the string is equal to the name of the event
+}
+
+bool Events::operator>(const Events& rhs) const
+{
+	if (m_year > rhs.m_year) //if the current event is at a later year
+	{
+		return(true); //returns true because the current event is after the event passed in
+	}
+	else if (m_year == rhs.m_year) //if they occur on the same year
+	{
+		if (m_month > rhs.m_month) //if the current event is at a later month in the same year
+		{
+			return(true); //returns true because the current event is after the event passed in
+		}
+		else if (m_month == rhs.m_month) //if they occur on the same month and year
+		{
+			if (m_day > rhs.m_day) //if the current event is at a later day in the same month
+			{
+				return(true); //returns true because the current event is after the event passed in
+			}
+		}
+	}
+
+	return(false); //returns false if not one of the cases covered above
 }

@@ -23,7 +23,7 @@ Executive::Executive()
 	std::string year = ""; //creates a placeholder variable for a year of an event
 
 	inFile.open("eventslist.txt"); //opens the file
-	eventList = new LinkedList<Events>(); //creates the linked list of events
+	eventList = new LinkedList<Events, std::string>(); //creates the linked list of events
 	while(inFile) //while not at end of file
 	{
 		std::getline(inFile, name, ','); //gets the name of an event
@@ -56,7 +56,7 @@ Executive::Executive()
 			}
 		}
 		eventList->addBack(event); //adds the event to the back of the list
-		eventList -> sortListEvent(); //sorts the list based on the event dates
+		eventList -> sort(); //sorts the list
 	}
 	inFile.close(); //close the file
 
@@ -484,7 +484,7 @@ bool Executive::addEvent(bool mode12)
 
 	}
 	eventList->addBack(event1);
-	eventList->sortListEvent();
+	eventList->sort;
         std::cout << "\n The length of timeslots is " << event1.getTimeSlots()->getLength() << "\n";
 	event1.getInfo();
 	for (int i=1; i <= event1.getTimeSlots()->getLength(); i++)

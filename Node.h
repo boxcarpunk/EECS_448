@@ -1,10 +1,3 @@
-/**
-* @author Sahil Hirani
-* @cal448
-* @date 12 February 2017
-* @brief A header file for templated Node class
-* @file Node.h **/
-
 #ifndef NODE_H
 #define NODE_H
 
@@ -59,8 +52,8 @@ public:
 
 private:
 
-	T m_value; //the current value of the node
-	Node<T>* m_next; //a ptr to the next node
+	T m_value; /**< the current value of the node */
+	Node<T>* m_next; /**< a ptr to the next node */
 
 };
 

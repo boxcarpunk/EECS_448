@@ -1,10 +1,3 @@
-/**
-* @author Sahil Hirani
-* @cal448
-* @date 12 February 2017
-* @brief TimeSlots class implementation
-* @file TimeSlots.cpp **/
-
 #include "TimeSlots.h"
 
 TimeSlots::TimeSlots()
@@ -47,4 +40,14 @@ int TimeSlots::getTimeSlot()
 TimeSlots::~TimeSlots()
 {
 	//Destructor for good coding practice
+}
+
+bool TimeSlots::operator==(const TimeSlots& rhs) const
+{
+	return((m_TimeSlot == rhs.m_TimeSlot) && (m_numOfAtt == rhs.m_numOfAtt)); //true if the time slot and number of attendees are the same, false otherwise
+}
+
+bool TimeSlots::operator>(const TimeSlots& rhs) const
+{
+	return(m_TimeSlot > rhs.m_TimeSlot) //true if the current time slot is after the one passed in, false otherwise
 }

@@ -1,12 +1,6 @@
-/**
-* @author Robert Goss
-* @cal448
-* @date 12 February 2017
-* @brief Events class that represents an event in the cal448 program
-* @file Events.h **/
-
 #pragma once
 #include <sstream>
+#include <string>
 #include "LinkedList.h"
 #include "TimeSlots.h"
 
@@ -141,10 +135,38 @@ public:
 	void addTimeSlots(int s_t, int numOfAtt);
 
 
+	/**
+	*	Operator overload for == between two events, checks the name and dates of the events
+	*	@pre None
+	*	@post None
+	*	@param The event to be compared to this one
+	*	@return True if the name and date of the events are the same, false otherwise
+	*/
+	bool operator==(const Events& rhs) const;
+
+	/**
+	*	Operator overload for == between an event and a string, checks the string against the event's name
+	*	@pre None
+	*	@post None
+	*	@param A string to be compared to the event's name
+	*	@return True if the string is equal to the name of the event, false otherwise
+	*/
+	bool operator==(const std::string& rhs) const;
+
+	/**
+	*	Operator overload for > between two events, checks the dates of the events
+	*	@pre None
+	*	@post None
+	*	@param The event to be compared to this one
+	*	@return True if the date of the current event is after the event passed in, false otherwise
+	*/
+	bool operator>(const Events& rhs) const;
+
+
 private:
-	std::string m_name; // event name
-	int m_month; // month of event
-	int m_day; // day of event
-	int m_year; // year of event
-	LinkedList<TimeSlots>* m_TimeSlot; // pointer to list of time slots for this event
+	std::string m_name; /**< event name */
+	int m_month; /**< month of event */
+	int m_day; /**< day of event */
+	int m_year; /**< year of event */
+	LinkedList<TimeSlots, TimeSlots>* m_TimeSlot; /**< pointer to list of time slots for this event */
 };

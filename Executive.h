@@ -1,10 +1,3 @@
-/**
-* @author Leon Kleyn
-* @cal448
-* @date 12 February 2017
-* @brief Executive class that runs UI and implements other classes of cal448 program
-* @file Executives.h **/
-
 #pragma once
 #include "LinkedList.h"
 #include "Events.h"
@@ -61,8 +54,7 @@ class Executive
 	bool dateCheck(int y, int m, int d);
 
 	private:
-	std::ifstream inFile;
-	LinkedList<Events>* eventList; //List which holds the event objects
+	LinkedList<Events, std::string>* eventList; /**< List which holds the event objects */
 
 	/**
 	*	The program initializes the admin mode
