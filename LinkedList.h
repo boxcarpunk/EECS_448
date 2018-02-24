@@ -155,7 +155,7 @@ class LinkedList
 	void sort();
 
 	private:
-	Node<T>* m_front; /**< ptr to the first node in the list */
+	Node<keyType>* m_front; /**< ptr to the first node in the list */
 	int m_length; /**< the length of the list */
 };
 

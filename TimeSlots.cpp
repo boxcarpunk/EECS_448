@@ -49,5 +49,5 @@ bool TimeSlots::operator==(const TimeSlots& rhs) const
 
 bool TimeSlots::operator>(const TimeSlots& rhs) const
 {
-	return(m_TimeSlot > rhs.m_TimeSlot) //true if the current time slot is after the one passed in, false otherwise
+	return(m_TimeSlot > rhs.m_TimeSlot); //true if the current time slot is after the one passed in, false otherwise
 }

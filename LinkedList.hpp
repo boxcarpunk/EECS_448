@@ -282,7 +282,7 @@ bool LinkedList<keyType, searchType>::isFound(searchType value) const
 
 	while(temp != nullptr) //while temp is not pointing at null
 	{
-		if(temp.getEntry() == value) //if the entry at the current node is the one being searched for
+		if(temp->getValue() == value) //if the entry at the current node is the one being searched for
 		{
 			return(true); //returns true since the entry cooresponding to the search value was found
 		}
@@ -314,7 +314,7 @@ void LinkedList<keyType, searchType>::sort()
 	else //if the length is greater than 2
 	{
 		Node<keyType>* currentNode = nullptr; //creates a ptr to point to the current node
-		keyType temp = nullptr; //creates a temp storage object
+		keyType temp; //creates a temp storage object
 
 		for(int i = 1; i < m_length; i++) //iterates n-1 times
 		{

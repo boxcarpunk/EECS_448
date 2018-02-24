@@ -484,7 +484,7 @@ bool Executive::addEvent(bool mode12)
 
 	}
 	eventList->addBack(event1);
-	eventList->sort;
+	eventList->sort();
         std::cout << "\n The length of timeslots is " << event1.getTimeSlots()->getLength() << "\n";
 	event1.getInfo();
 	for (int i=1; i <= event1.getTimeSlots()->getLength(); i++)

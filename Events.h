@@ -114,7 +114,7 @@ public:
 	*	@param None
 	*	@return Head pointer to m_TimeSlot. Specifically created for >, <, == operator overloads
 	*/
-	LinkedList<TimeSlots>* getTimeSlots() const;
+	LinkedList<TimeSlots, TimeSlots>* getTimeSlots() const;
 
 	/**
 	*	The information for an event is printed out so that the user can see it
