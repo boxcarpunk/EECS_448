@@ -35,6 +35,8 @@ public:
 	*/
 	~Events();
 
+	static const std::string holidays[3];
+
 	/**
 	*	Private member variable is assigned correct value
 	*	@pre The name is valid

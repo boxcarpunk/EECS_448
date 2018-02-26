@@ -565,5 +565,18 @@ bool Executive::dateCheck(int y, int m, int d)
 			}
 		}
 	}
+	int size = sizeof(Events::holidays)/ sizeof(Events::holidays[0]);
+	//check if holiday (uses holiday size)
+	for (int i = 0; i < size; i++) {
+		std::istringstream issholiday(Events::holidays[i]);
+		std::string f;
+		std::vector<std::string> holiday;
+		while (std::getline(issholiday, f, '/')) {
+			holiday.push_back(f);
+		}
+		if (std::stoi(holiday[0]) == m && std::stoi(holiday[1]) == d) {
+			return false;
+		}
+	}
 	return true;
 }
