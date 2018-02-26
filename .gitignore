@@ -5,3 +5,4 @@ Debug/
 *.vcxproj
 *.vcxproj.filters
 .vs/
+EECS_488.*
