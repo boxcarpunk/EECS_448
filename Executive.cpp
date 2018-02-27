@@ -38,7 +38,12 @@ Executive::Executive()
 		std::getline(inFile, month, ','); //gets the month of the event
 		std::getline(inFile, day, ','); //gets the day of the event
 		std::getline(inFile, year, ','); //gets the year of the event
-		Events event(name, std::stoi(month), std::stoi(day), std::stoi(year)); //creates a new event with the given name, month, day, and year
+		std::string strMonth, strDay, strYear;
+		strMonth = month;
+		strDay = day;
+		strYear = year;
+		//TODO: Add numOfDays to constructor
+		Events event(name, strMonth, strDay, strYear, 0); //creates a new event with the given name, month, day, and year
 		while (true) //runs infinitely
 		{
 			if (inFile.peek() == '.') //if the next character is a period
@@ -76,7 +81,7 @@ void Executive::run()
 	while (programStatus == true) //main program loop condition
 	{
 		std::cout << "Are you an admin or a user?\n  (1) Admin\n  (2) User\n  (3) Quit\n\n  Choice: ";
-		std::cin.ignore(); //wipes cin
+		std::cin.clear(); //wipes cin
 		std::cin >> choice; //takes in and stores the menu input
 		while(std::cin.fail()) //fail bit code to recover bad input
 		{
@@ -103,11 +108,13 @@ void Executive::run()
 			if(choice == 1) //if 12hr mode
 			{
 				std::cout << "\n--------- Admin Mode Starting ---------\n";
+				timeMode = 12;
 				programStatus = adminFunc(true); //goes into admin mode with a 12-hr format
 			}
 			else //if 24hr mode
 			{
 				std::cout << "\n--------- Admin Mode Starting ---------\n";
+				timeMode = 24;
 				programStatus = adminFunc(false); //goes into admin mode with a 24-hr format
 			}
 		}
@@ -148,7 +155,11 @@ void Executive::run()
 	for (int i=1; i<=eventList->getLength(); i++) //goes through the event list
 	{
 		Events temp = eventList->getEntry(i); //stores an event in a temp variable
-		outFile << temp.getName() << "," << temp.getMonth() << "," << temp.getDay() << "," << temp.getYear() << ","; //writes the event info to file
+		outFile << temp.getName() << ",";
+		for (int i = 0; i < temp.getDates().size(); i++)
+		{
+			outFile << temp.getDates()[i]; //writes the event info to file
+		}
 		if (!temp.getTimeSlots()->isEmpty()) //if there are time slots for the event
 		{
 			for (int j=1; j<=temp.getTimeSlots()->getLength(); j++) //goes through the time slots
@@ -352,123 +363,71 @@ bool Executive::addEvent(bool mode12)
 	int month = 0; //creates a placeholder variable for a month of an event
 	int day = 0; //creates a placeholder variable for a day of an event
 	int year = 0; //creates a placeholder variable for a year of an event
+	int numOfDays = 0;
 
 	std::cout << "\nWhat is the name of your event?\n";
 	std::cin.ignore(); //wipes cin
 	std::getline (std::cin, name); //gets the name of the event
-	while (1) //runs infinitely
-	{
-		std::cout << "\nWhat year will your event take place?\n";
-		std::cin.ignore(); //wipes cin
-		std::cin >> year; //takes in the year
-		while (std::cin.fail()) //fail bit code to recover from bad input
+	std::cout << "How many days would you like to add?\n";
+	//TODO: Error check input
+	std::cin >> numOfDays;
+	
+		while (1) //runs infinitely
 		{
-			std::cin.clear();
-			std::cin.ignore();
-			std::cout << "Invalid input, please enter a year\n";
-			std::cin >> year;
-		}
-		std::cout << "\nWhat month will your event take place?\n";
-		for(int i = 0; i < 12; i++)
-		{
-			std::cout<<"  ("<<i+1<<")"<<" "<<m_months[i]<<std::endl;
-		}
-		std::cin.ignore(); //wipes cin
-		std::cin >> month; //takes in the month
-		while (std::cin.fail()) //fail bit code to recover from bad input
-		{
-			std::cin.clear();
-			std::cin.ignore();
-			std::cout << "Invalid input, please select '1'-'12'\n";
-			std::cin >> month;
-		}
-		std::cout << "\nWhat day will your event take place?\n";
-		std::cin.ignore(); //wipes cin
-		std::cin >> day; //takes in the day
-		while (std::cin.fail()) //fail bit code to recover from bad input
-		{
-			std::cin.clear();
-			std::cin.ignore();
-			std::cout << "Invalid input, please enter a day\n";
-			std::cin >> day;
-		}
-
-		if (dateCheck(year, month, day) == true) //if the date is valid
-		{
-			break; //break out of the while loop
-		}
-		else //if the date is invalid
-		{
-			std::cout << "\nThis date is invalid, please enter a valid date\n"; //notify the user that the date is invalid
-		}
-	}
-
-	if(mode12) //if 12-hr mode
-	{
-		std::cout << "\nWhat time will your event start? \n";
-
-		int hourMin = 0; //an int that stores the time of the event
-		std::string AMPM = ""; //a string that stores whether the time is am or pm
-
-		std::cout<<"Start Time (format like 1000 for 10:00): ";
-		std::cin.ignore(); //wipes cin
-		std::cin>>hourMin; //takes in and stores starting the time
-		while (std::cin.fail()) //fail bit code to recover from bad input
-		{
-			std::cin.clear();
-			std::cin.ignore();
-			std::cout << "Invalid input, please enter a time\n";
-			std::cin >> hourMin;
-		}
-
-		std::cout<<"\nIs this AM or PM (enter AM or PM): ";
-		std::cin.ignore(); //wipes cin
-		std::cin>>AMPM; //takes in whether the time is am or pm
-
-		if(AMPM == "PM") //if the time is pm
-		{
-			hourMin = hourMin + 1200; //add 12 hours to the time
-		}
-
-		m_stime = std::to_string(hourMin);
-
-		std::cout<<"\nEnd Time (format like 1000 for 10:00): ";
-		std::cin.ignore(); //wipes cin
-		std::cin>>hourMin;
-
-		std::cout<<"\nIs this AM or PM (enter AM or PM): ";
-		std::cin.ignore(); //wipes cin
-		std::cin>>AMPM;
-
-		if(AMPM == "PM") {
-			hourMin = hourMin + 1200;
-		}
-
-		m_etime = std::to_string(hourMin);
-	} else {
-		std::cout << "\nWhat time will your event start?\n";
-		std::cin.ignore(); //wipes cin
-		std::cin >> m_stime;
-		while(std::stoi(m_stime) >= 2359 || std::stoi(m_stime) < 500 || (std::stoi(m_stime) >= 1201 && std::stoi(m_stime) <= 1259))
-		{
-			std::cout <<"Invalid Time input! Try Again!\n";
+			std::cout << "\nWhat year will your event take place?\n";
+			std::cin >> year; //takes in the year
+			while (std::cin.fail()) //fail bit code to recover from bad input
+			{
+				std::cin.clear();
+				std::cin.ignore();
+				std::cout << "Invalid input, please enter a year\n";
+				std::cin >> year;
+			}
+			std::cout << "\nWhat month will your event take place?\n";
+			for (int i = 0; i < 12; i++)
+			{
+				std::cout << "  (" << i + 1 << ")" << " " << m_months[i] << std::endl;
+			}
+			std::cin >> month; //takes in the month
+			while (std::cin.fail()) //fail bit code to recover from bad input
+			{
+				std::cin.clear();
+				std::cout << "Invalid input, please select '1'-'12'\n";
+				std::cin >> month;
+			}
+			std::cout << "\nWhat day will your event take place?\n";
 			std::cin.ignore(); //wipes cin
-			std::cin >> m_stime;
-		}
-		std::cout << "\nWhat time will your event end?\n";
-		std::cin.ignore(); //wipes cin
-		std::cin >> m_etime;
-		while(std::stoi(m_etime) >= 2359 || std::stoi(m_etime) < 500 || (std::stoi(m_etime) >= 1201 && std::stoi(m_etime) <= 1259))
-		{
-			std::cout <<"Invalid Time input! Try Again!\n";
-			std::cin.ignore(); //wipes cin
-			std::cin >> m_etime;
-		}
-	}
+			std::cin >> day; //takes in the day
+			while (std::cin.fail()) //fail bit code to recover from bad input
+			{
+				std::cin.clear();
+				std::cin.ignore();
+				std::cout << "Invalid input, please enter a day\n";
+				std::cin >> day;
+			}
 
-	Events event1(name, month, day, year);
+			if (dateCheck(year, month, day) == true) //if the date is valid
+			{
+				break; //break out of the while loop
+			}
+			else //if the date is invalid
+			{
+				std::cout << "\nThis date is invalid, please enter a valid date\n"; //notify the user that the date is invalid
+			}
+		}
 
-	m_intSTime = stoi(m_stime);
+		std::string strMonth, strDay, strYear;
+		strMonth = month;
+		strDay = day;
+		strYear = year;
+	Events event1(name, strMonth, strDay, strYear, numOfDays);
+	eventList->addBack(event1);
+	//std::cout << eventList->getLength();
+	eventList->sort();
+
+	AddAvailability(event1);
+
+/*	m_intSTime = stoi(m_stime);
 	m_intETime = stoi(m_etime);
 	double numTs = ceil(((std::stod(m_etime) - std::stod(m_stime))/100) * 3);
 	std::cout << numTs << "\n";
@@ -490,9 +449,502 @@ bool Executive::addEvent(bool mode12)
 	for (int i=1; i <= event1.getTimeSlots()->getLength(); i++)
 	{
 		std::cout << "There are " << event1.getTimeSlots()->getEntry(i).getNum() << " people available at " << event1.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
-	}
+	}*/
 
 	return true;
+}
+
+void Executive::AddAvailability(Events event1)
+{
+	for (int i = 0; i < event1.getNumOfDays(); i++)
+	{
+		std::cout << "Day #" << event1.getNumOfDays() << std::endl;
+		std::cout << "Here: " << timeMode << std::endl;
+		if (timeMode == 12) //if 12-hr mode
+		{
+			int hourSelection = 0;
+			do
+			{
+				std::cout << "Select Time\n";
+				std::cout << "1) 5:00 AM\n";
+				std::cout << "2) 6:00 AM\n";
+				std::cout << "3) 7:00 AM\n";
+				std::cout << "4) 8:00 AM\n";
+				std::cout << "5) 9:00 AM\n";
+				std::cout << "6) 10:00 AM\n";
+				std::cout << "7) 11:00 AM\n";
+				std::cout << "8) 1:00 PM\n";
+				std::cout << "9) 2:00 PM\n";
+				std::cout << "10) 3:00 PM\n";
+				std::cout << "11) 4:00 PM\n";
+				std::cout << "12) 5:00 PM\n";
+				std::cout << "13) 6:00 PM\n";
+				std::cout << "14) 7:00 PM\n";
+				std::cout << "15) 8:00 PM\n";
+				std::cout << "16) 9:00 PM\n";
+				std::cout << "17) 10:00 PM\n";
+				std::cout << "18) 11:00 PM\n";
+				std::cout << "19) Finish\n";
+
+				std::cin >> hourSelection;
+				if (hourSelection == 1)
+				{
+					std::cout << "1) 5:00 - 5:20 AM\n";
+					std::cout << "2) 5:20 - 5:40 AM\n";
+					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 1)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 0 = true
+							}
+							else if (timeSelection == 2)
+							{
+								//index 1 = true
+							}
+							else if (timeSelection == 3)
+							{
+								//index 2 = true
+							}
+							else if (timeSelection == 4)
+							{
+								//index 1,2,3 = true
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 2)
+				{
+					std::cout << "1) 6:00 - 6:20 AM\n";
+					std::cout << "2) 6:20 - 6:40 AM\n";
+					std::cout << "3) 6:40 - 7:00 AM\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 1)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 3 = true
+							}
+							else if (timeSelection == 2)
+							{
+								//index 4 = true
+							}
+							else if (timeSelection == 3)
+							{
+								//index 5 = true
+							}
+							else if (timeSelection == 4)
+							{
+								//index 3,4,5 = true
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 3)
+				{
+					std::cout << "1) 7:00 - 7:20 AM\n";
+					std::cout << "2) 7:20 - 7:40 AM\n";
+					std::cout << "3) 7:40 - 8:00 AM\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 1)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 6 = true
+							}
+							else if (timeSelection == 2)
+							{
+								//index 7 = true
+							}
+							else if (timeSelection == 3)
+							{
+								//index 8 = true
+							}
+							else if (timeSelection == 4)
+							{
+								//index 6,7,8 = true
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 4)
+				{
+					std::cout << "1) 8:00 - 8:20 AM\n";
+					std::cout << "2) 8:20 - 8:40 AM\n";
+					std::cout << "3) 8:40 - 9:00 AM\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 1)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 9 = true
+							}
+							else if (timeSelection == 2)
+							{
+								//index 10 = true
+							}
+							else if (timeSelection == 3)
+							{
+								//index 11 = true
+							}
+							else if (timeSelection == 4)
+							{
+								//index 9,10,11 = true
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 5)
+				{
+					std::cout << "1) 9:00 - 9:20 AM\n";
+					std::cout << "2) 9:20 - 9:40 AM\n";
+					std::cout << "3) 9:40 - 10:00 AM\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 1)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 12 = true
+							}
+							else if (timeSelection == 2)
+							{
+								//index 13 = true
+							}
+							else if (timeSelection == 3)
+							{
+								//index 14 = true
+							}
+							else if (timeSelection == 4)
+							{
+								//index 1,2,3 = true
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 6)
+				{
+					std::cout << "1) 5:00 - 5:20 AM\n";
+					std::cout << "2) 5:20 - 5:40 AM\n";
+					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 1)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 0 = true
+							}
+							else if (timeSelection == 2)
+							{
+								//index 1 = true
+							}
+							else if (timeSelection == 3)
+							{
+								//index 2 = true
+							}
+							else if (timeSelection == 4)
+							{
+								//index 1,2,3 = true
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 7)
+				{
+					std::cout << "1) 5:00 - 5:20 AM\n";
+					std::cout << "2) 5:20 - 5:40 AM\n";
+					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 1)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 0 = true
+							}
+							else if (timeSelection == 2)
+							{
+								//index 1 = true
+							}
+							else if (timeSelection == 3)
+							{
+								//index 2 = true
+							}
+							else if (timeSelection == 4)
+							{
+								//index 1,2,3 = true
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 8)
+				{
+					std::cout << "1) 5:00 - 5:20 AM\n";
+					std::cout << "2) 5:20 - 5:40 AM\n";
+					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 1)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 0 = true
+							}
+							else if (timeSelection == 2)
+							{
+								//index 1 = true
+							}
+							else if (timeSelection == 3)
+							{
+								//index 2 = true
+							}
+							else if (timeSelection == 4)
+							{
+								//index 1,2,3 = true
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 9)
+				{
+					std::cout << "1) 5:00 - 5:20 AM\n";
+					std::cout << "2) 5:20 - 5:40 AM\n";
+					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 1)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 0 = true
+							}
+							else if (timeSelection == 2)
+							{
+								//index 1 = true
+							}
+							else if (timeSelection == 3)
+							{
+								//index 2 = true
+							}
+							else if (timeSelection == 4)
+							{
+								//index 1,2,3 = true
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 10)
+				{
+					std::cout << "1) 5:00 - 5:20 AM\n";
+					std::cout << "2) 5:20 - 5:40 AM\n";
+					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 1)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 0 = true
+							}
+							else if (timeSelection == 2)
+							{
+								//index 1 = true
+							}
+							else if (timeSelection == 3)
+							{
+								//index 2 = true
+							}
+							else if (timeSelection == 4)
+							{
+								//index 1,2,3 = true
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 11)
+				{
+					std::cout << "1) 5:00 - 5:20 AM\n";
+					std::cout << "2) 5:20 - 5:40 AM\n";
+					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 1)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 0 = true
+							}
+							else if (timeSelection == 2)
+							{
+								//index 1 = true
+							}
+							else if (timeSelection == 3)
+							{
+								//index 2 = true
+							}
+							else if (timeSelection == 4)
+							{
+								//index 1,2,3 = true
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+			} while (hourSelection != 19);
+
+		}
+		else {
+
+		}
+	}
 }
 
 void Executive::printEvents()

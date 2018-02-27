@@ -3,19 +3,15 @@
 Events::Events()
 {
 	m_name = ""; //sets the name to the empty string
-	m_month = 0; //sets the month to 0
-	m_day = 0; //sets the day to 0
-	m_year = 0; //sets the year to 0
 	m_TimeSlot = new LinkedList<TimeSlots, TimeSlots>(); //creates a linked list of time slots
 }
 
-Events::Events(std::string name, int month, int day, int year)
+Events::Events(std::string name, std::string month, std::string day, std::string year, int numOfDays)
 {
-	m_name = name; //sets the name to what was passed in
-	m_month = month; //sets the month to what was passed in
-	m_day = day; //sets the day to what was passed in
-	m_year = year; //sets the year to what was passed in
+	std::string date = month + "/" + day + "/" + year;
+
 	m_TimeSlot = new LinkedList<TimeSlots, TimeSlots>(); //creates a linked list of time slots
+	m_numOfDays = numOfDays;
 }
 
 Events::~Events()
@@ -28,19 +24,14 @@ void Events::setName(std::string name)
 	m_name = name; //sets the name to what was passed in
 }
 
-void Events::setMonth(int month)
+void Events::setNumOfDays(int num)
 {
-	m_month = month; //sets the month to what was passed in
+	m_numOfDays = num;
 }
 
-void Events::setDay(int day)
+void Events::setDates(std::string date)
 {
-	m_day = day; //sets the day to what was passed in
-}
-
-void Events::setYear(int year)
-{
-	m_year = year; //sets the year to what was passed in
+	m_dates.push_back(date); //sets the month to what was passed in
 }
 
 std::string Events::getName() const
@@ -48,20 +39,16 @@ std::string Events::getName() const
 	return m_name; //returns the name of the event
 }
 
-int Events::getMonth() const
+int Events::getNumOfDays()
 {
-	return m_month; //returns the month of the event
+	return m_numOfDays;
 }
 
-int Events::getDay() const
+std::vector<std::string> Events::getDates() const
 {
-	return m_day; //returns the day of the event
+	return m_dates; //returns the month of the event
 }
 
-int Events::getYear() const
-{
-	return m_year; //returns the year of the event
-}
 
 LinkedList<TimeSlots, TimeSlots>* Events::getTimeSlots() const
 {
@@ -70,7 +57,14 @@ LinkedList<TimeSlots, TimeSlots>* Events::getTimeSlots() const
 
 void Events::getInfo()
 {
-	std::cout << "\n" << m_name << " is occuring on " << m_month << "/" << m_day << "/" << m_year << ".\n"; //prints the name and date of the event
+	std::string year, month, day;
+	std::string date = m_dates[0];
+	day = date.substr(0, 2);
+	month = date.substr(3, 2);
+	year = date.substr(6, 10);
+
+	//TODO change to include all dates
+	std::cout << "\n" << m_name << " is occuring on " << month << "/" << day << "/" << year << ".\n"; //prints the name and date of the event
 	for (int i=1; i == m_TimeSlot->getLength(); i++) //goes through the linked list of time slots
 	{
 		std::cout << "There are " << m_TimeSlot->getEntry(i).getNum() << " people available at " << m_TimeSlot->getEntry(i).getTimeSlot() << ".\n"; //prints the number of attendees for each relevant time slot
@@ -86,7 +80,19 @@ void Events::addTimeSlots(int s_t, int numOfAtt)
 
 bool Events::operator==(const Events& rhs) const
 {
-	return((m_name == rhs.m_name) && (m_year == rhs.m_year) && (m_month == rhs.m_month) && (m_day == rhs.m_day)); //returns true if the name, year, month, and day are the same
+	std::string rhsYear, rhsMonth, rhsDay, rhsDate;
+	rhsDate = rhs.getDates()[0];
+	rhsDay = rhsDate.substr(0, 2);
+	rhsMonth = rhsDate.substr(3, 2);
+	rhsYear = rhsDate.substr(6, 10);
+
+	std::string year, month, day;
+	std::string date = m_dates[0];
+	day = date.substr(0, 2);
+	month = date.substr(3, 2);
+	year = date.substr(6, 10);
+
+	return((m_name == rhs.m_name) && (year == rhsYear) && (month == rhsMonth) && (day == rhsDay)); //returns true if the name, year, month, and day are the same
 }
 
 bool Events::operator==(const std::string& rhs) const
@@ -96,19 +102,31 @@ bool Events::operator==(const std::string& rhs) const
 
 bool Events::operator>(const Events& rhs) const
 {
-	if (m_year > rhs.m_year) //if the current event is at a later year
+	std::string rhsYear, rhsMonth, rhsDay, rhsDate;
+	rhsDate = rhs.getDates()[0];
+	rhsDay = rhsDate.substr(0, 2);
+	rhsMonth = rhsDate.substr(3, 2);
+	rhsYear = rhsDate.substr(6, 10);
+
+	std::string year, month, day;
+	std::string date = m_dates[0];
+	day = date.substr(0, 2);
+	month = date.substr(3, 2);
+	year = date.substr(6, 10);
+
+	if (year > rhsYear) //if the current event is at a later year
 	{
 		return(true); //returns true because the current event is after the event passed in
 	}
-	else if (m_year == rhs.m_year) //if they occur on the same year
+	else if (year == rhsYear) //if they occur on the same year
 	{
-		if (m_month > rhs.m_month) //if the current event is at a later month in the same year
+		if (month > rhsMonth) //if the current event is at a later month in the same year
 		{
 			return(true); //returns true because the current event is after the event passed in
 		}
-		else if (m_month == rhs.m_month) //if they occur on the same month and year
+		else if (month == rhsMonth) //if they occur on the same month and year
 		{
-			if (m_day > rhs.m_day) //if the current event is at a later day in the same month
+			if (day > rhsDay) //if the current event is at a later day in the same month
 			{
 				return(true); //returns true because the current event is after the event passed in
 			}

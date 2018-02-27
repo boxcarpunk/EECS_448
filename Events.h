@@ -3,6 +3,7 @@
 #include <string>
 #include "LinkedList.h"
 #include "TimeSlots.h"
+#include <vector>
 
 class Events
 {
@@ -24,7 +25,7 @@ public:
 	*	@param String for name and integers for month, day, and year
 	*	@return None
 	*/
-	Events (std::string name, int motnh, int day, int year);
+	Events (std::string name, std::string month, std::string day, std::string year, int numOfDays);
 
 	/**
 	*	Empty destructor
@@ -44,32 +45,7 @@ public:
 	*/
 	void setName(std::string name);
 
-	/**
-	*	Private member variable is assigned correct value
-	*	@pre Int representing the month of an event
-	*	@post The private member variable is set to match the parameter
-	*	@param Int representing the month of an event
-	*	@return None
-	*/
-	void setMonth(int month);
-
-	/**
-	*	Private member variable is assigned correct value
-	*	@pre The day is valid
-	*	@post The private member variable is set to match the parameter
-	*	@param Int representing the day of an event
-	*	@return None
-	*/
-	void setDay(int day);
-
-	/**
-	*	Private member variable is assigned correct value
-	*	@pre The year is valid
-	*	@post The private member variable is set to match the parameter
-	*	@param Int representing the year of an event
-	*	@return None
-	*/
-	void setYear(int year);
+	void setNumOfDays(int num);
 
 	/**
 	*	The name of the event being accessed is returned to the program
@@ -80,32 +56,19 @@ public:
 	*/
 	std::string getName() const;
 
+	int getNumOfDays();
+
 	/**
 	*	The month of the event being accessed is returned to the program
 	*	@pre None
-	*	@post The month of an event it returned
+	*	@post The dates of an event is returned
 	*	@param None
-	*	@return An int representing the month of the event
+	*	@return A vector containing a list of dates in mm/dd/yyyy format
 	*/
-	int getMonth() const;
+	std::vector<std::string> getDates() const;
 
-	/**
-	*	The day of the event being accessed is returned to the program
-	*	@pre None
-	*	@post The day of an event it returned
-	*	@param None
-	*	@return An int representing the day of the event
-	*/
-	int getDay() const;
+	void setDates(std::string date);
 
-	/**
-	*	The year of the event being accessed is returned to the program
-	*	@pre None
-	*	@post The year of an event it returned
-	*	@param None
-	*	@return An int representing the year of the event
-	*/
-	int getYear() const;
 
 	/**
 	*	The list of time slots for the event being accessed is returned to the program
@@ -165,8 +128,8 @@ public:
 
 private:
 	std::string m_name; /**< event name */
-	int m_month; /**< month of event */
-	int m_day; /**< day of event */
-	int m_year; /**< year of event */
 	LinkedList<TimeSlots, TimeSlots>* m_TimeSlot; /**< pointer to list of time slots for this event */
+	int m_numOfDays;
+
+	std::vector<std::string> m_dates;
 };

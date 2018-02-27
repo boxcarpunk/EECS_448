@@ -53,6 +53,9 @@ class Executive
 	*/
 	bool dateCheck(int y, int m, int d);
 
+	void AddAvailability(Events event);
+
+
 	private:
 	LinkedList<Events, std::string>* eventList; /**< List which holds the event objects */
 
@@ -83,12 +86,7 @@ class Executive
 	*/
 	bool addEvent(bool mode12);
 
-	int m_intSTime = 0;
-	int m_intETime = 0;
-
-	std::string m_time = ""; // placeholder variable for a time of an event, to be passed to Events class as an argument
+	int timeMode;
 	std::string m_attNum = ""; // placeholder variable for an attendance number of an event, to be passed to Event class as an argument
-	std::string m_stime = ""; // variable for a start time of an event, used in for loop to determine how many time slots need to be created for an event
-	std::string m_etime = ""; // variable for a end time of an event, used in for loop to determine how many time slots need to be created for an event
 	std::string m_months[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 };
