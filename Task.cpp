@@ -59,7 +59,7 @@ std::string Task::getPersonName()
 
 bool Task::operator==(const Task& rhs)
 {
-	return((m_taskName == rhs.m_taskName) && (m_personName == rhs.m_personName) && (m_handled == rhsm_handled)); //compares each member variable and returns them and-ed together
+	return((m_taskName == rhs.m_taskName) && (m_personName == rhs.m_personName) && (m_handled == rhs.m_handled)); //compares each member variable and returns them and-ed together
 }
 
 bool Task::operator>(const Task& rhs)

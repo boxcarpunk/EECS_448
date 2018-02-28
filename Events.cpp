@@ -9,7 +9,7 @@ Events::Events()
 	m_day = 0; //sets the day to 0
 	m_year = 0; //sets the year to 0
 	m_TimeSlot = new LinkedList<TimeSlots, TimeSlots>(); //creates a linked list of time slots
-	m_Task = new LinkedList<Task, Task>(); //creates a linked list of tasks
+	m_Task = new LinkedList<Task, std::string>(); //creates a linked list of tasks
 }
 
 Events::Events(std::string name, int month, int day, int year)
@@ -91,7 +91,7 @@ void Events::addTimeSlots(int s_t, int numOfAtt)
 
 void Events::addTask(std::string name)
 {
-	m_Task->addFront(new Task(name)); //makes a new task with the given name and adds it to the front of the list
+	m_Task->addFront(Task(name)); //makes a new task with the given name and adds it to the front of the list
 }
 
 bool Events::signUpTask(std::string userName, std::string taskName)
