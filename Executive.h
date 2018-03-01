@@ -83,6 +83,15 @@ class Executive
 	*/
 	bool addEvent(bool mode12);
 
+	/**
+	* The program checks inputs to be greater than 0 and less than the value given to it
+	* @pre None
+	* @post None
+	* @param String name of the event and the int value is the greatest amount of characters the event name can have
+	* @return returns true if a valid name and false if invalid name
+	*/
+	bool validEventName(std::string name, int value);
+
 	int m_intSTime = 0;
 	int m_intETime = 0;
 
