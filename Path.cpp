@@ -12,7 +12,6 @@ using namespace std;
 Path::Path()
 {
 	TT1 = false;
-	Exit = false;
 	EmptyString = "";
 	initscr();
 	noecho();
@@ -27,6 +26,7 @@ Path::Path()
 	ValAdPass = "Alvarez";
 	ValUser = "Ryan";
 	ValPass = "Alvarez";
+	Twelve = true;
 	Login(1,0);
 }
 Path::~Path()
@@ -85,6 +85,10 @@ void Path::Login(int screen, int AdminOrUser)
 		//string B = to_string(Choice);
 		//char const *pchar = B.c_str();
 		//mvwprintw(win0,0,0,pchar);
+		if(Choice)
+		{
+			Twelve = false;
+		}
 		Login(3,0);
 	}
 	else if(screen == 3)
@@ -146,13 +150,13 @@ void Path::Login(int screen, int AdminOrUser)
 		//string B = to_string(Choice);
 		//char const *pchar = B.c_str();
 		//mvwprintw(win0,0,0,pchar);
-		if(Choice==1)
+		if(Choice==0)
 		{
-			Login(3,1);
+			Login(5,1);
 		}
 		else
 		{
-			Login(5,1);
+			Login(3,1);
 		}
 	}
 	else if((screen == 5)&&(AdminOrUser==1))
@@ -162,23 +166,21 @@ void Path::Login(int screen, int AdminOrUser)
 		box(win0,0,0);
 		wrefresh(win0);
 		mvwprintw(win0,1,1,"Events:");
-		int Choice = H->print_scroll(win0,EventNames,3,9,2);
-		string B = to_string(Choice);
-		char const *pchar = B.c_str();
-		mvwprintw(win0,0,0,pchar);
-		wrefresh(win0);
-		getch();
-		Login(5,1);
-		/*
-		if(Choice==1)
+		int Choice = H->print_scroll(win0,Events,3,3,2);
+		//string B = to_string(Choice);
+		//char const *pchar = B.c_str();
+		//mvwprintw(win0,0,0,pchar);
+		//wrefresh(win0);
+		//getch();
+		if(Twelve)
 		{
-			Login(3,1);
+			int Choice2 = H->print_scroll(win0,TwelveAval,3,19,2);
+			string B = to_string(Choice2);
+			char const *pchar = B.c_str();
+			mvwprintw(win0,0,0,pchar);
+			wrefresh(win0);
+			getch();
 		}
-		else
-		{
-			Login(6,1);
-		}
-		*/
 	}
 	keypad(stdscr,TRUE);
 	int Keys = 0;

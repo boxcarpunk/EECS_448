@@ -58,6 +58,10 @@ int Highlight::print_scroll(WINDOW * win, char * Menu[], int size, int Actual, i
 	keypad(win, true);
 	while(1)
 	{
+		wclear(win);
+		box(win,0,0);
+		wrefresh(win);
+
 		for(int i = size+StartLine; i > StartLine; i--)
 		{
 			if(highlightNum == i-1)
@@ -71,7 +75,6 @@ int Highlight::print_scroll(WINDOW * win, char * Menu[], int size, int Actual, i
 				mvwprintw(win, i, 1, Menu[i-StartLine+index-1]);
 			}
 		}
-		wrefresh(win);
 		int Arrows = wgetch(win);
 		switch(Arrows)
 		{
