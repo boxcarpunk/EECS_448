@@ -43,7 +43,7 @@ Executive::Executive()
 		strDay = day;
 		strYear = year;
 		//TODO: Add numOfDays to constructor
-		Events event(name, strMonth, strDay, strYear, 0); //creates a new event with the given name, month, day, and year
+		Events event(name,  0, 0); //creates a new event with the given name, month, day, and year
 		while (true) //runs infinitely
 		{
 			if (inFile.peek() == '.') //if the next character is a period
@@ -80,6 +80,8 @@ void Executive::run()
 	std::cout << "\n-------------------------\nWelcome to cal448!\n-------------------------\n\n";
 	while (programStatus == true) //main program loop condition
 	{
+		std::cout << "Enter your name: \n";
+		std::cin >> currentUser;
 		std::cout << "Are you an admin or a user?\n  (1) Admin\n  (2) User\n  (3) Quit\n\n  Choice: ";
 		std::cin.clear(); //wipes cin
 		std::cin >> choice; //takes in and stores the menu input
@@ -367,11 +369,23 @@ bool Executive::addEvent(bool mode12)
 
 	std::cout << "\nWhat is the name of your event?\n";
 	std::cin.ignore(); //wipes cin
-	std::getline (std::cin, name); //gets the name of the event
+	std::getline(std::cin, name); //gets the name of the event
 	std::cout << "How many days would you like to add?\n";
 	//TODO: Error check input
 	std::cin >> numOfDays;
-	
+	std::cout << "HERE: " << name << std::endl;
+
+	TimeSlots** myArray = new TimeSlots*[numOfDays];
+	for (int i = 0; i < numOfDays; i++)
+	{
+		myArray[i] = new TimeSlots[54];
+	}
+
+	Events event1(name, numOfDays, myArray);
+
+	for (int i = 0; i < numOfDays; i++)
+	{
+		std::cout << "Day " << i+1 << ": \n";
 		while (1) //runs infinitely
 		{
 			std::cout << "\nWhat year will your event take place?\n";
@@ -415,12 +429,35 @@ bool Executive::addEvent(bool mode12)
 				std::cout << "\nThis date is invalid, please enter a valid date\n"; //notify the user that the date is invalid
 			}
 		}
+		std::string strMonth, strDay, strYear, date;
+		strMonth = std::to_string(month);
+		strDay = std::to_string(day);
+		strYear = std::to_string(year);
 
-		std::string strMonth, strDay, strYear;
-		strMonth = month;
-		strDay = day;
-		strYear = year;
-	Events event1(name, strMonth, strDay, strYear, numOfDays);
+		if (strMonth.length() == 1)
+		{
+			strMonth = "0" + strMonth;
+		}
+
+		if (strDay.length() == 1)
+		{
+			strDay = "0" + strDay;
+		}
+
+		date = strMonth + "/" + strDay + "/" + strYear;
+
+		event1.setDates(date);
+
+		/*std::string year, month, day;
+		//std::string date = dates[0];
+		day = date.substr(0, 2);
+		month = date.substr(3, 2);
+		year = date.substr(6, 10);
+		std::cout << "\n" << m_name << " is occuring on " << month << "/" << day << "/" << year << ".\n"; //prints the name and date of the event*/
+
+	}
+
+
 	eventList->addBack(event1);
 	//std::cout << eventList->getLength();
 	eventList->sort();
@@ -456,42 +493,1059 @@ bool Executive::addEvent(bool mode12)
 
 void Executive::AddAvailability(Events event1)
 {
+	TimeSlots** myArray = new TimeSlots*[event1.getNumOfDays()];
+	for (int i = 0; i < event1.getNumOfDays(); i++)
+	{
+		myArray[i] = new TimeSlots[54];
+	}
+
 	for (int i = 0; i < event1.getNumOfDays(); i++)
 	{
 		std::cout << "Day #" << event1.getNumOfDays() << std::endl;
-		std::cout << "Here: " << timeMode << std::endl;
-		if (timeMode == 12) //if 12-hr mode
+		std::string strCopy;
+		bool copy = false;
+		if (i > 0)
+		{
+			std::cout << "Copy the previous day's times? (y/n)\n";
+			//TODO Error check input
+			std::cin >> strCopy;
+			if (strCopy == "y" || strCopy == "Y")
+			{
+				copy = true;
+			}
+			else if (strCopy == "n" || strCopy == "N")
+			{
+				copy = false;
+			}
+			TimeSlots** myNewArray = event1.getTimes();
+
+
+				for (int j = 0; j < 54; j++)
+				{
+					myArray[i][j] = myNewArray[i-1][j];
+				}
+			//std::cin.ignore();
+		}
+
+		if(!copy)
+		{
+			if (timeMode == 12) //if 12-hr mode
+			{
+
+
+				int hourSelection = 0;
+				do
+				{
+					std::cout << "Select Time\n";
+					std::cout << "1) 5:00 AM\n";
+					std::cout << "2) 6:00 AM\n";
+					std::cout << "3) 7:00 AM\n";
+					std::cout << "4) 8:00 AM\n";
+					std::cout << "5) 9:00 AM\n";
+					std::cout << "6) 10:00 AM\n";
+					std::cout << "7) 11:00 AM\n";
+					std::cout << "8) 1:00 PM\n";
+					std::cout << "9) 2:00 PM\n";
+					std::cout << "10) 3:00 PM\n";
+					std::cout << "11) 4:00 PM\n";
+					std::cout << "12) 5:00 PM\n";
+					std::cout << "13) 6:00 PM\n";
+					std::cout << "14) 7:00 PM\n";
+					std::cout << "15) 8:00 PM\n";
+					std::cout << "16) 9:00 PM\n";
+					std::cout << "17) 10:00 PM\n";
+					std::cout << "18) 11:00 PM\n";
+					std::cout << "19) Finish\n";
+
+					std::cin >> hourSelection;
+					if (hourSelection == 1)
+					{
+						std::cout << "1) 5:00 - 5:20 AM\n";
+						std::cout << "2) 5:20 - 5:40 AM\n";
+						std::cout << "3) 5:40 - 6:00 AM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 1)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 0 = true
+									myArray[i][0].increaseAtt();
+									myArray[i][0].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 1 = true
+									myArray[i][1].increaseAtt();
+									myArray[i][1].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 2 = true
+									myArray[i][2].increaseAtt();
+									myArray[i][2].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									myArray[i][0].increaseAtt();
+									myArray[i][0].addAttendee(currentUser);
+									myArray[i][1].increaseAtt();
+									myArray[i][1].addAttendee(currentUser);
+									myArray[i][2].increaseAtt();
+									myArray[i][2].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 2)
+					{
+						std::cout << "1) 6:00 - 6:20 AM\n";
+						std::cout << "2) 6:20 - 6:40 AM\n";
+						std::cout << "3) 6:40 - 7:00 AM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 2)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 3 = true
+									myArray[i][3].increaseAtt();
+									myArray[i][3].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 4 = true
+									myArray[i][4].increaseAtt();
+									myArray[i][4].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 5 = true
+									myArray[i][5].increaseAtt();
+									myArray[i][5].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 3,4,5 = true
+									myArray[i][3].increaseAtt();
+									myArray[i][3].addAttendee(currentUser);
+									myArray[i][4].increaseAtt();
+									myArray[i][4].addAttendee(currentUser);
+									myArray[i][5].increaseAtt();
+									myArray[i][5].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 3)
+					{
+						std::cout << "1) 7:00 - 7:20 AM\n";
+						std::cout << "2) 7:20 - 7:40 AM\n";
+						std::cout << "3) 7:40 - 8:00 AM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 3)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 6 = true
+									myArray[i][6].increaseAtt();
+									myArray[i][6].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 7 = true
+									myArray[i][7].increaseAtt();
+									myArray[i][7].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 8 = true
+									myArray[i][8].increaseAtt();
+									myArray[i][8].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 6,7,8 = true
+									myArray[i][6].increaseAtt();
+									myArray[i][6].addAttendee(currentUser);
+									myArray[i][7].increaseAtt();
+									myArray[i][7].addAttendee(currentUser);
+									myArray[i][8].increaseAtt();
+									myArray[i][8].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 4)
+					{
+						std::cout << "1) 8:00 - 8:20 AM\n";
+						std::cout << "2) 8:20 - 8:40 AM\n";
+						std::cout << "3) 8:40 - 9:00 AM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 4)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 9 = true
+									myArray[i][9].increaseAtt();
+									myArray[i][9].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 10 = true
+									myArray[i][10].increaseAtt();
+									myArray[i][10].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 11 = true
+									myArray[i][11].increaseAtt();
+									myArray[i][11].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 9,10,11 = true
+									myArray[i][9].increaseAtt();
+									myArray[i][9].addAttendee(currentUser);
+									myArray[i][10].increaseAtt();
+									myArray[i][10].addAttendee(currentUser);
+									myArray[i][11].increaseAtt();
+									myArray[i][11].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 5)
+					{
+						std::cout << "1) 9:00 - 9:20 AM\n";
+						std::cout << "2) 9:20 - 9:40 AM\n";
+						std::cout << "3) 9:40 - 10:00 AM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 5)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 12 = true
+									myArray[i][12].increaseAtt();
+									myArray[i][12].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 13 = true
+									myArray[i][13].increaseAtt();
+									myArray[i][13].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 14 = true
+									myArray[i][14].increaseAtt();
+									myArray[i][14].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 12,13,14 = true
+									myArray[i][12].increaseAtt();
+									myArray[i][12].addAttendee(currentUser);
+									myArray[i][13].increaseAtt();
+									myArray[i][13].addAttendee(currentUser);
+									myArray[i][14].increaseAtt();
+									myArray[i][14].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 6)
+					{
+						std::cout << "1) 10:00 - 10:20 AM\n";
+						std::cout << "2) 10:20 - 10:40 AM\n";
+						std::cout << "3) 10:40 - 11:00 AM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 6)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 15 = true
+									myArray[i][15].increaseAtt();
+									myArray[i][15].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 16 = true
+									myArray[i][16].increaseAtt();
+									myArray[i][16].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 17 = true
+									myArray[i][17].increaseAtt();
+									myArray[i][17].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 15,16,17 = true
+									myArray[i][15].increaseAtt();
+									myArray[i][15].addAttendee(currentUser);
+									myArray[i][16].increaseAtt();
+									myArray[i][16].addAttendee(currentUser);
+									myArray[i][17].increaseAtt();
+									myArray[i][17].addAttendee(currentUser);
+
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 7)
+					{
+						std::cout << "1) 11:00 - 11:20 AM\n";
+						std::cout << "2) 11:20 - 11:40 AM\n";
+						std::cout << "3) 11:40 - 12:00 PM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 7)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 18 = true
+									myArray[i][18].increaseAtt();
+									myArray[i][18].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 19 = true
+									myArray[i][19].increaseAtt();
+									myArray[i][19].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 20 = true
+									myArray[i][20].increaseAtt();
+									myArray[i][20].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 18,19,20 = true
+									myArray[i][18].increaseAtt();
+									myArray[i][18].addAttendee(currentUser);
+									myArray[i][19].increaseAtt();
+									myArray[i][19].addAttendee(currentUser);
+									myArray[i][20].increaseAtt();
+									myArray[i][20].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 8)
+					{
+						std::cout << "1) 1:00 - 1:20 PM\n";
+						std::cout << "2) 1:20 - 1:40 PM\n";
+						std::cout << "3) 1:40 - 2:00 PM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 8)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 21 = true
+									myArray[i][21].increaseAtt();
+									myArray[i][21].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 22 = true
+									myArray[i][22].increaseAtt();
+									myArray[i][22].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 23 = true
+									myArray[i][23].increaseAtt();
+									myArray[i][23].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 21,22,23 = true
+									myArray[i][21].increaseAtt();
+									myArray[i][21].addAttendee(currentUser);
+									myArray[i][22].increaseAtt();
+									myArray[i][22].addAttendee(currentUser);
+									myArray[i][23].increaseAtt();
+									myArray[i][23].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 9)
+					{
+						std::cout << "1) 2:00 - 2:20 PM\n";
+						std::cout << "2) 2:20 - 2:40 PM\n";
+						std::cout << "3) 2:40 - 3:00 PM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 9)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 24 = true
+									myArray[i][24].increaseAtt();
+									myArray[i][24].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 25 = true
+									myArray[i][25].increaseAtt();
+									myArray[i][25].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 26 = true
+									myArray[i][26].increaseAtt();
+									myArray[i][26].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 24,25,26 = true
+									myArray[i][24].increaseAtt();
+									myArray[i][24].addAttendee(currentUser);
+									myArray[i][25].increaseAtt();
+									myArray[i][25].addAttendee(currentUser);
+									myArray[i][26].increaseAtt();
+									myArray[i][26].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 10)
+					{
+						std::cout << "1) 3:00 - 3:20 PM\n";
+						std::cout << "2) 3:20 - 3:40 PM\n";
+						std::cout << "3) 3:40 - 4:00 PM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 10)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 27 = true
+									myArray[i][27].increaseAtt();
+									myArray[i][27].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 28 = true
+									myArray[i][28].increaseAtt();
+									myArray[i][28].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 29 = true
+									myArray[i][29].increaseAtt();
+									myArray[i][29].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 27,28,29 = true
+									myArray[i][27].increaseAtt();
+									myArray[i][27].addAttendee(currentUser);
+									myArray[i][28].increaseAtt();
+									myArray[i][28].addAttendee(currentUser);
+									myArray[i][29].increaseAtt();
+									myArray[i][29].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 11)
+					{
+						std::cout << "1) 4:00 - 4:20 PM\n";
+						std::cout << "2) 4:20 - 4:40 PM\n";
+						std::cout << "3) 4:40 - 5:00 PM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 11)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 30 = true
+									myArray[i][30].increaseAtt();
+									myArray[i][30].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 31 = true
+									myArray[i][31].increaseAtt();
+									myArray[i][31].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 32 = true
+									myArray[i][32].increaseAtt();
+									myArray[i][32].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 30,31,32 = true
+									myArray[i][30].increaseAtt();
+									myArray[i][30].addAttendee(currentUser);
+									myArray[i][31].increaseAtt();
+									myArray[i][31].addAttendee(currentUser);
+									myArray[i][32].increaseAtt();
+									myArray[i][32].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 12)
+					{
+						std::cout << "1) 5:00 - 5:20 PM\n";
+						std::cout << "2) 5:20 - 5:40 PM\n";
+						std::cout << "3) 5:40 - 6:00 PM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 12)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 33 = true
+									myArray[i][33].increaseAtt();
+									myArray[i][33].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 34 = true
+									myArray[i][34].increaseAtt();
+									myArray[i][34].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 35 = true
+									myArray[i][35].increaseAtt();
+									myArray[i][35].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 33,34,35 = true
+									myArray[i][33].increaseAtt();
+									myArray[i][33].addAttendee(currentUser);
+									myArray[i][34].increaseAtt();
+									myArray[i][34].addAttendee(currentUser);
+									myArray[i][35].increaseAtt();
+									myArray[i][35].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 13)
+					{
+						std::cout << "1) 6:00 - 6:20 PM\n";
+						std::cout << "2) 6:20 - 6:40 PM\n";
+						std::cout << "3) 6:40 - 7:00 PM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 13)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 36 = true
+									myArray[i][36].increaseAtt();
+									myArray[i][36].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 37 = true
+									myArray[i][37].increaseAtt();
+									myArray[i][37].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 38 = true
+									myArray[i][38].increaseAtt();
+									myArray[i][38].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 36,37,38 = true
+									myArray[i][36].increaseAtt();
+									myArray[i][36].addAttendee(currentUser);
+									myArray[i][37].increaseAtt();
+									myArray[i][37].addAttendee(currentUser);
+									myArray[i][38].increaseAtt();
+									myArray[i][38].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 14)
+					{
+						std::cout << "1) 7:00 - 7:20 PM\n";
+						std::cout << "2) 7:20 - 7:40 PM\n";
+						std::cout << "3) 7:40 - 8:00 PM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 14)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 39 = true
+									myArray[i][39].increaseAtt();
+									myArray[i][39].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 40 = true
+									myArray[i][40].increaseAtt();
+									myArray[i][40].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 41 = true
+									myArray[i][41].increaseAtt();
+									myArray[i][41].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 39,40,41 = true
+									myArray[i][39].increaseAtt();
+									myArray[i][39].addAttendee(currentUser);
+									myArray[i][40].increaseAtt();
+									myArray[i][40].addAttendee(currentUser);
+									myArray[i][41].increaseAtt();
+									myArray[i][41].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 15)
+					{
+						std::cout << "1) 8:00 - 8:20 PM\n";
+						std::cout << "2) 8:20 - 8:40 PM\n";
+						std::cout << "3) 8:40 - 9:00 PM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 15)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 42 = true
+									myArray[i][42].increaseAtt();
+									myArray[i][42].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 43 = true
+									myArray[i][43].increaseAtt();
+									myArray[i][43].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 44 = true
+									myArray[i][44].increaseAtt();
+									myArray[i][44].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 42,43,44 = true
+									myArray[i][42].increaseAtt();
+									myArray[i][42].addAttendee(currentUser);
+									myArray[i][43].increaseAtt();
+									myArray[i][43].addAttendee(currentUser);
+									myArray[i][44].increaseAtt();
+									myArray[i][44].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 16)
+					{
+						std::cout << "1) 9:00 - 9:20 PM\n";
+						std::cout << "2) 9:20 - 9:40 PM\n";
+						std::cout << "3) 9:40 - 10:00 PM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 16)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 45 = true
+									myArray[i][45].increaseAtt();
+									myArray[i][45].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 46 = true
+									myArray[i][46].increaseAtt();
+									myArray[i][46].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 47 = true
+									myArray[i][47].increaseAtt();
+									myArray[i][47].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 45,46,47 = true
+									myArray[i][45].increaseAtt();
+									myArray[i][45].addAttendee(currentUser);
+									myArray[i][46].increaseAtt();
+									myArray[i][46].addAttendee(currentUser);
+									myArray[i][47].increaseAtt();
+									myArray[i][47].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 17)
+					{
+						std::cout << "1) 10:00 - 10:20 PM\n";
+						std::cout << "2) 10:20 - 10:40 PM\n";
+						std::cout << "3) 10:40 - 11:00 PM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 17)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 48 = true
+									myArray[i][48].increaseAtt();
+									myArray[i][48].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 49 = true
+									myArray[i][49].increaseAtt();
+									myArray[i][49].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 50 = true
+									myArray[i][50].increaseAtt();
+									myArray[i][50].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 48,49,50 = true
+									myArray[i][48].increaseAtt();
+									myArray[i][48].addAttendee(currentUser);
+									myArray[i][49].increaseAtt();
+									myArray[i][49].addAttendee(currentUser);
+									myArray[i][50].increaseAtt();
+									myArray[i][50].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+					if (hourSelection == 18)
+					{
+						std::cout << "1) 11:00 - 11:20 PM\n";
+						std::cout << "2) 11:20 - 11:40 PM\n";
+						std::cout << "3) 11:40 - 12:00 AM\n";
+						std::cout << "4) Entire Hour\n";
+						std::cout << "5) Go Back\n";
+						while (hourSelection == 18)
+						{
+							int timeSelection = 0;
+							while (timeSelection != 5)
+							{
+								std::cin >> timeSelection;
+								if (timeSelection == 1)
+								{
+									//index 51 = true
+									myArray[i][51].increaseAtt();
+									myArray[i][51].addAttendee(currentUser);
+								}
+								else if (timeSelection == 2)
+								{
+									//index 52 = true
+									myArray[i][52].increaseAtt();
+									myArray[i][52].addAttendee(currentUser);
+								}
+								else if (timeSelection == 3)
+								{
+									//index 53 = true
+									myArray[i][53].increaseAtt();
+									myArray[i][53].addAttendee(currentUser);
+								}
+								else if (timeSelection == 4)
+								{
+									//index 51,52,53 = true
+									myArray[i][51].increaseAtt();
+									myArray[i][51].addAttendee(currentUser);
+									myArray[i][52].increaseAtt();
+									myArray[i][52].addAttendee(currentUser);
+									myArray[i][53].increaseAtt();
+									myArray[i][53].addAttendee(currentUser);
+								}
+								else if (timeSelection == 5)
+								{
+									hourSelection = 0;
+								}
+								else
+								{
+									std::cout << "Please enter a valid selection:\n";
+									std::cin >> timeSelection;
+								}
+							}
+						}
+					}
+				} while (hourSelection != 19);
+			}
+			else if (timeMode == 24) //if 12-hr mode
 		{
 			int hourSelection = 0;
 			do
 			{
 				std::cout << "Select Time\n";
-				std::cout << "1) 5:00 AM\n";
-				std::cout << "2) 6:00 AM\n";
-				std::cout << "3) 7:00 AM\n";
-				std::cout << "4) 8:00 AM\n";
-				std::cout << "5) 9:00 AM\n";
-				std::cout << "6) 10:00 AM\n";
-				std::cout << "7) 11:00 AM\n";
-				std::cout << "8) 1:00 PM\n";
-				std::cout << "9) 2:00 PM\n";
-				std::cout << "10) 3:00 PM\n";
-				std::cout << "11) 4:00 PM\n";
-				std::cout << "12) 5:00 PM\n";
-				std::cout << "13) 6:00 PM\n";
-				std::cout << "14) 7:00 PM\n";
-				std::cout << "15) 8:00 PM\n";
-				std::cout << "16) 9:00 PM\n";
-				std::cout << "17) 10:00 PM\n";
-				std::cout << "18) 11:00 PM\n";
+				std::cout << "1) 05:00\n";
+				std::cout << "2) 06:00\n";
+				std::cout << "3) 07:00\n";
+				std::cout << "4) 08:00\n";
+				std::cout << "5) 09:00\n";
+				std::cout << "6) 10:00\n";
+				std::cout << "7) 11:00\n";
+				std::cout << "8) 13:00\n";
+				std::cout << "9) 14:00\n";
+				std::cout << "10) 15:00\n";
+				std::cout << "11) 16:00\n";
+				std::cout << "12) 17:00\n";
+				std::cout << "13) 18:00\n";
+				std::cout << "14) 19:00\n";
+				std::cout << "15) 20:00\n";
+				std::cout << "16) 21:00\n";
+				std::cout << "17) 22:00\n";
+				std::cout << "18) 23:00\n";
 				std::cout << "19) Finish\n";
 
 				std::cin >> hourSelection;
 				if (hourSelection == 1)
 				{
-					std::cout << "1) 5:00 - 5:20 AM\n";
-					std::cout << "2) 5:20 - 5:40 AM\n";
-					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "1) 05:00 - 05:20\n";
+					std::cout << "2) 05:20 - 05:40\n";
+					std::cout << "3) 05:40 - 06:00\n";
 					std::cout << "4) Entire Hour\n";
 					std::cout << "5) Go Back\n";
 					while (hourSelection == 1)
@@ -503,18 +1557,30 @@ void Executive::AddAvailability(Events event1)
 							if (timeSelection == 1)
 							{
 								//index 0 = true
+								myArray[i][0].increaseAtt();
+								myArray[i][0].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 1 = true
+								myArray[i][1].increaseAtt();
+								myArray[i][1].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 2 = true
+								myArray[i][2].increaseAtt();
+								myArray[i][2].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
-								//index 1,2,3 = true
+								//index 0,1,2 = true
+								myArray[i][0].increaseAtt();
+								myArray[i][0].addAttendee(currentUser);
+								myArray[i][1].increaseAtt();
+								myArray[i][1].addAttendee(currentUser);
+								myArray[i][2].increaseAtt();
+								myArray[i][2].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -530,12 +1596,12 @@ void Executive::AddAvailability(Events event1)
 				}
 				if (hourSelection == 2)
 				{
-					std::cout << "1) 6:00 - 6:20 AM\n";
-					std::cout << "2) 6:20 - 6:40 AM\n";
-					std::cout << "3) 6:40 - 7:00 AM\n";
+					std::cout << "1) 06:00 - 06:20\n";
+					std::cout << "2) 06:20 - 06:40\n";
+					std::cout << "3) 06:40 - 07:00\n";
 					std::cout << "4) Entire Hour\n";
 					std::cout << "5) Go Back\n";
-					while (hourSelection == 1)
+					while (hourSelection == 2)
 					{
 						int timeSelection = 0;
 						while (timeSelection != 5)
@@ -544,18 +1610,30 @@ void Executive::AddAvailability(Events event1)
 							if (timeSelection == 1)
 							{
 								//index 3 = true
+								myArray[i][3].increaseAtt();
+								myArray[i][3].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 4 = true
+								myArray[i][4].increaseAtt();
+								myArray[i][4].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 5 = true
+								myArray[i][5].increaseAtt();
+								myArray[i][5].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 3,4,5 = true
+								myArray[i][3].increaseAtt();
+								myArray[i][3].addAttendee(currentUser);
+								myArray[i][4].increaseAtt();
+								myArray[i][4].addAttendee(currentUser);
+								myArray[i][5].increaseAtt();
+								myArray[i][5].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -571,12 +1649,12 @@ void Executive::AddAvailability(Events event1)
 				}
 				if (hourSelection == 3)
 				{
-					std::cout << "1) 7:00 - 7:20 AM\n";
-					std::cout << "2) 7:20 - 7:40 AM\n";
-					std::cout << "3) 7:40 - 8:00 AM\n";
+					std::cout << "1) 07:00 - 07:20\n";
+					std::cout << "2) 07:20 - 07:40\n";
+					std::cout << "3) 07:40 - 08:00\n";
 					std::cout << "4) Entire Hour\n";
 					std::cout << "5) Go Back\n";
-					while (hourSelection == 1)
+					while (hourSelection == 3)
 					{
 						int timeSelection = 0;
 						while (timeSelection != 5)
@@ -585,18 +1663,30 @@ void Executive::AddAvailability(Events event1)
 							if (timeSelection == 1)
 							{
 								//index 6 = true
+								myArray[i][6].increaseAtt();
+								myArray[i][6].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 7 = true
+								myArray[i][7].increaseAtt();
+								myArray[i][7].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 8 = true
+								myArray[i][8].increaseAtt();
+								myArray[i][8].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 6,7,8 = true
+								myArray[i][6].increaseAtt();
+								myArray[i][6].addAttendee(currentUser);
+								myArray[i][7].increaseAtt();
+								myArray[i][7].addAttendee(currentUser);
+								myArray[i][8].increaseAtt();
+								myArray[i][8].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -612,12 +1702,12 @@ void Executive::AddAvailability(Events event1)
 				}
 				if (hourSelection == 4)
 				{
-					std::cout << "1) 8:00 - 8:20 AM\n";
-					std::cout << "2) 8:20 - 8:40 AM\n";
-					std::cout << "3) 8:40 - 9:00 AM\n";
+					std::cout << "1) 08:00 - 08:20\n";
+					std::cout << "2) 08:20 - 08:40\n";
+					std::cout << "3) 08:40 - 09:00\n";
 					std::cout << "4) Entire Hour\n";
 					std::cout << "5) Go Back\n";
-					while (hourSelection == 1)
+					while (hourSelection == 4)
 					{
 						int timeSelection = 0;
 						while (timeSelection != 5)
@@ -626,18 +1716,30 @@ void Executive::AddAvailability(Events event1)
 							if (timeSelection == 1)
 							{
 								//index 9 = true
+								myArray[i][9].increaseAtt();
+								myArray[i][9].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 10 = true
+								myArray[i][10].increaseAtt();
+								myArray[i][10].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 11 = true
+								myArray[i][11].increaseAtt();
+								myArray[i][11].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 9,10,11 = true
+								myArray[i][9].increaseAtt();
+								myArray[i][9].addAttendee(currentUser);
+								myArray[i][10].increaseAtt();
+								myArray[i][10].addAttendee(currentUser);
+								myArray[i][11].increaseAtt();
+								myArray[i][11].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -653,12 +1755,12 @@ void Executive::AddAvailability(Events event1)
 				}
 				if (hourSelection == 5)
 				{
-					std::cout << "1) 9:00 - 9:20 AM\n";
-					std::cout << "2) 9:20 - 9:40 AM\n";
-					std::cout << "3) 9:40 - 10:00 AM\n";
+					std::cout << "1) 09:00 - 09:20\n";
+					std::cout << "2) 09:20 - 09:40\n";
+					std::cout << "3) 09:40 - 10:00\n";
 					std::cout << "4) Entire Hour\n";
 					std::cout << "5) Go Back\n";
-					while (hourSelection == 1)
+					while (hourSelection == 5)
 					{
 						int timeSelection = 0;
 						while (timeSelection != 5)
@@ -667,18 +1769,30 @@ void Executive::AddAvailability(Events event1)
 							if (timeSelection == 1)
 							{
 								//index 12 = true
+								myArray[i][12].increaseAtt();
+								myArray[i][12].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 13 = true
+								myArray[i][13].increaseAtt();
+								myArray[i][13].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 14 = true
+								myArray[i][14].increaseAtt();
+								myArray[i][14].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
-								//index 1,2,3 = true
+								//index 12,13,14 = true
+								myArray[i][12].increaseAtt();
+								myArray[i][12].addAttendee(currentUser);
+								myArray[i][13].increaseAtt();
+								myArray[i][13].addAttendee(currentUser);
+								myArray[i][14].increaseAtt();
+								myArray[i][14].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -694,12 +1808,12 @@ void Executive::AddAvailability(Events event1)
 				}
 				if (hourSelection == 6)
 				{
-					std::cout << "1) 5:00 - 5:20 AM\n";
-					std::cout << "2) 5:20 - 5:40 AM\n";
-					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "1) 10:00 - 10:20\n";
+					std::cout << "2) 10:20 - 10:40\n";
+					std::cout << "3) 10:40 - 11:00\n";
 					std::cout << "4) Entire Hour\n";
 					std::cout << "5) Go Back\n";
-					while (hourSelection == 1)
+					while (hourSelection == 6)
 					{
 						int timeSelection = 0;
 						while (timeSelection != 5)
@@ -707,19 +1821,31 @@ void Executive::AddAvailability(Events event1)
 							std::cin >> timeSelection;
 							if (timeSelection == 1)
 							{
-								//index 0 = true
+								//index 15 = true
+								myArray[i][15].increaseAtt();
+								myArray[i][15].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
-								//index 1 = true
+								//index 16 = true
+								myArray[i][16].increaseAtt();
+								myArray[i][16].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
-								//index 2 = true
+								//index 17 = true
+								myArray[i][17].increaseAtt();
+								myArray[i][17].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
-								//index 1,2,3 = true
+								//index 15,16,17 = true
+								myArray[i][15].increaseAtt();
+								myArray[i][15].addAttendee(currentUser);
+								myArray[i][16].increaseAtt();
+								myArray[i][16].addAttendee(currentUser);
+								myArray[i][17].increaseAtt();
+								myArray[i][17].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -735,12 +1861,12 @@ void Executive::AddAvailability(Events event1)
 				}
 				if (hourSelection == 7)
 				{
-					std::cout << "1) 5:00 - 5:20 AM\n";
-					std::cout << "2) 5:20 - 5:40 AM\n";
-					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "1) 11:00 - 11:20 AM\n";
+					std::cout << "2) 11:20 - 11:40 AM\n";
+					std::cout << "3) 11:40 - 12:00\n";
 					std::cout << "4) Entire Hour\n";
 					std::cout << "5) Go Back\n";
-					while (hourSelection == 1)
+					while (hourSelection == 7)
 					{
 						int timeSelection = 0;
 						while (timeSelection != 5)
@@ -748,19 +1874,31 @@ void Executive::AddAvailability(Events event1)
 							std::cin >> timeSelection;
 							if (timeSelection == 1)
 							{
-								//index 0 = true
+								//index 18 = true
+								myArray[i][18].increaseAtt();
+								myArray[i][18].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
-								//index 1 = true
+								//index 19 = true
+								myArray[i][19].increaseAtt();
+								myArray[i][19].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
-								//index 2 = true
+								//index 20 = true
+								myArray[i][20].increaseAtt();
+								myArray[i][20].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
-								//index 1,2,3 = true
+								//index 18,19,20 = true
+								myArray[i][18].increaseAtt();
+								myArray[i][18].addAttendee(currentUser);
+								myArray[i][19].increaseAtt();
+								myArray[i][19].addAttendee(currentUser);
+								myArray[i][20].increaseAtt();
+								myArray[i][20].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -776,12 +1914,12 @@ void Executive::AddAvailability(Events event1)
 				}
 				if (hourSelection == 8)
 				{
-					std::cout << "1) 5:00 - 5:20 AM\n";
-					std::cout << "2) 5:20 - 5:40 AM\n";
-					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "1) 13:00 - 13:20\n";
+					std::cout << "2) 13:20 - 13:40\n";
+					std::cout << "3) 13:40 - 14:00\n";
 					std::cout << "4) Entire Hour\n";
 					std::cout << "5) Go Back\n";
-					while (hourSelection == 1)
+					while (hourSelection == 8)
 					{
 						int timeSelection = 0;
 						while (timeSelection != 5)
@@ -789,19 +1927,31 @@ void Executive::AddAvailability(Events event1)
 							std::cin >> timeSelection;
 							if (timeSelection == 1)
 							{
-								//index 0 = true
+								//index 21 = true
+								myArray[i][21].increaseAtt();
+								myArray[i][21].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
-								//index 1 = true
+								//index 22 = true
+								myArray[i][22].increaseAtt();
+								myArray[i][22].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
-								//index 2 = true
+								//index 23 = true
+								myArray[i][23].increaseAtt();
+								myArray[i][23].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
-								//index 1,2,3 = true
+								//index 21,22,23 = true
+								myArray[i][21].increaseAtt();
+								myArray[i][21].addAttendee(currentUser);
+								myArray[i][22].increaseAtt();
+								myArray[i][22].addAttendee(currentUser);
+								myArray[i][23].increaseAtt();
+								myArray[i][23].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -817,12 +1967,12 @@ void Executive::AddAvailability(Events event1)
 				}
 				if (hourSelection == 9)
 				{
-					std::cout << "1) 5:00 - 5:20 AM\n";
-					std::cout << "2) 5:20 - 5:40 AM\n";
-					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "1) 14:00 - 14:20\n";
+					std::cout << "2) 14:20 - 14:40\n";
+					std::cout << "3) 14:40 - 15:00\n";
 					std::cout << "4) Entire Hour\n";
 					std::cout << "5) Go Back\n";
-					while (hourSelection == 1)
+					while (hourSelection == 9)
 					{
 						int timeSelection = 0;
 						while (timeSelection != 5)
@@ -830,19 +1980,31 @@ void Executive::AddAvailability(Events event1)
 							std::cin >> timeSelection;
 							if (timeSelection == 1)
 							{
-								//index 0 = true
+								//index 24 = 
+								myArray[i][24].increaseAtt();
+								myArray[i][24].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
-								//index 1 = true
+								//index 25 = true
+								myArray[i][25].increaseAtt();
+								myArray[i][25].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
-								//index 2 = true
+								//index 26 = true
+								myArray[i][26].increaseAtt();
+								myArray[i][26].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
-								//index 1,2,3 = true
+								//index 24,25,26 = true
+								myArray[i][24].increaseAtt();
+								myArray[i][24].addAttendee(currentUser);
+								myArray[i][25].increaseAtt();
+								myArray[i][25].addAttendee(currentUser);
+								myArray[i][26].increaseAtt();
+								myArray[i][26].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -858,12 +2020,12 @@ void Executive::AddAvailability(Events event1)
 				}
 				if (hourSelection == 10)
 				{
-					std::cout << "1) 5:00 - 5:20 AM\n";
-					std::cout << "2) 5:20 - 5:40 AM\n";
-					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "1) 15:00 - 15:20\n";
+					std::cout << "2) 15:20 - 15:40\n";
+					std::cout << "3) 15:40 - 16:00\n";
 					std::cout << "4) Entire Hour\n";
 					std::cout << "5) Go Back\n";
-					while (hourSelection == 1)
+					while (hourSelection == 10)
 					{
 						int timeSelection = 0;
 						while (timeSelection != 5)
@@ -871,19 +2033,31 @@ void Executive::AddAvailability(Events event1)
 							std::cin >> timeSelection;
 							if (timeSelection == 1)
 							{
-								//index 0 = true
+								//index 27 = true
+								myArray[i][27].increaseAtt();
+								myArray[i][27].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
-								//index 1 = true
+								//index 28 = true
+								myArray[i][28].increaseAtt();
+								myArray[i][28].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
-								//index 2 = true
+								//index 29 = true
+								myArray[i][29].increaseAtt();
+								myArray[i][29].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
-								//index 1,2,3 = true
+								//index 27,28,29 = true
+								myArray[i][27].increaseAtt();
+								myArray[i][27].addAttendee(currentUser);
+								myArray[i][28].increaseAtt();
+								myArray[i][28].addAttendee(currentUser);
+								myArray[i][29].increaseAtt();
+								myArray[i][29].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -899,12 +2073,12 @@ void Executive::AddAvailability(Events event1)
 				}
 				if (hourSelection == 11)
 				{
-					std::cout << "1) 5:00 - 5:20 AM\n";
-					std::cout << "2) 5:20 - 5:40 AM\n";
-					std::cout << "3) 5:40 - 6:00 AM\n";
+					std::cout << "1) 16:00 - 16:20\n";
+					std::cout << "2) 16:20 - 16:40\n";
+					std::cout << "3) 16:40 - 17:00\n";
 					std::cout << "4) Entire Hour\n";
 					std::cout << "5) Go Back\n";
-					while (hourSelection == 1)
+					while (hourSelection == 11)
 					{
 						int timeSelection = 0;
 						while (timeSelection != 5)
@@ -912,19 +2086,402 @@ void Executive::AddAvailability(Events event1)
 							std::cin >> timeSelection;
 							if (timeSelection == 1)
 							{
-								//index 0 = true
+								//index 30 = true
+								myArray[i][30].increaseAtt();
+								myArray[i][30].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
-								//index 1 = true
+								//index 31 = true
+								myArray[i][31].increaseAtt();
+								myArray[i][31].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
-								//index 2 = true
+								//index 32 = true
+								myArray[i][32].increaseAtt();
+								myArray[i][32].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
-								//index 1,2,3 = true
+								//index 30,31,32 = true
+								myArray[i][30].increaseAtt();
+								myArray[i][30].addAttendee(currentUser);
+								myArray[i][31].increaseAtt();
+								myArray[i][31].addAttendee(currentUser);
+								myArray[i][32].increaseAtt();
+								myArray[i][32].addAttendee(currentUser);
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 12)
+				{
+					std::cout << "1) 17:00 - 17:20\n";
+					std::cout << "2) 17:20 - 17:40\n";
+					std::cout << "3) 17:40 - 18:00\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 12)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 33 = true
+								myArray[i][33].increaseAtt();
+								myArray[i][33].addAttendee(currentUser);
+							}
+							else if (timeSelection == 2)
+							{
+								//index 34 = true
+								myArray[i][34].increaseAtt();
+								myArray[i][34].addAttendee(currentUser);
+							}
+							else if (timeSelection == 3)
+							{
+								//index 35 = true
+								myArray[i][35].increaseAtt();
+								myArray[i][35].addAttendee(currentUser);
+							}
+							else if (timeSelection == 4)
+							{
+								//index 33,34,35 = true
+								myArray[i][33].increaseAtt();
+								myArray[i][33].addAttendee(currentUser);
+								myArray[i][34].increaseAtt();
+								myArray[i][34].addAttendee(currentUser);
+								myArray[i][35].increaseAtt();
+								myArray[i][35].addAttendee(currentUser);
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 13)
+				{
+					std::cout << "1) 18:00 - 18:20\n";
+					std::cout << "2) 18:20 - 18:40\n";
+					std::cout << "3) 18:40 - 19:00\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 13)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 36 = true
+								myArray[i][36].increaseAtt();
+								myArray[i][36].addAttendee(currentUser);
+							}
+							else if (timeSelection == 2)
+							{
+								//index 37 = true
+								myArray[i][37].increaseAtt();
+								myArray[i][37].addAttendee(currentUser);
+							}
+							else if (timeSelection == 3)
+							{
+								//index 38 = true
+								myArray[i][38].increaseAtt();
+								myArray[i][38].addAttendee(currentUser);
+							}
+							else if (timeSelection == 4)
+							{
+								//index 36,37,38 = true
+								myArray[i][36].increaseAtt();
+								myArray[i][36].addAttendee(currentUser);
+								myArray[i][37].increaseAtt();
+								myArray[i][37].addAttendee(currentUser);
+								myArray[i][38].increaseAtt();
+								myArray[i][38].addAttendee(currentUser);
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 14)
+				{
+					std::cout << "1) 19:00 - 19:20\n";
+					std::cout << "2) 19:20 - 19:40\n";
+					std::cout << "3) 19:40 - 20:00\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 14)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 39 = true
+								myArray[i][39].increaseAtt();
+								myArray[i][39].addAttendee(currentUser);
+							}
+							else if (timeSelection == 2)
+							{
+								//index 40 = true
+								myArray[i][40].increaseAtt();
+								myArray[i][40].addAttendee(currentUser);
+							}
+							else if (timeSelection == 3)
+							{
+								//index 41 = true
+								myArray[i][41].increaseAtt();
+								myArray[i][41].addAttendee(currentUser);
+							}
+							else if (timeSelection == 4)
+							{
+								//index 39,40,41 = true
+								myArray[i][39].increaseAtt();
+								myArray[i][39].addAttendee(currentUser);
+								myArray[i][40].increaseAtt();
+								myArray[i][40].addAttendee(currentUser);
+								myArray[i][41].increaseAtt();
+								myArray[i][41].addAttendee(currentUser);
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 15)
+				{
+					std::cout << "1) 20:00 - 20:20\n";
+					std::cout << "2) 20:20 - 20:40\n";
+					std::cout << "3) 20:40 - 21:00\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 15)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 42 = true
+								myArray[i][42].increaseAtt();
+								myArray[i][42].addAttendee(currentUser);
+							}
+							else if (timeSelection == 2)
+							{
+								//index 43 = true
+								myArray[i][43].increaseAtt();
+								myArray[i][43].addAttendee(currentUser);
+							}
+							else if (timeSelection == 3)
+							{
+								//index 44 = true
+								myArray[i][44].increaseAtt();
+								myArray[i][44].addAttendee(currentUser);
+							}
+							else if (timeSelection == 4)
+							{
+								//index 42,43,44 = true
+								myArray[i][42].increaseAtt();
+								myArray[i][42].addAttendee(currentUser);
+								myArray[i][43].increaseAtt();
+								myArray[i][43].addAttendee(currentUser);
+								myArray[i][44].increaseAtt();
+								myArray[i][44].addAttendee(currentUser);
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 16)
+				{
+					std::cout << "1) 21:00 - 21:20\n";
+					std::cout << "2) 21:20 - 21:40\n";
+					std::cout << "3) 21:40 - 22:00\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 16)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 45 = true
+								myArray[i][45].increaseAtt();
+								myArray[i][45].addAttendee(currentUser);
+							}
+							else if (timeSelection == 2)
+							{
+								//index 46 = true
+								myArray[i][46].increaseAtt();
+								myArray[i][46].addAttendee(currentUser);
+							}
+							else if (timeSelection == 3)
+							{
+								//index 47 = true
+								myArray[i][47].increaseAtt();
+								myArray[i][47].addAttendee(currentUser);
+							}
+							else if (timeSelection == 4)
+							{
+								//index 45,46,47 = true
+								myArray[i][45].increaseAtt();
+								myArray[i][45].addAttendee(currentUser);
+								myArray[i][46].increaseAtt();
+								myArray[i][46].addAttendee(currentUser);
+								myArray[i][47].increaseAtt();
+								myArray[i][47].addAttendee(currentUser);
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 17)
+				{
+					std::cout << "1) 22:00 - 22:20\n";
+					std::cout << "2) 22:20 - 22:40\n";
+					std::cout << "3) 22:40 - 23:00\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 17)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 48 = true
+								myArray[i][48].increaseAtt();
+								myArray[i][48].addAttendee(currentUser);
+							}
+							else if (timeSelection == 2)
+							{
+								//index 49 = true
+								myArray[i][49].increaseAtt();
+								myArray[i][49].addAttendee(currentUser);
+							}
+							else if (timeSelection == 3)
+							{
+								//index 50 = true
+								myArray[i][50].increaseAtt();
+								myArray[i][50].addAttendee(currentUser);
+							}
+							else if (timeSelection == 4)
+							{
+								//index 48,49,50 = true
+								myArray[i][48].increaseAtt();
+								myArray[i][48].addAttendee(currentUser);
+								myArray[i][49].increaseAtt();
+								myArray[i][49].addAttendee(currentUser);
+								myArray[i][50].increaseAtt();
+								myArray[i][50].addAttendee(currentUser);
+							}
+							else if (timeSelection == 5)
+							{
+								hourSelection = 0;
+							}
+							else
+							{
+								std::cout << "Please enter a valid selection:\n";
+								std::cin >> timeSelection;
+							}
+						}
+					}
+				}
+				if (hourSelection == 18)
+				{
+					std::cout << "1) 23:00 - 23:20\n";
+					std::cout << "2) 23:20 - 23:40\n";
+					std::cout << "3) 23:40 - 00:00\n";
+					std::cout << "4) Entire Hour\n";
+					std::cout << "5) Go Back\n";
+					while (hourSelection == 18)
+					{
+						int timeSelection = 0;
+						while (timeSelection != 5)
+						{
+							std::cin >> timeSelection;
+							if (timeSelection == 1)
+							{
+								//index 51 = 
+								myArray[i][51].increaseAtt();
+								myArray[i][51].addAttendee(currentUser);
+							}
+							else if (timeSelection == 2)
+							{
+								//index 52 = true
+								myArray[i][52].increaseAtt();
+								myArray[i][52].addAttendee(currentUser);
+							}
+							else if (timeSelection == 3)
+							{
+								//index 53 = true
+								myArray[i][53].increaseAtt();
+								myArray[i][53].addAttendee(currentUser);
+							}
+							else if (timeSelection == 4)
+							{
+								//index 51,52,53 = true
+								myArray[i][51].increaseAtt();
+								myArray[i][51].addAttendee(currentUser);
+								myArray[i][52].increaseAtt();
+								myArray[i][52].addAttendee(currentUser);
+								myArray[i][53].increaseAtt();
+								myArray[i][53].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -939,11 +2496,10 @@ void Executive::AddAvailability(Events event1)
 					}
 				}
 			} while (hourSelection != 19);
-
 		}
-		else {
-
+			else {}
 		}
+		event1.setTimes(myArray);
 	}
 }
 

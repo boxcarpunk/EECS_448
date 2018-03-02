@@ -25,7 +25,7 @@ public:
 	*	@param String for name and integers for month, day, and year
 	*	@return None
 	*/
-	Events (std::string name, std::string month, std::string day, std::string year, int numOfDays);
+	Events (std::string name, int numOfDays, TimeSlots**);
 
 	/**
 	*	Empty destructor
@@ -97,6 +97,10 @@ public:
 	*/
 	void addTimeSlots(int s_t, int numOfAtt);
 
+	void setTimes(TimeSlots**);
+
+	TimeSlots** getTimes();
+
 
 	/**
 	*	Operator overload for == between two events, checks the name and dates of the events
@@ -131,5 +135,6 @@ private:
 	LinkedList<TimeSlots, TimeSlots>* m_TimeSlot; /**< pointer to list of time slots for this event */
 	int m_numOfDays;
 
+	TimeSlots** timeSlot;
 	std::vector<std::string> m_dates;
 };

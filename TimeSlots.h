@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-
+#include <vector>
 class TimeSlots
 {
 public:
@@ -49,6 +49,8 @@ public:
 	*/
 	void setTimeSlot(int time);
 
+	void addAttendee(std::string);
+
 	/**
 	*	The number of attendees is returned to the program
 	*	@pre None
@@ -66,6 +68,9 @@ public:
 	*	@return An int representing the timeslot
 	*/
 	int getTimeSlot();
+
+	std::vector<std::string> getAttendees();
+
 
 	/**
 	*	Increases the number of attendees by one
@@ -97,5 +102,5 @@ public:
 private:
 	int m_numOfAtt;  /**< the number of attendants for a certain timeslot in an event */
 	int m_TimeSlot;  /**< the timeslot for an event */
-
+	std::vector<std::string> m_attendees;
 };

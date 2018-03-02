@@ -89,4 +89,5 @@ class Executive
 	int timeMode;
 	std::string m_attNum = ""; // placeholder variable for an attendance number of an event, to be passed to Event class as an argument
 	std::string m_months[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+	std::string currentUser = "";
 };

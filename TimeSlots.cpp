@@ -27,6 +27,11 @@ void TimeSlots::setTimeSlot(int time)
 	m_TimeSlot = time; //sets the time slot to what was passed in
 }
 
+void TimeSlots::addAttendee(std::string name)
+{
+	m_attendees.push_back(name);
+}
+
 int TimeSlots::getNum()
 {
 	return m_numOfAtt; //returns the number of attendees
@@ -35,6 +40,11 @@ int TimeSlots::getNum()
 int TimeSlots::getTimeSlot()
 {
 	return m_TimeSlot; //returns the time slot
+}
+
+std::vector<std::string> TimeSlots::getAttendees()
+{
+	return m_attendees;
 }
 
 TimeSlots::~TimeSlots()
