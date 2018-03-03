@@ -74,10 +74,16 @@ void Events::getInfo()
 			std::cout << timeSlot[i][j].getNum();
 			if (timeSlot[i][j].getNum() != 0)
 			{
-				std::vector<std::string> name;
-				for (int i = 0; i < timeSlot[i][j].getNum(); i++)
+				std::vector<std::string> names;
+				for (int k = 0; k < timeSlot[i][j].getNum(); k++)
+				{
 					timeSlot[i][j].getAttendees();
-					//std::cout << timeSlot[i][j].getAttendees();
+					names = timeSlot[i][j].getAttendees();
+					for (int l = 0; l < names.size(); l++)
+					{
+						std::cout << names[l];
+					}
+				}
 			}
 		}
 	}
