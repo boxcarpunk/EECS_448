@@ -1,7 +1,6 @@
 #include <string>
 #include <fstream>
 #include <ncurses.h>
-#include "Dialog.h"
 #include "Highlight.h"
 #include "Designs.h"
 #include <string>
