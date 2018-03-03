@@ -76,7 +76,6 @@ void Executive::run()
 	while (programStatus == true) //main program loop condition
 	{
 		std::cout << "Are you an admin or a user?\n  (1) Admin\n  (2) User\n  (3) Quit\n\n  Choice: ";
-		std::cin.ignore(); //wipes cin
 		std::cin >> choice; //takes in and stores the menu input
 		while(std::cin.fail()) //fail bit code to recover bad input
 		{
@@ -361,7 +360,6 @@ bool Executive::addEvent(bool mode12)
 		while (1) //runs infinitely
 		{
 			std::cout << "\nWhat year will your event take place?\n";
-			std::cin.ignore(); //wipes cin
 			std::cin >> year; //takes in the year
 			while (std::cin.fail()) //fail bit code to recover from bad input
 			{
