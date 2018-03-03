@@ -13,6 +13,7 @@ class Path
 		Path();
 		~Path();
 		void Login(int screen,int AdminOrUser);
+		std::string Input(WINDOW * win1);
 
 	private:
 		const char * m_Field[100][100];
@@ -28,7 +29,7 @@ class Path
 		int m_MenuCounter;
 		std::string EmptyString;
 		char * FirstAdminMenu[3]={"Add Event","Edit Event","Back"};
-		char * FirstUserMenu[2]={"Add Availability","Back"};
+		char * FirstUserMenu[3]={"Add Availability","Back","Submit"};
 		char * Events[3]={"Even1","Event2","Event3"};
 		char * SecondUserMenu[3]={"Add Available Tasks","Submit","Back"};
 		char * TwelveAval[19]={"5:00 AM","6:00 AM","7:00 AM","8:00 AM","9:00 AM","10:00 AM","11:00 AM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM","7:00 PM","8:00 PM","9:00 PM","10:00 PM","11:00 PM","Submit"};
@@ -55,6 +56,7 @@ class Path
 		char * EventNames[9]={"1","2","3","4","5","6","7","8","9"};
 		char * stuff[2]={"How!?","What!!"};
 		bool TT1;
+		bool Type;
 		WINDOW * InvWin;
 		bool TalkedTo1;
 		bool Twelve;

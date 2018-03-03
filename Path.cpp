@@ -52,6 +52,10 @@ void Path::Login(int screen, int AdminOrUser)
 		box(win1,0,0);
 		wrefresh(win1);
 		refresh();
+		string Username = Input(win1);
+		wclear(win1);
+		wrefresh(win1);
+		Login(3,1);
 	}
 	else if((screen == 5)&&(AdminOrUser==0))
 	{
@@ -61,6 +65,8 @@ void Path::Login(int screen, int AdminOrUser)
 		box(win1,0,0);
 		wrefresh(win1);
 		refresh();
+		Input(win1);
+		Login(6,0);
 	}
 	else if((screen == 6)&&(AdminOrUser==0))
 	{
@@ -71,6 +77,7 @@ void Path::Login(int screen, int AdminOrUser)
 		box(win1,0,0);
 		wrefresh(win1);
 		refresh();
+		Input(win1);
 	}
 	else if(screen == 3)
 	{
@@ -89,7 +96,7 @@ void Path::Login(int screen, int AdminOrUser)
 		//getch();
 		if(Choice==2)
 		{
-			Login(2,1);
+			Login(1,1);
 		}
 		else
 		{
@@ -135,9 +142,17 @@ void Path::Login(int screen, int AdminOrUser)
 		{
 			Login(5,1);
 		}
-		else
+		else if(Choice==1)
 		{
 			Login(3,1);
+		}
+		else
+		{
+			string B = to_string(Choice);
+			char const *pchar = B.c_str();
+			mvwprintw(win0,0,0,pchar);
+			wrefresh(win0);
+			getch();
 		}
 	}
 	else if((screen == 5)&&(AdminOrUser==1))
@@ -298,9 +313,9 @@ void Path::Login(int screen, int AdminOrUser)
 		}
 		else if(Choice2==1)
 		{
-			string B = to_string(Choice2);
-			char const *pchar = B.c_str();
-			mvwprintw(win0,0,0,pchar);
+			//string B = to_string(Choice2);
+			//char const *pchar = B.c_str();
+			mvwprintw(win0,0,0,"Done!");
 			wrefresh(win0);
 			getch();
 		}
@@ -309,14 +324,17 @@ void Path::Login(int screen, int AdminOrUser)
 			Login(6,1);
 		}
 	}
+}
+string Path::Input(WINDOW * win1)
+{
 	keypad(stdscr,TRUE);
 	int Keys = 0;
 	string ValidChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()`~-_=+,<.>/?';:[{]}";
 	string Info = "";
-	bool success = true;
+	bool Enter = false;
 	string A = "A";
 	string B = "B";
-	while(1)
+	while(!Enter)
 	{
 		Keys = getch();
 		switch(Keys)
@@ -324,20 +342,7 @@ void Path::Login(int screen, int AdminOrUser)
 			//Enter
 			case 10:
 			{
-				wclear(win1);
-				if(screen==1)
-				{
-					Login(3,1);
-				}
-				else if((screen == 5)&&(AdminOrUser==0))
-				{
-					Login(6,0);
-				}
-				else if((screen == 6)&&(AdminOrUser==0))
-				{
-					Login(6,0);
-				}
-				wrefresh(win1);
+				Enter = true;
 				break;
 			}
 			//backspace
@@ -355,9 +360,6 @@ void Path::Login(int screen, int AdminOrUser)
 			}
 			default:
 			{
-				//string i = to_string(Keys);
-				//const char  * number = i.c_str();
-				//mvwprintw(win1, 0, 0, number);
 				break;
 			}
 		}
@@ -375,4 +377,5 @@ void Path::Login(int screen, int AdminOrUser)
 		}
 		wrefresh(win1);
 	}
+	return(Info);
 }
