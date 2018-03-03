@@ -59,6 +59,8 @@ class Executive
 	private:
 	LinkedList<Events, std::string>* eventList; /**< List which holds the event objects */
 
+	//std::vector<Events> eventList;
+
 	/**
 	*	The program initializes the admin mode
 	*	@pre None

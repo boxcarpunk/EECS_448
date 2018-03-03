@@ -53,7 +53,9 @@ void LinkedList<keyType, searchType>::addBack(keyType value)
 {
   if(isEmpty()) //if the list is empty
   {
-    addFront(value); //add the value to the front
+		  addFront(value); //add the value to the front
+
+	std::cout << "HERE2\n";
   }
   else //if the list is not empty
   {
@@ -75,7 +77,7 @@ void LinkedList<keyType, searchType>::addFront(keyType value)
 {
   Node<keyType>* temp = new Node<keyType>(value); //creates a new node containing the given value
 
-    if(isEmpty()) //if the list is empty
+    if(m_front == nullptr) //if the list is empty
     {
       m_front = temp; //makes the front node ptr point to the new node
     }
@@ -86,6 +88,8 @@ void LinkedList<keyType, searchType>::addFront(keyType value)
     }
 
     m_length++; //increases the length of the list by one since a node was added
+	std::cout << "HERE1\n";
+
 }
 
 template <typename keyType, typename searchType>

@@ -86,7 +86,7 @@ void Events::getInfo()
 				{
 					timeSlot[i][j].getAttendees();
 					names = timeSlot[i][j].getAttendees();
-					for (int l = 0; l < names.size(); l++)
+					for (size_t l = 0; l < names.size(); l++)
 					{
 						std::cout << names[l];
 					}

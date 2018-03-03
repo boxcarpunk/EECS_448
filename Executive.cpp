@@ -374,116 +374,70 @@ bool Executive::addEvent(bool mode12)
 	std::cout << "How many days would you like to add?\n";
 	//TODO: Error check input
 	std::cin >> numOfDays;
-	std::cout << "HERE: " << name << std::endl;
 
 	TimeSlots** myArray = new TimeSlots*[numOfDays];
 	for (int i = 0; i < numOfDays; i++)
 	{
 		myArray[i] = new TimeSlots[54];
   }
-  
-	/*if (validEventName(name,17) == true) {//checks if event name entered is >0 and less than 17 characters
-		while (1) //runs infinitely
-		{
-			std::cout << "\nWhat year will your event take place?\n";
-			std::cin.ignore(); //wipes cin
-			std::cin >> year; //takes in the year
-			while (std::cin.fail()) //fail bit code to recover from bad input
-			{
-				std::cin.clear();
-				std::cin.ignore();
-				std::cout << "Invalid input, please enter a year\n";
-				std::cin >> year;
-			}
-			std::cout << "\nWhat month will your event take place?\n";
-			for (int i = 0; i < 12; i++)
-			{
-				std::cout << "  (" << i + 1 << ")" << " " << m_months[i] << std::endl;
-			}
-			std::cin.ignore(); //wipes cin
-			std::cin >> month; //takes in the month
-			while (std::cin.fail()) //fail bit code to recover from bad input
-			{
-				std::cin.clear();
-				std::cin.ignore();
-				std::cout << "Invalid input, please select '1'-'12'\n";
-				std::cin >> month;
-			}
-			std::cout << "\nWhat day will your event take place?\n";
-			std::cin.ignore(); //wipes cin
-			std::cin >> day; //takes in the day
-			while (std::cin.fail()) //fail bit code to recover from bad input
-			{
-				std::cin.clear();
-				std::cin.ignore();
-				std::cout << "Invalid input, please enter a day\n";
-				std::cin >> day;
-			}
 
-			if (dateCheck(year, month, day) == true) //if the date is valid
+	if (validEventName(name, 17))//checks if event name entered is >0 and less than 17 characters
+	{
+		Events event1(name, numOfDays, myArray);
+		
+		for (int i = 0; i < numOfDays; i++)
+		{
+			std::cout << "Day " << i + 1 << ": \n";
+
+			while (1) //runs infinitely
 			{
-				break; //break out of the while loop
-			}
-			else //if the date is invalid
-			{
-				std::cout << "\nThis date is invalid, please enter a valid date\n"; //notify the user that the date is invalid
+				std::cout << "\nWhat year will your event take place?\n";
+				std::cin.ignore(); //wipes cin
+				std::cin >> year; //takes in the year
+				while (std::cin.fail()) //fail bit code to recover from bad input
+				{
+					std::cin.clear();
+					std::cin.ignore();
+					std::cout << "Invalid input, please enter a year\n";
+					std::cin >> year;
+				}
+				std::cout << "\nWhat month will your event take place?\n";
+				for (int i = 0; i < 12; i++)
+				{
+					std::cout << "  (" << i + 1 << ")" << " " << m_months[i] << std::endl;
+				}
+				std::cin.ignore(); //wipes cin
+				std::cin >> month; //takes in the month
+				while (std::cin.fail()) //fail bit code to recover from bad input
+				{
+					std::cin.clear();
+					std::cin.ignore();
+					std::cout << "Invalid input, please select '1'-'12'\n";
+					std::cin >> month;
+				}
+				std::cout << "\nWhat day will your event take place?\n";
+				std::cin.ignore(); //wipes cin
+				std::cin >> day; //takes in the day
+				while (std::cin.fail()) //fail bit code to recover from bad input
+				{
+					std::cin.clear();
+					std::cin.ignore();
+					std::cout << "Invalid input, please enter a day\n";
+					std::cin >> day;
+				}
+
+				if (dateCheck(year, month, day) == true) //if the date is valid
+				{
+					break; //break out of the while loop
+				}
+				else //if the date is invalid
+				{
+					std::cout << "\nThis date is invalid, please enter a valid date\n"; //notify the user that the date is invalid
+				}
 			}
 		}
-	}
-	else
-	{
-		std::cout << "\nInvalid name. Please enter a valid name. (The event name needs to be less than 17 characters.)";
-		addEvent(mode12);
-	}
+		std::cout << "Here1\n";
 
-	Events event1(name, numOfDays, myArray);
-
-	for (int i = 0; i < numOfDays; i++)
-	{
-		std::cout << "Day " << i+1 << ": \n";
-		while (1) //runs infinitely
-		{
-			std::cout << "\nWhat year will your event take place?\n";
-			std::cin >> year; //takes in the year
-			while (std::cin.fail()) //fail bit code to recover from bad input
-			{
-				std::cin.clear();
-				std::cin.ignore();
-				std::cout << "Invalid input, please enter a year\n";
-				std::cin >> year;
-			}
-			std::cout << "\nWhat month will your event take place?\n";
-			for (int i = 0; i < 12; i++)
-			{
-				std::cout << "  (" << i + 1 << ")" << " " << m_months[i] << std::endl;
-			}
-			std::cin >> month; //takes in the month
-			while (std::cin.fail()) //fail bit code to recover from bad input
-			{
-				std::cin.clear();
-				std::cout << "Invalid input, please select '1'-'12'\n";
-				std::cin >> month;
-			}
-			std::cout << "\nWhat day will your event take place?\n";
-			std::cin.ignore(); //wipes cin
-			std::cin >> day; //takes in the day
-			while (std::cin.fail()) //fail bit code to recover from bad input
-			{
-				std::cin.clear();
-				std::cin.ignore();
-				std::cout << "Invalid input, please enter a day\n";
-				std::cin >> day;
-			}
-
-			if (dateCheck(year, month, day) == true) //if the date is valid
-			{
-				break; //break out of the while loop
-			}
-			else //if the date is invalid
-			{
-				std::cout << "\nThis date is invalid, please enter a valid date\n"; //notify the user that the date is invalid
-			}
-		}
 		std::string strMonth, strDay, strYear, date;
 		strMonth = std::to_string(month);
 		strDay = std::to_string(day);
@@ -498,50 +452,32 @@ bool Executive::addEvent(bool mode12)
 		{
 			strDay = "0" + strDay;
 		}
+		std::cout << "Here2\n";
 
 		date = strMonth + "/" + strDay + "/" + strYear;
+		
+		std::cout << "Here3\n";
 
-		event1.setDates(date);*/
+		event1.setDates(date);
+		std::cout << "Here4\n";
 
-		/*std::string year, month, day;
-		//std::string date = dates[0];
-		day = date.substr(0, 2);
-		month = date.substr(3, 2);
-		year = date.substr(6, 10);
-		std::cout << "\n" << m_name << " is occuring on " << month << "/" << day << "/" << year << ".\n"; //prints the name and date of the event*/
+		eventList->addBack(event1);
 
+		std::cout << "Here5\n";
+
+		//std::cout << eventList->getLength();
+		eventList->sort();
+		std::cout << "Here6\n";
+		AddAvailability(event1);
+		std::cout << "Here7\n";
+	}
+	else
+	{
+		std::cout << "\nInvalid name. Please enter a valid name. (The event name needs to be less than 17 characters.)";
+		addEvent(mode12);
 	}
 
 
-	eventList->addBack(event1);
-	//std::cout << eventList->getLength();
-	eventList->sort();
-
-	AddAvailability(event1);
-
-/*	m_intSTime = stoi(m_stime);
-	m_intETime = stoi(m_etime);
-	double numTs = ceil(((std::stod(m_etime) - std::stod(m_stime))/100) * 3);
-	std::cout << numTs << "\n";
-	int tsup = ceil(m_intSTime);
-	for (int i = 0; i < numTs; i ++)
-	{
-		if(tsup % 100 == 60)
-		{
-			tsup = tsup + 40;
-		}
-		event1.addTimeSlots(tsup, 1);
-		tsup += 20;
-
-	}
-	eventList->addBack(event1);
-	eventList->sort();
-        std::cout << "\n The length of timeslots is " << event1.getTimeSlots()->getLength() << "\n";
-	event1.getInfo();
-	for (int i=1; i <= event1.getTimeSlots()->getLength(); i++)
-	{
-		std::cout << "There are " << event1.getTimeSlots()->getEntry(i).getNum() << " people available at " << event1.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
-	}*/
 
 	return true;
 }
