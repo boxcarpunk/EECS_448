@@ -3,7 +3,9 @@
 #include <string>
 #include "LinkedList.h"
 #include "TimeSlots.h"
+
 #include <vector>
+#include "Task.h"
 
 class Events
 {
@@ -25,16 +27,19 @@ public:
 	*	@param String for name and integers for month, day, and year
 	*	@return None
 	*/
+
 	Events (std::string name, int numOfDays, TimeSlots**);
 
 	/**
-	*	Empty destructor
+	*	Destructor deletes the linked lists
 	*	@pre None
 	*	@post None
 	*	@param None
 	*	@return None
 	*/
 	~Events();
+
+	static const std::string holidays[3];
 
 	/**
 	*	Private member variable is assigned correct value
@@ -97,10 +102,46 @@ public:
 	*/
 	void addTimeSlots(int s_t, int numOfAtt);
 
+
 	void setTimes(TimeSlots**);
 
 	TimeSlots** getTimes();
 
+	/**
+	*	Adds a task to the list of tasks for the event
+	*	@pre None
+	*	@post New Task object added to m_Task list for the event
+	*	@param The name of the task to be added
+	*	@return None
+	*/
+	void addTask(std::string name);
+
+	/**
+	*	Allows a user to sign up for a task
+	*	@pre There is a task in the list with the given name
+	*	@post The task is handled
+	*	@param The name of the task to be handled and the person handling it
+	*	@return True if the person could sign up for the task, false otherwise
+	*/
+	bool signUpTask(std::string userName, std::string taskName);
+
+	/**
+	*	Allows a user to un-sign up for a task
+	*	@pre The user is handling the task
+	*	@post The user is no longer handling the task
+	*	@param The name of the task to be un-handled and the name of the person trying to un-sign up
+	*	@return True if the person could un-sign up, false otherwise
+	*/
+	bool cancelSignUpTask(std::string userName, std::string taskName);
+
+	/**
+	*	Gets the task list
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return The list of tasks for the event
+	*/
+	LinkedList<Task, std::string>* getTasks();
 
 	/**
 	*	Operator overload for == between two events, checks the name and dates of the events
@@ -129,12 +170,14 @@ public:
 	*/
 	bool operator>(const Events& rhs) const;
 
-
 private:
 	std::string m_name; /**< event name */
 	LinkedList<TimeSlots, TimeSlots>* m_TimeSlot; /**< pointer to list of time slots for this event */
+
 	int m_numOfDays;
 
 	TimeSlots** timeSlot;
 	std::vector<std::string> m_dates;
+
+	LinkedList<Task, std::string>* m_Task; /**< pointer to list of tasks for this event */
 };

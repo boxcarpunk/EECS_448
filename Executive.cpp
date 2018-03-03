@@ -211,6 +211,7 @@ bool Executive::adminFunc(bool mode12)
 			std::cout << "\nPlease enter the name of the event you would like to pull up: ";
 			std::cin.ignore(); //wipes cin
 			std::getline(std::cin, nameToSearch); //takes in the name of the event
+
 			if (eventList->isFound(nameToSearch)) //if the event is in the list
 			{
 				std::cout << "\nThe event was found: " << nameToSearch << "\n\n"; //notifies the user that the event was found
@@ -379,6 +380,60 @@ bool Executive::addEvent(bool mode12)
 	for (int i = 0; i < numOfDays; i++)
 	{
 		myArray[i] = new TimeSlots[54];
+  }
+  
+	/*if (validEventName(name,17) == true) {//checks if event name entered is >0 and less than 17 characters
+		while (1) //runs infinitely
+		{
+			std::cout << "\nWhat year will your event take place?\n";
+			std::cin.ignore(); //wipes cin
+			std::cin >> year; //takes in the year
+			while (std::cin.fail()) //fail bit code to recover from bad input
+			{
+				std::cin.clear();
+				std::cin.ignore();
+				std::cout << "Invalid input, please enter a year\n";
+				std::cin >> year;
+			}
+			std::cout << "\nWhat month will your event take place?\n";
+			for (int i = 0; i < 12; i++)
+			{
+				std::cout << "  (" << i + 1 << ")" << " " << m_months[i] << std::endl;
+			}
+			std::cin.ignore(); //wipes cin
+			std::cin >> month; //takes in the month
+			while (std::cin.fail()) //fail bit code to recover from bad input
+			{
+				std::cin.clear();
+				std::cin.ignore();
+				std::cout << "Invalid input, please select '1'-'12'\n";
+				std::cin >> month;
+			}
+			std::cout << "\nWhat day will your event take place?\n";
+			std::cin.ignore(); //wipes cin
+			std::cin >> day; //takes in the day
+			while (std::cin.fail()) //fail bit code to recover from bad input
+			{
+				std::cin.clear();
+				std::cin.ignore();
+				std::cout << "Invalid input, please enter a day\n";
+				std::cin >> day;
+			}
+
+			if (dateCheck(year, month, day) == true) //if the date is valid
+			{
+				break; //break out of the while loop
+			}
+			else //if the date is invalid
+			{
+				std::cout << "\nThis date is invalid, please enter a valid date\n"; //notify the user that the date is invalid
+			}
+		}
+	}
+	else
+	{
+		std::cout << "\nInvalid name. Please enter a valid name. (The event name needs to be less than 17 characters.)";
+		addEvent(mode12);
 	}
 
 	Events event1(name, numOfDays, myArray);
@@ -446,7 +501,7 @@ bool Executive::addEvent(bool mode12)
 
 		date = strMonth + "/" + strDay + "/" + strYear;
 
-		event1.setDates(date);
+		event1.setDates(date);*/
 
 		/*std::string year, month, day;
 		//std::string date = dates[0];
@@ -2513,9 +2568,10 @@ void Executive::printEvents()
 }
 
 bool Executive::dateCheck(int y, int m, int d)
-{
+{///next few lines are important to keep running on Anna's computer
 	time_t now = time(0);
-	tm* ltm = localtime(&now);
+	tm* ltm = new tm();
+	localtime_s(ltm, &now);
 	int curY = (1900 + ltm->tm_year);
 	if(y < curY)
 	{
@@ -2573,5 +2629,25 @@ bool Executive::dateCheck(int y, int m, int d)
 			}
 		}
 	}
+	int size = sizeof(Events::holidays)/ sizeof(Events::holidays[0]);
+	//check if holiday (uses holiday size)
+	for (int i = 0; i < size; i++) {
+		std::istringstream issholiday(Events::holidays[i]);
+		std::string f;
+		std::vector<std::string> holiday;
+		while (std::getline(issholiday, f, '/')) {
+			holiday.push_back(f);
+		}
+		if (std::stoi(holiday[0]) == m && std::stoi(holiday[1]) == d) {
+			return false;
+		}
+	}
 	return true;
+}
+
+bool Executive::validEventName(std::string name, int value) {
+	if (name.length() == 0 || name.length()>(value-1)) 
+		return false;
+	else
+		return true;
 }

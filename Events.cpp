@@ -1,9 +1,12 @@
 #include "Events.h"
 
+const std::string Events::holidays[3] = { "01/01", "07/4","12/25" };
+
 Events::Events()
 {
 	m_name = ""; //sets the name to the empty string
 	m_TimeSlot = new LinkedList<TimeSlots, TimeSlots>(); //creates a linked list of time slots
+	m_Task = new LinkedList<Task, std::string>(); //creates a linked list of tasks
 }
 
 Events::Events(std::string name, int numOfDays, TimeSlots** times)
@@ -11,14 +14,18 @@ Events::Events(std::string name, int numOfDays, TimeSlots** times)
 	//std::string date = month + "/" + day + "/" + year;
 
 	m_TimeSlot = new LinkedList<TimeSlots, TimeSlots>(); //creates a linked list of time slots
+
 	m_numOfDays = numOfDays;
 	m_name = name;
 	timeSlot = times;
+	m_Task = new LinkedList<Task, std::string>(); //creates a linked list of tasks
+
 }
 
 Events::~Events()
 {
-	//empty destructor
+	delete m_TimeSlot;
+	delete m_Task;
 }
 
 void Events::setName(std::string name)
@@ -104,6 +111,7 @@ void Events::addTimeSlots(int s_t, int numOfAtt)
 	m_TimeSlot->sort(); //sort the list
 }
 
+
 void Events::setTimes(TimeSlots** times)
 {
 	for (int i = 0; i < m_numOfDays; i++)
@@ -118,6 +126,53 @@ void Events::setTimes(TimeSlots** times)
 TimeSlots ** Events::getTimes()
 {
 	return timeSlot;
+}
+
+void Events::addTask(std::string name)
+{
+	m_Task->addFront(Task(name)); //makes a new task with the given name and adds it to the front of the list
+}
+
+bool Events::signUpTask(std::string userName, std::string taskName)
+{
+	Task temp; //creates a temp task
+	try
+	{
+		temp = m_Task->search(taskName); //searchs for the task with the given name and stores it in temp if found
+	}
+	catch (std::runtime_error) //if search threw an error
+	{
+		return(false); //return false because the taskName passed in is not the name of a task in the list
+	}
+
+	return(temp.signUp(userName)); //passes along the name of the user to the task and returns whether they were able to sign up or not
+}
+
+bool Events::cancelSignUpTask(std::string userName, std::string taskName)
+{
+	Task temp; //creates a temp task
+	try
+	{
+		temp = m_Task->search(taskName); //searchs for the task with the given name and stores it in temp if found
+	}
+	catch (std::runtime_error) //if search threw an error
+	{
+		return(false); //return false because the taskName passed in is not the name of a task in the list
+	}
+
+	if (userName == temp.getPersonName()) //if the name of the user trying to un-sign up is the same as the user who is handling the task
+	{
+		return(temp.cancelSignUp()); //returns whether the user was able to un-sign up or not
+	}
+	else //if the user is not the person who is handling the task
+	{
+		return(false); //you can't un-sign up someone else from a task
+	}
+}
+
+LinkedList<Task, std::string>* Events::getTasks()
+{
+	return(m_Task); //returns the list of tasks
 }
 
 bool Events::operator==(const Events& rhs) const

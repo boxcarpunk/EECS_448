@@ -1,0 +1,8 @@
+#Visual Studio Files
+Debug/
+*.sdf
+*.sln
+*.vcxproj
+*.vcxproj.filters
+.vs/
+EECS_488.*
