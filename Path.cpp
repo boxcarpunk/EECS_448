@@ -72,25 +72,6 @@ void Path::Login(int screen, int AdminOrUser)
 		wrefresh(win1);
 		refresh();
 	}
-	else if(screen == 2)
-	{
-		wclear(win0);
-		wclear(win1);
-		box(win0,0,0);
-		wrefresh(win0);
-		mvwprintw(win0,1,1,"12 or 24 hour?");
-		int Choice = H->print_scroll(win0,TwelveOrTwentyFourMenu,2,2,2);
-		wclear(win0);
-		wrefresh(win0);
-		//string B = to_string(Choice);
-		//char const *pchar = B.c_str();
-		//mvwprintw(win0,0,0,pchar);
-		if(Choice)
-		{
-			Twelve = false;
-		}
-		Login(3,0);
-	}
 	else if(screen == 3)
 	{
 		wclear(win0);
@@ -166,20 +147,135 @@ void Path::Login(int screen, int AdminOrUser)
 		box(win0,0,0);
 		wrefresh(win0);
 		mvwprintw(win0,1,1,"Events:");
-		int Choice = H->print_scroll(win0,Events,3,3,2);
-		//string B = to_string(Choice);
-		//char const *pchar = B.c_str();
-		//mvwprintw(win0,0,0,pchar);
-		//wrefresh(win0);
-		//getch();
+		vector<char *> Ev;
+		Ev.push_back("Event1");
+		Ev.push_back("Event2");
+		Ev.push_back("Event3");
+		int Choice = H->print_vec(win0,Ev,3,2);
+		Login(6,1);
+	}
+	else if((screen==6)&&(AdminOrUser==1))
+	{
+		bool Submit = false;
+		int Choice2 = 0;
 		if(Twelve)
 		{
-			int Choice2 = H->print_scroll(win0,TwelveAval,3,19,2);
+			while(!Submit)
+			{
+				Choice2 = H->print_scroll(win0,TwelveAval,3,19,2);
+				//use the integer Choice2 to be an index on an array that stores what times the user signed up for
+				switch(Choice2)
+				{
+					case 0:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp1,3,5,2);
+						break;
+					}
+					case 1:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp2,3,5,2);
+						break;
+					}
+					case 2:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp3,3,5,2);
+						break;
+					}
+					case 3:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp4,3,5,2);
+						break;
+					}
+					case 4:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp5,3,5,2);
+						break;
+					}
+					case 5:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp6,3,5,2);
+						break;
+					}
+					case 6:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp7,3,5,2);
+						break;
+					}
+					case 7:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp8,3,5,2);
+						break;
+					}
+					case 8:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp9,3,5,2);
+						break;
+					}
+					case 9:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp10,3,5,2);
+						break;
+					}
+					case 10:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp11,3,5,2);
+						break;
+					}
+					case 11:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp12,3,5,2);
+						break;
+					}
+					case 12:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp13,3,5,2);
+						break;
+					}
+					case 13:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp14,3,5,2);
+						break;
+					}
+					case 14:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp15,3,5,2);
+						break;
+					}
+					case 15:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp16,3,5,2);
+						break;
+					}
+					case 16:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp17,3,5,2);
+						break;
+					}
+					case 17:
+					{
+						Choice2 = H->print_scroll(win0,TwelveSp18,3,5,2);
+						break;
+					}
+					case 18:
+					{
+						Submit = true;
+						break;
+					}
+				}
+			}
 			string B = to_string(Choice2);
 			char const *pchar = B.c_str();
 			mvwprintw(win0,0,0,pchar);
 			wrefresh(win0);
 			getch();
+		}
+	}
+	else if((screen==7)&&(AdminOrUser==1))
+	{
+		int Choice2 = H->print_scroll(win0,SecondUserMenu,3,2,2);
+		if(Choice2==1)
+		{
+			Login(6,1);
 		}
 	}
 	keypad(stdscr,TRUE);
@@ -200,15 +296,15 @@ void Path::Login(int screen, int AdminOrUser)
 				wclear(win1);
 				if(screen==1)
 				{
-					Login(2,1);
+					Login(3,1);
 				}
 				else if((screen == 5)&&(AdminOrUser==0))
 				{
-					Login(6,1);
+					Login(6,0);
 				}
 				else if((screen == 6)&&(AdminOrUser==0))
 				{
-					Login(6,1);
+					Login(6,0);
 				}
 				wrefresh(win1);
 				break;

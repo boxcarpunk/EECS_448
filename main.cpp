@@ -17,6 +17,5 @@ int starty = 0;
 int main()
 {
 	Path P;
-
 	return 0;
 }
