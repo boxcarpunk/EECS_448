@@ -275,17 +275,36 @@ void Path::Login(int screen, int AdminOrUser)
 					}
 				}
 			}
+			//string B = to_string(Choice2);
+			//char const *pchar = B.c_str();
+			//mvwprintw(win0,0,0,pchar);
+			//wrefresh(win0);
+			//getch();
+			Login(7,1);
+		}
+	}
+	else if((screen==7)&&(AdminOrUser==1))
+	{
+		int Choice2 = H->print_scroll(win0,SecondUserMenu,3,3,2);
+		if(Choice2==0)
+		{
+			//Interface will only currectly print unrelated vector of tasks
+			//appropriate data structure will need to be applied so that the interface displays correct vector when event is picked
+			vector<char *> Taskvec;
+			Taskvec.push_back("Task 1");
+			Taskvec.push_back("Task 2");
+			Choice2 = H->print_vec(win0,Taskvec,3,2);
+			Login(7,1);
+		}
+		else if(Choice2==1)
+		{
 			string B = to_string(Choice2);
 			char const *pchar = B.c_str();
 			mvwprintw(win0,0,0,pchar);
 			wrefresh(win0);
 			getch();
 		}
-	}
-	else if((screen==7)&&(AdminOrUser==1))
-	{
-		int Choice2 = H->print_scroll(win0,SecondUserMenu,3,2,2);
-		if(Choice2==1)
+		else
 		{
 			Login(6,1);
 		}
