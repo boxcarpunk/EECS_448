@@ -148,10 +148,22 @@ void Path::Login(int screen, int AdminOrUser)
 		wrefresh(win0);
 		mvwprintw(win0,1,1,"Events:");
 		vector<char *> Ev;
+		vector<char *> Ev1D;
+		vector<char *> Ev2D;
+		vector<char *> Ev3D;
+		Ev1D.push_back("Day1");
+		Ev1D.push_back("Day2");
+		Ev2D.push_back("Day1");
+		Ev2D.push_back("Day2");
+		Ev3D.push_back("Day1");
+		Ev3D.push_back("Day2");
 		Ev.push_back("Event1");
 		Ev.push_back("Event2");
 		Ev.push_back("Event3");
 		int Choice = H->print_vec(win0,Ev,3,2);
+		//Interface will only currectly print days of event 1
+		//appropriate data structure will need to be applied so that the interface displays correct vector when event is picked
+		Choice = H->print_vec(win0,Ev1D,3,2);
 		Login(6,1);
 	}
 	else if((screen==6)&&(AdminOrUser==1))
