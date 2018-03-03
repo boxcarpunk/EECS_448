@@ -5,7 +5,7 @@
 #include <string>
 #include <stdio.h>
 #include <ncurses.h>
-#include <windows.h>
+//#include <windows.h>
 //#include <mmsystem.h>
 #define WIDTH 30
 #define HEIGHT 10
