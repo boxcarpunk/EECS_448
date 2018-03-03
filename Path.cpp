@@ -346,6 +346,7 @@ string Path::Input(WINDOW * win1)
 				break;
 			}
 			//backspace
+			case 263:
 			case 127:
 			{
 				if(Info.length()!=0)
