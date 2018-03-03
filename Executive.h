@@ -83,6 +83,8 @@ class Executive
 	*/
 	bool addEvent(bool mode12);
 
+	std::vector<std::string> substring(std::string mainString, char seperatingChar);
+
 	int m_intSTime = 0;
 	int m_intETime = 0;
 
@@ -91,4 +93,6 @@ class Executive
 	std::string m_stime = ""; // variable for a start time of an event, used in for loop to determine how many time slots need to be created for an event
 	std::string m_etime = ""; // variable for a end time of an event, used in for loop to determine how many time slots need to be created for an event
 	std::string m_months[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+	const std::string holidays[3] = { "01/01", "07/4","12/25" };
+
 };

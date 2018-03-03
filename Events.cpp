@@ -1,7 +1,5 @@
 #include "Events.h"
 
-const std::string Events::holidays[3] = { "01/01", "07/4","12/25" };
-
 Events::Events()
 {
 	m_name = ""; //sets the name to the empty string

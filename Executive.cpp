@@ -359,7 +359,7 @@ bool Executive::addEvent(bool mode12)
 	while (1) //runs infinitely
 	{
 		std::cout << "\nWhat year will your event take place?\n";
-		std::cin.ignore(); //wipes cin
+		//std::cin.ignore(); //wipes cin
 		std::cin >> year; //takes in the year
 		while (std::cin.fail()) //fail bit code to recover from bad input
 		{
@@ -392,7 +392,6 @@ bool Executive::addEvent(bool mode12)
 			std::cout << "Invalid input, please enter a day\n";
 			std::cin >> day;
 		}
-
 		if (dateCheck(year, month, day) == true) //if the date is valid
 		{
 			break; //break out of the while loop
@@ -506,31 +505,16 @@ void Executive::printEvents()
 
 bool Executive::dateCheck(int y, int m, int d)
 {
-	time_t now = time(0);
-	tm* ltm = localtime(&now);
-	int curY = (1900 + ltm->tm_year);
-	if(y < curY)
-	{
-		std::cout <<"The year needs to be this year or later, you cannot create a past event!\n";
-		return false;
-		if(m <= ltm -> tm_mon)
-		{
-			std::cout <<"The month needs to be this month or later, you cannot create a past event!\n";
-			return false;
-			if(d <= ltm->tm_mday)
-			{
-				std::cout <<"The day needs to be this day or later, you cannot create a past event!\n";
-				return false;
-			}
-		}
-
-	}
+	// if the day is less than 1, then it can't possibly be a valid day
 	if (d < 1)
 	{
 		std::cout << "\nThe day must be 1 or higher.\n";
 		return false;
 	}
-	if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
+
+	// Check if day is greater than the max amount of days of the month
+	//  Jan       March     May       July      August    October    December  
+	else if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
 	{
 		if (d > 31)
 		{
@@ -538,6 +522,7 @@ bool Executive::dateCheck(int y, int m, int d)
 			return false;
 		}
 	}
+	//       April     June      September November
 	else if (m == 4 || m == 6 || m == 9 || m == 11)
 	{
 		if (d > 30)
@@ -546,6 +531,9 @@ bool Executive::dateCheck(int y, int m, int d)
 			return false;
 		}
 	}
+
+	// Check if the day is greater than the amount of days in February
+	//       February
 	else if (m == 2)
 	{
 		if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0))			//Leep year conditions: cite "crazzyguy101 - cplusplus.com"
@@ -565,18 +553,50 @@ bool Executive::dateCheck(int y, int m, int d)
 			}
 		}
 	}
-	int size = sizeof(Events::holidays)/ sizeof(Events::holidays[0]);
-	//check if holiday (uses holiday size)
+
+	//check if the day is in the past
+	const int monthIndex = 0;
+	const int dayIndex = 1;
+	const int yearIndex = 2;
+	
+	time_t now = time(0);
+	tm* ltm = localtime(&now);
+	char currentDate[32];
+	std::strftime(currentDate, 32, "%m/%d/%Y", ltm);
+	std::vector<std::string> currentDateVector = substring(currentDate, '/');
+	if ( y < std::stoi(currentDateVector[yearIndex])) {
+		std::cout <<"The year needs to be this year or later, you cannot create a past event!\n";
+		return false;
+	}
+	else if (y == std::stoi(currentDateVector[yearIndex]) && m < std::stoi(currentDateVector[monthIndex])){
+		std::cout << "The month needs to be this month or later, you cannot create a past event!\n";
+		return false;
+	}
+	else if (y == std::stoi(currentDateVector[yearIndex]) && m == std::stoi(currentDateVector[monthIndex]) && d < std::stoi(currentDateVector[dayIndex])) {
+		std::cout << "The day needs to be this day or later, you cannot create a past event!\n";
+		return false;
+	}
+
+	
+	// check if event date is on a holiday
+	int size = sizeof(holidays) / sizeof(holidays[0]);
 	for (int i = 0; i < size; i++) {
-		std::istringstream issholiday(Events::holidays[i]);
-		std::string f;
-		std::vector<std::string> holiday;
-		while (std::getline(issholiday, f, '/')) {
-			holiday.push_back(f);
-		}
-		if (std::stoi(holiday[0]) == m && std::stoi(holiday[1]) == d) {
+		std::vector<std::string> holiday = substring(holidays[i], '/');
+		if (std::stoi(holiday[monthIndex]) == m && std::stoi(holiday[dayIndex]) == d) {
+			std::cout << "The event cannot be on a holiday!\n";
 			return false;
 		}
 	}
 	return true;
+}
+
+//seperates a string by the delimiting character
+std::vector<std::string> Executive::substring(std::string mainString, char seperatingChar) {
+	std::istringstream issMainString(mainString);
+	std::string f;
+	std::vector<std::string> returnString;
+	while (std::getline(issMainString, f, seperatingChar)) {
+		returnString.push_back(f);
+	}
+	return returnString;
 }
