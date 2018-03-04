@@ -2486,11 +2486,18 @@ void Executive::AddAvailability(Events event1)
 
 void Executive::printEvents()
 {
-	std::cout << "Number of events currently planned: " << eventList->getLength() << "\nEvent list:\n";
-	for (int i=1; i<=eventList->getLength(); i++)
+	//TODO I think the below value for length may be off because it showed the length as 1
+	//even though the event list was empty
+	if (eventList->getLength()>1)
 	{
-		eventList->getEntry(i).getInfo();
+		std::cout << "Number of events currently planned: " << eventList->getLength() << "\nEvent list:\n";
+		for (int i=1; i<=eventList->getLength(); i++)
+		{
+			eventList->getEntry(i).getInfo();
+		}
 	}
+	else
+	std::cout << "There are no events in the list; there are none to display. \n";
 }
 
 bool Executive::dateCheck(int y, int m, int d)
