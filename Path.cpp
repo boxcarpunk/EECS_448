@@ -70,14 +70,17 @@ void Path::Login(int screen, int AdminOrUser)
 	}
 	else if((screen == 6)&&(AdminOrUser==0))
 	{
-		mvwprintw(win0,1,1,"Enter even date"); 
-		mvwprintw(win0,3,1,"Date:"); 
+		mvwprintw(win0,1,1,"Enter date");
+		mvwprintw(win0,3,1,"Date: ");
 		mvwprintw(win0,6,1,"(MM/DD/YYYY)");
 		wrefresh(win0);
 		box(win1,0,0);
 		wrefresh(win1);
 		refresh();
-		Input(win1);
+		string Username = Input(win1);
+		wclear(win1);
+		wrefresh(win1);
+		Login(4,0);
 	}
 	else if(screen == 3)
 	{
@@ -113,16 +116,17 @@ void Path::Login(int screen, int AdminOrUser)
 		int Choice = H->print_scroll(win0,FirstAdminMenu,3,3,2);
 		wclear(win0);
 		wrefresh(win0);
-		//string B = to_string(Choice);
-		//char const *pchar = B.c_str();
-		//mvwprintw(win0,0,0,pchar);
-		if(Choice==2)
+		if(Choice==0)
 		{
-			Login(3,1);
+			Login(5,0);
+		}
+		else if(Choice==1)
+		{
+			Login(7,0);
 		}
 		else
 		{
-			Login(5,1);
+			Login(3,1);
 		}
 	}
 	else if((screen == 4)&&(AdminOrUser==1))
@@ -297,6 +301,70 @@ void Path::Login(int screen, int AdminOrUser)
 			//getch();
 			Login(7,1);
 		}
+	}
+	else if((screen==7)&&(AdminOrUser==0))
+	{
+		wclear(win0);
+		wclear(win1);
+		box(win0,0,0);
+		wrefresh(win0);
+		mvwprintw(win0,1,1,"Select events:");
+		vector<char *> Ev;
+		vector<char *> Ev1D;
+		vector<char *> Ev2D;
+		vector<char *> Ev3D;
+		Ev3D.push_back("Day1");
+		Ev3D.push_back("Day2");
+		Ev.push_back("Event1");
+		Ev.push_back("Event2");
+		Ev.push_back("Event3");
+		int Choice = H->print_vec(win0,Ev,3,2);
+		int Choice2 = H->print_scroll(win0,Edit,3,2,2);
+		wclear(win1);
+		if(Choice2 == 0)
+		{
+			mvwprintw(win0,1,1,"Enter even name");
+			mvwprintw(win0,3,1,"Name:");
+			box(win1,0,0);
+			wrefresh(win1);
+			refresh();
+			string Name = Input(win1);
+		}
+		else if(Choice == 1)
+		{
+			mvwprintw(win0,1,1,"Enter event date");
+			mvwprintw(win0,3,1,"Date:");
+			wrefresh(win0);
+			box(win1,0,0);
+			wrefresh(win1);
+			refresh();
+			string Date = Input(win1);
+		}
+		else if(Choice ==2)
+		{
+			Login(8,0);
+		}
+	}
+	else if((screen == 8)&&(AdminOrUser==0))
+	{
+		wclear(win0);
+		wclear(win1);
+		box(win0,0,0);
+		wrefresh(win0);
+		mvwprintw(win0,1,1,"Add Task?");
+		int Choice = H->print_scroll(win0,AddTask,3,2,2);
+		if(!Choice)
+		{
+			mvwprintw(win0,1,1,"Enter name");
+			mvwprintw(win0,3,1,"Task name: ");
+			wrefresh(win0);
+			box(win1,0,0);
+			wrefresh(win1);
+			refresh();
+			string TaskName = Input(win1);
+			wclear(win1);
+			wrefresh(win1);
+		}	
 	}
 	else if((screen==7)&&(AdminOrUser==1))
 	{

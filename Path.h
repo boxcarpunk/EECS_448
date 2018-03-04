@@ -53,7 +53,8 @@ class Path
 		char * AorUMenu[3] = {"Admin","User","Back"};
 		char * TwelveOrTwentyFourMenu[2]={"12 hour","24 hour"};
 		char * EventNames[9]={"1","2","3","4","5","6","7","8","9"};
-		char * stuff[2]={"How!?","What!!"};
+		char * AddTask[2]={"Yes","No"};
+		char * Edit[4]={"Edit event name","Edit event date","Add task","Submit"};
 		bool TT1;
 		bool Type;
 		WINDOW * InvWin;
