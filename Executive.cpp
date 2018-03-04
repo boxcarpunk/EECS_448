@@ -352,7 +352,7 @@ bool Executive::addEvent(bool mode12)
 	int month = 0; //creates a placeholder variable for a month of an event
 	int day = 0; //creates a placeholder variable for a day of an event
 	int year = 0; //creates a placeholder variable for a year of an event
-
+	std::string AMPM ="";
 	std::cout << "\nWhat is the name of your event?\n";
 	std::cin.ignore(); //wipes cin
 	std::getline(std::cin, name); //gets the name of the event
@@ -426,12 +426,13 @@ bool Executive::addEvent(bool mode12)
 			std::cout << "Invalid input, please enter a time\n";
 			std::cin >> hourMin;
 		}
-
-		std::cout<<"\nIs this AM or PM (enter AM or PM): ";
-		std::cin.ignore(); //wipes cin
-		std::cin>>AMPM; //takes in whether the time is am or pm
-
-		if(AMPM == "PM") //if the time is pm
+		while(AMPM!="AM" && AMPM!="PM" &&  AMPM != "p.m." && AMPM != "a.m." && AMPM != "pm" && AMPM != "am" && AMPM != "P.M." && AMPM != "A.M."){
+			std::cout<<"\nIs this AM or PM (enter AM or PM): ";
+			std::cin.ignore(); //wipes cin
+			std::cin >> AMPM; //takes in whether the time is am or pm
+//		std::cout << AMPM;
+		}
+		if(AMPM == "PM" || AMPM == "p.m." || AMPM == "pm" || AMPM == "P.M.") //if the time is pm
 		{
 			hourMin = hourMin + 1200; //add 12 hours to the time
 		}
@@ -441,12 +442,14 @@ bool Executive::addEvent(bool mode12)
 		std::cout<<"\nEnd Time (format like 1000 for 10:00): ";
 		std::cin.ignore(); //wipes cin
 		std::cin>>hourMin;
-
-		std::cout<<"\nIs this AM or PM (enter AM or PM): ";
-		std::cin.ignore(); //wipes cin
-		std::cin>>AMPM;
-
-		if(AMPM == "PM") {
+		AMPM = "";//resets the AMPM string
+		while(AMPM!="AM" && AMPM!="PM" &&  AMPM != "p.m." && AMPM != "a.m." && AMPM != "pm" && AMPM != "am" && AMPM != "P.M." && AMPM != "A.M."){
+		{
+			std::cout<<"\nIs this AM or PM (enter AM or PM): ";
+			std::cin.ignore(); //wipes cin
+			std::cin>>AMPM;
+		}
+		if(AMPM == "PM" || AMPM == "p.m." || AMPM == "pm" || AMPM == "P.M.") //if the time is pm
 			hourMin = hourMin + 1200;
 		}
 
@@ -520,7 +523,7 @@ bool Executive::dateCheck(int y, int m, int d)
 	}
 
 	// Check if day is greater than the max amount of days of the month
-	//  Jan       March     May       July      August    October    December  
+	//        Jan       March     May       July      August    October    December
 	else if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
 	{
 		if (d > 31)
@@ -565,7 +568,7 @@ bool Executive::dateCheck(int y, int m, int d)
 	const int monthIndex = 0;
 	const int dayIndex = 1;
 	const int yearIndex = 2;
-	
+
 	time_t now = time(0);
 	tm* ltm = localtime(&now);
 	char currentDate[32];
@@ -584,7 +587,7 @@ bool Executive::dateCheck(int y, int m, int d)
 		return false;
 	}
 
-	
+
 	// check if event date is on a holiday
 	int size = sizeof(holidays) / sizeof(holidays[0]);
 	for (int i = 0; i < size; i++) {
@@ -596,8 +599,8 @@ bool Executive::dateCheck(int y, int m, int d)
 	}
 	return true;
 }
-bool Executive::validEventName(std::string name, int value) {
-	if (name.length() == 0 || name.length()>(value-1)) 
+bool Executive::validEventName(std::string name, unsigned int value) {
+	if (name.length() == 0 || name.length()>(value-1))
 		return false;
 	else
 		return true;
