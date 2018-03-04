@@ -1,11 +1,3 @@
-/**
-* @author Leon Kleyn
-* @cal448
-* @date 12 February 2017
-* @brief Executive class implementation
-* @file Executive.cpp
-Test comment**/
-
 #include "Executive.h"
 #include "Events.h"
 #include "LinkedList.h"
@@ -69,9 +61,27 @@ Executive::Executive()
 
 }
 
-/*Executive::~Executive()
+Executive::~Executive()
 {
-}*/
+	outFile.open("eventslist.txt"); //opens the file
+	for (int i = 1; i <= eventList->getLength(); i++) //goes through the event list
+	{
+		Events temp = eventList->getEntry(i); //stores an event in a temp variable
+		outFile << temp.getName() << ",";
+		for (unsigned int i = 0; i < temp.getDates().size(); i++)
+		{
+			outFile << temp.getDates()[i]; //writes the event info to file
+		}
+		if (!temp.getTimeSlots()->isEmpty()) //if there are time slots for the event
+		{
+			for (int j = 1; j <= temp.getTimeSlots()->getLength(); j++) //goes through the time slots
+			{
+				outFile << "." << temp.getTimeSlots()->getEntry(j).getTimeSlot() << "," << temp.getTimeSlots()->getEntry(j).getNum() << ","; //writes the time slot info to file
+			}
+		}
+	}
+	outFile.close(); //closes the file
+}
 
 void Executive::run()
 {
@@ -83,7 +93,7 @@ void Executive::run()
 	while (programStatus == true) //main program loop condition
 	{
 		std::cout << "Enter your name: \n";
-		std::cin >> currentUser;
+		std::cin >> m_currentUser;
 		std::cout << "Are you an admin or a user?\n  (1) Admin\n  (2) User\n  (3) Quit\n\n  Choice: ";
 		std::cin.clear(); //wipes cin
 		std::cin >> choice; //takes in and stores the menu input
@@ -155,24 +165,6 @@ void Executive::run()
 			std::cout<<"\nInvalid input. Try again: \n";
 		}
 	}
-	outFile.open("eventslist.txt"); //opens the file
-	for (int i=1; i<=eventList->getLength(); i++) //goes through the event list
-	{
-		Events temp = eventList->getEntry(i); //stores an event in a temp variable
-		outFile << temp.getName() << ",";
-		for (unsigned int i = 0; i < temp.getDates().size(); i++)
-		{
-			outFile << temp.getDates()[i]; //writes the event info to file
-		}
-		if (!temp.getTimeSlots()->isEmpty()) //if there are time slots for the event
-		{
-			for (int j=1; j<=temp.getTimeSlots()->getLength(); j++) //goes through the time slots
-			{
-				outFile << "." << temp.getTimeSlots()->getEntry(j).getTimeSlot() << "," << temp.getTimeSlots()->getEntry(j).getNum() << ","; //writes the time slot info to file
-			}
-		}
-	}
-	outFile.close(); //closes the file
 }
 
 bool Executive::adminFunc(bool mode12)
@@ -556,28 +548,28 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 0 = true
 									myArray[i][0].increaseAtt();
-									myArray[i][0].addAttendee(currentUser);
+									myArray[i][0].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 1 = true
 									myArray[i][1].increaseAtt();
-									myArray[i][1].addAttendee(currentUser);
+									myArray[i][1].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 2 = true
 									myArray[i][2].increaseAtt();
-									myArray[i][2].addAttendee(currentUser);
+									myArray[i][2].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									myArray[i][0].increaseAtt();
-									myArray[i][0].addAttendee(currentUser);
+									myArray[i][0].addAttendee(m_currentUser);
 									myArray[i][1].increaseAtt();
-									myArray[i][1].addAttendee(currentUser);
+									myArray[i][1].addAttendee(m_currentUser);
 									myArray[i][2].increaseAtt();
-									myArray[i][2].addAttendee(currentUser);
+									myArray[i][2].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -608,29 +600,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 3 = true
 									myArray[i][3].increaseAtt();
-									myArray[i][3].addAttendee(currentUser);
+									myArray[i][3].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 4 = true
 									myArray[i][4].increaseAtt();
-									myArray[i][4].addAttendee(currentUser);
+									myArray[i][4].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 5 = true
 									myArray[i][5].increaseAtt();
-									myArray[i][5].addAttendee(currentUser);
+									myArray[i][5].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 3,4,5 = true
 									myArray[i][3].increaseAtt();
-									myArray[i][3].addAttendee(currentUser);
+									myArray[i][3].addAttendee(m_currentUser);
 									myArray[i][4].increaseAtt();
-									myArray[i][4].addAttendee(currentUser);
+									myArray[i][4].addAttendee(m_currentUser);
 									myArray[i][5].increaseAtt();
-									myArray[i][5].addAttendee(currentUser);
+									myArray[i][5].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -661,29 +653,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 6 = true
 									myArray[i][6].increaseAtt();
-									myArray[i][6].addAttendee(currentUser);
+									myArray[i][6].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 7 = true
 									myArray[i][7].increaseAtt();
-									myArray[i][7].addAttendee(currentUser);
+									myArray[i][7].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 8 = true
 									myArray[i][8].increaseAtt();
-									myArray[i][8].addAttendee(currentUser);
+									myArray[i][8].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 6,7,8 = true
 									myArray[i][6].increaseAtt();
-									myArray[i][6].addAttendee(currentUser);
+									myArray[i][6].addAttendee(m_currentUser);
 									myArray[i][7].increaseAtt();
-									myArray[i][7].addAttendee(currentUser);
+									myArray[i][7].addAttendee(m_currentUser);
 									myArray[i][8].increaseAtt();
-									myArray[i][8].addAttendee(currentUser);
+									myArray[i][8].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -714,29 +706,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 9 = true
 									myArray[i][9].increaseAtt();
-									myArray[i][9].addAttendee(currentUser);
+									myArray[i][9].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 10 = true
 									myArray[i][10].increaseAtt();
-									myArray[i][10].addAttendee(currentUser);
+									myArray[i][10].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 11 = true
 									myArray[i][11].increaseAtt();
-									myArray[i][11].addAttendee(currentUser);
+									myArray[i][11].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 9,10,11 = true
 									myArray[i][9].increaseAtt();
-									myArray[i][9].addAttendee(currentUser);
+									myArray[i][9].addAttendee(m_currentUser);
 									myArray[i][10].increaseAtt();
-									myArray[i][10].addAttendee(currentUser);
+									myArray[i][10].addAttendee(m_currentUser);
 									myArray[i][11].increaseAtt();
-									myArray[i][11].addAttendee(currentUser);
+									myArray[i][11].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -767,29 +759,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 12 = true
 									myArray[i][12].increaseAtt();
-									myArray[i][12].addAttendee(currentUser);
+									myArray[i][12].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 13 = true
 									myArray[i][13].increaseAtt();
-									myArray[i][13].addAttendee(currentUser);
+									myArray[i][13].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 14 = true
 									myArray[i][14].increaseAtt();
-									myArray[i][14].addAttendee(currentUser);
+									myArray[i][14].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 12,13,14 = true
 									myArray[i][12].increaseAtt();
-									myArray[i][12].addAttendee(currentUser);
+									myArray[i][12].addAttendee(m_currentUser);
 									myArray[i][13].increaseAtt();
-									myArray[i][13].addAttendee(currentUser);
+									myArray[i][13].addAttendee(m_currentUser);
 									myArray[i][14].increaseAtt();
-									myArray[i][14].addAttendee(currentUser);
+									myArray[i][14].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -820,29 +812,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 15 = true
 									myArray[i][15].increaseAtt();
-									myArray[i][15].addAttendee(currentUser);
+									myArray[i][15].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 16 = true
 									myArray[i][16].increaseAtt();
-									myArray[i][16].addAttendee(currentUser);
+									myArray[i][16].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 17 = true
 									myArray[i][17].increaseAtt();
-									myArray[i][17].addAttendee(currentUser);
+									myArray[i][17].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 15,16,17 = true
 									myArray[i][15].increaseAtt();
-									myArray[i][15].addAttendee(currentUser);
+									myArray[i][15].addAttendee(m_currentUser);
 									myArray[i][16].increaseAtt();
-									myArray[i][16].addAttendee(currentUser);
+									myArray[i][16].addAttendee(m_currentUser);
 									myArray[i][17].increaseAtt();
-									myArray[i][17].addAttendee(currentUser);
+									myArray[i][17].addAttendee(m_currentUser);
 
 								}
 								else if (timeSelection == 5)
@@ -874,29 +866,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 18 = true
 									myArray[i][18].increaseAtt();
-									myArray[i][18].addAttendee(currentUser);
+									myArray[i][18].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 19 = true
 									myArray[i][19].increaseAtt();
-									myArray[i][19].addAttendee(currentUser);
+									myArray[i][19].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 20 = true
 									myArray[i][20].increaseAtt();
-									myArray[i][20].addAttendee(currentUser);
+									myArray[i][20].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 18,19,20 = true
 									myArray[i][18].increaseAtt();
-									myArray[i][18].addAttendee(currentUser);
+									myArray[i][18].addAttendee(m_currentUser);
 									myArray[i][19].increaseAtt();
-									myArray[i][19].addAttendee(currentUser);
+									myArray[i][19].addAttendee(m_currentUser);
 									myArray[i][20].increaseAtt();
-									myArray[i][20].addAttendee(currentUser);
+									myArray[i][20].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -927,29 +919,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 21 = true
 									myArray[i][21].increaseAtt();
-									myArray[i][21].addAttendee(currentUser);
+									myArray[i][21].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 22 = true
 									myArray[i][22].increaseAtt();
-									myArray[i][22].addAttendee(currentUser);
+									myArray[i][22].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 23 = true
 									myArray[i][23].increaseAtt();
-									myArray[i][23].addAttendee(currentUser);
+									myArray[i][23].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 21,22,23 = true
 									myArray[i][21].increaseAtt();
-									myArray[i][21].addAttendee(currentUser);
+									myArray[i][21].addAttendee(m_currentUser);
 									myArray[i][22].increaseAtt();
-									myArray[i][22].addAttendee(currentUser);
+									myArray[i][22].addAttendee(m_currentUser);
 									myArray[i][23].increaseAtt();
-									myArray[i][23].addAttendee(currentUser);
+									myArray[i][23].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -980,29 +972,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 24 = true
 									myArray[i][24].increaseAtt();
-									myArray[i][24].addAttendee(currentUser);
+									myArray[i][24].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 25 = true
 									myArray[i][25].increaseAtt();
-									myArray[i][25].addAttendee(currentUser);
+									myArray[i][25].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 26 = true
 									myArray[i][26].increaseAtt();
-									myArray[i][26].addAttendee(currentUser);
+									myArray[i][26].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 24,25,26 = true
 									myArray[i][24].increaseAtt();
-									myArray[i][24].addAttendee(currentUser);
+									myArray[i][24].addAttendee(m_currentUser);
 									myArray[i][25].increaseAtt();
-									myArray[i][25].addAttendee(currentUser);
+									myArray[i][25].addAttendee(m_currentUser);
 									myArray[i][26].increaseAtt();
-									myArray[i][26].addAttendee(currentUser);
+									myArray[i][26].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -1033,29 +1025,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 27 = true
 									myArray[i][27].increaseAtt();
-									myArray[i][27].addAttendee(currentUser);
+									myArray[i][27].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 28 = true
 									myArray[i][28].increaseAtt();
-									myArray[i][28].addAttendee(currentUser);
+									myArray[i][28].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 29 = true
 									myArray[i][29].increaseAtt();
-									myArray[i][29].addAttendee(currentUser);
+									myArray[i][29].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 27,28,29 = true
 									myArray[i][27].increaseAtt();
-									myArray[i][27].addAttendee(currentUser);
+									myArray[i][27].addAttendee(m_currentUser);
 									myArray[i][28].increaseAtt();
-									myArray[i][28].addAttendee(currentUser);
+									myArray[i][28].addAttendee(m_currentUser);
 									myArray[i][29].increaseAtt();
-									myArray[i][29].addAttendee(currentUser);
+									myArray[i][29].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -1086,29 +1078,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 30 = true
 									myArray[i][30].increaseAtt();
-									myArray[i][30].addAttendee(currentUser);
+									myArray[i][30].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 31 = true
 									myArray[i][31].increaseAtt();
-									myArray[i][31].addAttendee(currentUser);
+									myArray[i][31].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 32 = true
 									myArray[i][32].increaseAtt();
-									myArray[i][32].addAttendee(currentUser);
+									myArray[i][32].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 30,31,32 = true
 									myArray[i][30].increaseAtt();
-									myArray[i][30].addAttendee(currentUser);
+									myArray[i][30].addAttendee(m_currentUser);
 									myArray[i][31].increaseAtt();
-									myArray[i][31].addAttendee(currentUser);
+									myArray[i][31].addAttendee(m_currentUser);
 									myArray[i][32].increaseAtt();
-									myArray[i][32].addAttendee(currentUser);
+									myArray[i][32].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -1139,29 +1131,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 33 = true
 									myArray[i][33].increaseAtt();
-									myArray[i][33].addAttendee(currentUser);
+									myArray[i][33].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 34 = true
 									myArray[i][34].increaseAtt();
-									myArray[i][34].addAttendee(currentUser);
+									myArray[i][34].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 35 = true
 									myArray[i][35].increaseAtt();
-									myArray[i][35].addAttendee(currentUser);
+									myArray[i][35].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 33,34,35 = true
 									myArray[i][33].increaseAtt();
-									myArray[i][33].addAttendee(currentUser);
+									myArray[i][33].addAttendee(m_currentUser);
 									myArray[i][34].increaseAtt();
-									myArray[i][34].addAttendee(currentUser);
+									myArray[i][34].addAttendee(m_currentUser);
 									myArray[i][35].increaseAtt();
-									myArray[i][35].addAttendee(currentUser);
+									myArray[i][35].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -1192,29 +1184,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 36 = true
 									myArray[i][36].increaseAtt();
-									myArray[i][36].addAttendee(currentUser);
+									myArray[i][36].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 37 = true
 									myArray[i][37].increaseAtt();
-									myArray[i][37].addAttendee(currentUser);
+									myArray[i][37].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 38 = true
 									myArray[i][38].increaseAtt();
-									myArray[i][38].addAttendee(currentUser);
+									myArray[i][38].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 36,37,38 = true
 									myArray[i][36].increaseAtt();
-									myArray[i][36].addAttendee(currentUser);
+									myArray[i][36].addAttendee(m_currentUser);
 									myArray[i][37].increaseAtt();
-									myArray[i][37].addAttendee(currentUser);
+									myArray[i][37].addAttendee(m_currentUser);
 									myArray[i][38].increaseAtt();
-									myArray[i][38].addAttendee(currentUser);
+									myArray[i][38].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -1245,29 +1237,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 39 = true
 									myArray[i][39].increaseAtt();
-									myArray[i][39].addAttendee(currentUser);
+									myArray[i][39].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 40 = true
 									myArray[i][40].increaseAtt();
-									myArray[i][40].addAttendee(currentUser);
+									myArray[i][40].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 41 = true
 									myArray[i][41].increaseAtt();
-									myArray[i][41].addAttendee(currentUser);
+									myArray[i][41].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 39,40,41 = true
 									myArray[i][39].increaseAtt();
-									myArray[i][39].addAttendee(currentUser);
+									myArray[i][39].addAttendee(m_currentUser);
 									myArray[i][40].increaseAtt();
-									myArray[i][40].addAttendee(currentUser);
+									myArray[i][40].addAttendee(m_currentUser);
 									myArray[i][41].increaseAtt();
-									myArray[i][41].addAttendee(currentUser);
+									myArray[i][41].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -1298,29 +1290,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 42 = true
 									myArray[i][42].increaseAtt();
-									myArray[i][42].addAttendee(currentUser);
+									myArray[i][42].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 43 = true
 									myArray[i][43].increaseAtt();
-									myArray[i][43].addAttendee(currentUser);
+									myArray[i][43].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 44 = true
 									myArray[i][44].increaseAtt();
-									myArray[i][44].addAttendee(currentUser);
+									myArray[i][44].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 42,43,44 = true
 									myArray[i][42].increaseAtt();
-									myArray[i][42].addAttendee(currentUser);
+									myArray[i][42].addAttendee(m_currentUser);
 									myArray[i][43].increaseAtt();
-									myArray[i][43].addAttendee(currentUser);
+									myArray[i][43].addAttendee(m_currentUser);
 									myArray[i][44].increaseAtt();
-									myArray[i][44].addAttendee(currentUser);
+									myArray[i][44].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -1351,29 +1343,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 45 = true
 									myArray[i][45].increaseAtt();
-									myArray[i][45].addAttendee(currentUser);
+									myArray[i][45].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 46 = true
 									myArray[i][46].increaseAtt();
-									myArray[i][46].addAttendee(currentUser);
+									myArray[i][46].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 47 = true
 									myArray[i][47].increaseAtt();
-									myArray[i][47].addAttendee(currentUser);
+									myArray[i][47].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 45,46,47 = true
 									myArray[i][45].increaseAtt();
-									myArray[i][45].addAttendee(currentUser);
+									myArray[i][45].addAttendee(m_currentUser);
 									myArray[i][46].increaseAtt();
-									myArray[i][46].addAttendee(currentUser);
+									myArray[i][46].addAttendee(m_currentUser);
 									myArray[i][47].increaseAtt();
-									myArray[i][47].addAttendee(currentUser);
+									myArray[i][47].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -1404,29 +1396,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 48 = true
 									myArray[i][48].increaseAtt();
-									myArray[i][48].addAttendee(currentUser);
+									myArray[i][48].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 49 = true
 									myArray[i][49].increaseAtt();
-									myArray[i][49].addAttendee(currentUser);
+									myArray[i][49].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 50 = true
 									myArray[i][50].increaseAtt();
-									myArray[i][50].addAttendee(currentUser);
+									myArray[i][50].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 48,49,50 = true
 									myArray[i][48].increaseAtt();
-									myArray[i][48].addAttendee(currentUser);
+									myArray[i][48].addAttendee(m_currentUser);
 									myArray[i][49].increaseAtt();
-									myArray[i][49].addAttendee(currentUser);
+									myArray[i][49].addAttendee(m_currentUser);
 									myArray[i][50].increaseAtt();
-									myArray[i][50].addAttendee(currentUser);
+									myArray[i][50].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -1457,29 +1449,29 @@ void Executive::AddAvailability(Events event1)
 								{
 									//index 51 = true
 									myArray[i][51].increaseAtt();
-									myArray[i][51].addAttendee(currentUser);
+									myArray[i][51].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 52 = true
 									myArray[i][52].increaseAtt();
-									myArray[i][52].addAttendee(currentUser);
+									myArray[i][52].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 53 = true
 									myArray[i][53].increaseAtt();
-									myArray[i][53].addAttendee(currentUser);
+									myArray[i][53].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 51,52,53 = true
 									myArray[i][51].increaseAtt();
-									myArray[i][51].addAttendee(currentUser);
+									myArray[i][51].addAttendee(m_currentUser);
 									myArray[i][52].increaseAtt();
-									myArray[i][52].addAttendee(currentUser);
+									myArray[i][52].addAttendee(m_currentUser);
 									myArray[i][53].increaseAtt();
-									myArray[i][53].addAttendee(currentUser);
+									myArray[i][53].addAttendee(m_currentUser);
 								}
 								else if (timeSelection == 5)
 								{
@@ -1539,29 +1531,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 0 = true
 								myArray[i][0].increaseAtt();
-								myArray[i][0].addAttendee(currentUser);
+								myArray[i][0].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 1 = true
 								myArray[i][1].increaseAtt();
-								myArray[i][1].addAttendee(currentUser);
+								myArray[i][1].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 2 = true
 								myArray[i][2].increaseAtt();
-								myArray[i][2].addAttendee(currentUser);
+								myArray[i][2].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 0,1,2 = true
 								myArray[i][0].increaseAtt();
-								myArray[i][0].addAttendee(currentUser);
+								myArray[i][0].addAttendee(m_currentUser);
 								myArray[i][1].increaseAtt();
-								myArray[i][1].addAttendee(currentUser);
+								myArray[i][1].addAttendee(m_currentUser);
 								myArray[i][2].increaseAtt();
-								myArray[i][2].addAttendee(currentUser);
+								myArray[i][2].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -1592,29 +1584,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 3 = true
 								myArray[i][3].increaseAtt();
-								myArray[i][3].addAttendee(currentUser);
+								myArray[i][3].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 4 = true
 								myArray[i][4].increaseAtt();
-								myArray[i][4].addAttendee(currentUser);
+								myArray[i][4].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 5 = true
 								myArray[i][5].increaseAtt();
-								myArray[i][5].addAttendee(currentUser);
+								myArray[i][5].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 3,4,5 = true
 								myArray[i][3].increaseAtt();
-								myArray[i][3].addAttendee(currentUser);
+								myArray[i][3].addAttendee(m_currentUser);
 								myArray[i][4].increaseAtt();
-								myArray[i][4].addAttendee(currentUser);
+								myArray[i][4].addAttendee(m_currentUser);
 								myArray[i][5].increaseAtt();
-								myArray[i][5].addAttendee(currentUser);
+								myArray[i][5].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -1645,29 +1637,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 6 = true
 								myArray[i][6].increaseAtt();
-								myArray[i][6].addAttendee(currentUser);
+								myArray[i][6].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 7 = true
 								myArray[i][7].increaseAtt();
-								myArray[i][7].addAttendee(currentUser);
+								myArray[i][7].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 8 = true
 								myArray[i][8].increaseAtt();
-								myArray[i][8].addAttendee(currentUser);
+								myArray[i][8].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 6,7,8 = true
 								myArray[i][6].increaseAtt();
-								myArray[i][6].addAttendee(currentUser);
+								myArray[i][6].addAttendee(m_currentUser);
 								myArray[i][7].increaseAtt();
-								myArray[i][7].addAttendee(currentUser);
+								myArray[i][7].addAttendee(m_currentUser);
 								myArray[i][8].increaseAtt();
-								myArray[i][8].addAttendee(currentUser);
+								myArray[i][8].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -1698,29 +1690,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 9 = true
 								myArray[i][9].increaseAtt();
-								myArray[i][9].addAttendee(currentUser);
+								myArray[i][9].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 10 = true
 								myArray[i][10].increaseAtt();
-								myArray[i][10].addAttendee(currentUser);
+								myArray[i][10].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 11 = true
 								myArray[i][11].increaseAtt();
-								myArray[i][11].addAttendee(currentUser);
+								myArray[i][11].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 9,10,11 = true
 								myArray[i][9].increaseAtt();
-								myArray[i][9].addAttendee(currentUser);
+								myArray[i][9].addAttendee(m_currentUser);
 								myArray[i][10].increaseAtt();
-								myArray[i][10].addAttendee(currentUser);
+								myArray[i][10].addAttendee(m_currentUser);
 								myArray[i][11].increaseAtt();
-								myArray[i][11].addAttendee(currentUser);
+								myArray[i][11].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -1751,29 +1743,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 12 = true
 								myArray[i][12].increaseAtt();
-								myArray[i][12].addAttendee(currentUser);
+								myArray[i][12].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 13 = true
 								myArray[i][13].increaseAtt();
-								myArray[i][13].addAttendee(currentUser);
+								myArray[i][13].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 14 = true
 								myArray[i][14].increaseAtt();
-								myArray[i][14].addAttendee(currentUser);
+								myArray[i][14].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 12,13,14 = true
 								myArray[i][12].increaseAtt();
-								myArray[i][12].addAttendee(currentUser);
+								myArray[i][12].addAttendee(m_currentUser);
 								myArray[i][13].increaseAtt();
-								myArray[i][13].addAttendee(currentUser);
+								myArray[i][13].addAttendee(m_currentUser);
 								myArray[i][14].increaseAtt();
-								myArray[i][14].addAttendee(currentUser);
+								myArray[i][14].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -1804,29 +1796,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 15 = true
 								myArray[i][15].increaseAtt();
-								myArray[i][15].addAttendee(currentUser);
+								myArray[i][15].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 16 = true
 								myArray[i][16].increaseAtt();
-								myArray[i][16].addAttendee(currentUser);
+								myArray[i][16].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 17 = true
 								myArray[i][17].increaseAtt();
-								myArray[i][17].addAttendee(currentUser);
+								myArray[i][17].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 15,16,17 = true
 								myArray[i][15].increaseAtt();
-								myArray[i][15].addAttendee(currentUser);
+								myArray[i][15].addAttendee(m_currentUser);
 								myArray[i][16].increaseAtt();
-								myArray[i][16].addAttendee(currentUser);
+								myArray[i][16].addAttendee(m_currentUser);
 								myArray[i][17].increaseAtt();
-								myArray[i][17].addAttendee(currentUser);
+								myArray[i][17].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -1857,29 +1849,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 18 = true
 								myArray[i][18].increaseAtt();
-								myArray[i][18].addAttendee(currentUser);
+								myArray[i][18].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 19 = true
 								myArray[i][19].increaseAtt();
-								myArray[i][19].addAttendee(currentUser);
+								myArray[i][19].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 20 = true
 								myArray[i][20].increaseAtt();
-								myArray[i][20].addAttendee(currentUser);
+								myArray[i][20].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 18,19,20 = true
 								myArray[i][18].increaseAtt();
-								myArray[i][18].addAttendee(currentUser);
+								myArray[i][18].addAttendee(m_currentUser);
 								myArray[i][19].increaseAtt();
-								myArray[i][19].addAttendee(currentUser);
+								myArray[i][19].addAttendee(m_currentUser);
 								myArray[i][20].increaseAtt();
-								myArray[i][20].addAttendee(currentUser);
+								myArray[i][20].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -1910,29 +1902,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 21 = true
 								myArray[i][21].increaseAtt();
-								myArray[i][21].addAttendee(currentUser);
+								myArray[i][21].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 22 = true
 								myArray[i][22].increaseAtt();
-								myArray[i][22].addAttendee(currentUser);
+								myArray[i][22].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 23 = true
 								myArray[i][23].increaseAtt();
-								myArray[i][23].addAttendee(currentUser);
+								myArray[i][23].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 21,22,23 = true
 								myArray[i][21].increaseAtt();
-								myArray[i][21].addAttendee(currentUser);
+								myArray[i][21].addAttendee(m_currentUser);
 								myArray[i][22].increaseAtt();
-								myArray[i][22].addAttendee(currentUser);
+								myArray[i][22].addAttendee(m_currentUser);
 								myArray[i][23].increaseAtt();
-								myArray[i][23].addAttendee(currentUser);
+								myArray[i][23].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -1963,29 +1955,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 24 =
 								myArray[i][24].increaseAtt();
-								myArray[i][24].addAttendee(currentUser);
+								myArray[i][24].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 25 = true
 								myArray[i][25].increaseAtt();
-								myArray[i][25].addAttendee(currentUser);
+								myArray[i][25].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 26 = true
 								myArray[i][26].increaseAtt();
-								myArray[i][26].addAttendee(currentUser);
+								myArray[i][26].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 24,25,26 = true
 								myArray[i][24].increaseAtt();
-								myArray[i][24].addAttendee(currentUser);
+								myArray[i][24].addAttendee(m_currentUser);
 								myArray[i][25].increaseAtt();
-								myArray[i][25].addAttendee(currentUser);
+								myArray[i][25].addAttendee(m_currentUser);
 								myArray[i][26].increaseAtt();
-								myArray[i][26].addAttendee(currentUser);
+								myArray[i][26].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -2016,29 +2008,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 27 = true
 								myArray[i][27].increaseAtt();
-								myArray[i][27].addAttendee(currentUser);
+								myArray[i][27].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 28 = true
 								myArray[i][28].increaseAtt();
-								myArray[i][28].addAttendee(currentUser);
+								myArray[i][28].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 29 = true
 								myArray[i][29].increaseAtt();
-								myArray[i][29].addAttendee(currentUser);
+								myArray[i][29].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 27,28,29 = true
 								myArray[i][27].increaseAtt();
-								myArray[i][27].addAttendee(currentUser);
+								myArray[i][27].addAttendee(m_currentUser);
 								myArray[i][28].increaseAtt();
-								myArray[i][28].addAttendee(currentUser);
+								myArray[i][28].addAttendee(m_currentUser);
 								myArray[i][29].increaseAtt();
-								myArray[i][29].addAttendee(currentUser);
+								myArray[i][29].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -2069,29 +2061,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 30 = true
 								myArray[i][30].increaseAtt();
-								myArray[i][30].addAttendee(currentUser);
+								myArray[i][30].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 31 = true
 								myArray[i][31].increaseAtt();
-								myArray[i][31].addAttendee(currentUser);
+								myArray[i][31].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 32 = true
 								myArray[i][32].increaseAtt();
-								myArray[i][32].addAttendee(currentUser);
+								myArray[i][32].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 30,31,32 = true
 								myArray[i][30].increaseAtt();
-								myArray[i][30].addAttendee(currentUser);
+								myArray[i][30].addAttendee(m_currentUser);
 								myArray[i][31].increaseAtt();
-								myArray[i][31].addAttendee(currentUser);
+								myArray[i][31].addAttendee(m_currentUser);
 								myArray[i][32].increaseAtt();
-								myArray[i][32].addAttendee(currentUser);
+								myArray[i][32].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -2122,29 +2114,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 33 = true
 								myArray[i][33].increaseAtt();
-								myArray[i][33].addAttendee(currentUser);
+								myArray[i][33].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 34 = true
 								myArray[i][34].increaseAtt();
-								myArray[i][34].addAttendee(currentUser);
+								myArray[i][34].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 35 = true
 								myArray[i][35].increaseAtt();
-								myArray[i][35].addAttendee(currentUser);
+								myArray[i][35].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 33,34,35 = true
 								myArray[i][33].increaseAtt();
-								myArray[i][33].addAttendee(currentUser);
+								myArray[i][33].addAttendee(m_currentUser);
 								myArray[i][34].increaseAtt();
-								myArray[i][34].addAttendee(currentUser);
+								myArray[i][34].addAttendee(m_currentUser);
 								myArray[i][35].increaseAtt();
-								myArray[i][35].addAttendee(currentUser);
+								myArray[i][35].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -2175,29 +2167,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 36 = true
 								myArray[i][36].increaseAtt();
-								myArray[i][36].addAttendee(currentUser);
+								myArray[i][36].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 37 = true
 								myArray[i][37].increaseAtt();
-								myArray[i][37].addAttendee(currentUser);
+								myArray[i][37].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 38 = true
 								myArray[i][38].increaseAtt();
-								myArray[i][38].addAttendee(currentUser);
+								myArray[i][38].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 36,37,38 = true
 								myArray[i][36].increaseAtt();
-								myArray[i][36].addAttendee(currentUser);
+								myArray[i][36].addAttendee(m_currentUser);
 								myArray[i][37].increaseAtt();
-								myArray[i][37].addAttendee(currentUser);
+								myArray[i][37].addAttendee(m_currentUser);
 								myArray[i][38].increaseAtt();
-								myArray[i][38].addAttendee(currentUser);
+								myArray[i][38].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -2228,29 +2220,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 39 = true
 								myArray[i][39].increaseAtt();
-								myArray[i][39].addAttendee(currentUser);
+								myArray[i][39].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 40 = true
 								myArray[i][40].increaseAtt();
-								myArray[i][40].addAttendee(currentUser);
+								myArray[i][40].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 41 = true
 								myArray[i][41].increaseAtt();
-								myArray[i][41].addAttendee(currentUser);
+								myArray[i][41].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 39,40,41 = true
 								myArray[i][39].increaseAtt();
-								myArray[i][39].addAttendee(currentUser);
+								myArray[i][39].addAttendee(m_currentUser);
 								myArray[i][40].increaseAtt();
-								myArray[i][40].addAttendee(currentUser);
+								myArray[i][40].addAttendee(m_currentUser);
 								myArray[i][41].increaseAtt();
-								myArray[i][41].addAttendee(currentUser);
+								myArray[i][41].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -2281,29 +2273,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 42 = true
 								myArray[i][42].increaseAtt();
-								myArray[i][42].addAttendee(currentUser);
+								myArray[i][42].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 43 = true
 								myArray[i][43].increaseAtt();
-								myArray[i][43].addAttendee(currentUser);
+								myArray[i][43].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 44 = true
 								myArray[i][44].increaseAtt();
-								myArray[i][44].addAttendee(currentUser);
+								myArray[i][44].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 42,43,44 = true
 								myArray[i][42].increaseAtt();
-								myArray[i][42].addAttendee(currentUser);
+								myArray[i][42].addAttendee(m_currentUser);
 								myArray[i][43].increaseAtt();
-								myArray[i][43].addAttendee(currentUser);
+								myArray[i][43].addAttendee(m_currentUser);
 								myArray[i][44].increaseAtt();
-								myArray[i][44].addAttendee(currentUser);
+								myArray[i][44].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -2334,29 +2326,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 45 = true
 								myArray[i][45].increaseAtt();
-								myArray[i][45].addAttendee(currentUser);
+								myArray[i][45].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 46 = true
 								myArray[i][46].increaseAtt();
-								myArray[i][46].addAttendee(currentUser);
+								myArray[i][46].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 47 = true
 								myArray[i][47].increaseAtt();
-								myArray[i][47].addAttendee(currentUser);
+								myArray[i][47].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 45,46,47 = true
 								myArray[i][45].increaseAtt();
-								myArray[i][45].addAttendee(currentUser);
+								myArray[i][45].addAttendee(m_currentUser);
 								myArray[i][46].increaseAtt();
-								myArray[i][46].addAttendee(currentUser);
+								myArray[i][46].addAttendee(m_currentUser);
 								myArray[i][47].increaseAtt();
-								myArray[i][47].addAttendee(currentUser);
+								myArray[i][47].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -2387,29 +2379,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 48 = true
 								myArray[i][48].increaseAtt();
-								myArray[i][48].addAttendee(currentUser);
+								myArray[i][48].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 49 = true
 								myArray[i][49].increaseAtt();
-								myArray[i][49].addAttendee(currentUser);
+								myArray[i][49].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 50 = true
 								myArray[i][50].increaseAtt();
-								myArray[i][50].addAttendee(currentUser);
+								myArray[i][50].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 48,49,50 = true
 								myArray[i][48].increaseAtt();
-								myArray[i][48].addAttendee(currentUser);
+								myArray[i][48].addAttendee(m_currentUser);
 								myArray[i][49].increaseAtt();
-								myArray[i][49].addAttendee(currentUser);
+								myArray[i][49].addAttendee(m_currentUser);
 								myArray[i][50].increaseAtt();
-								myArray[i][50].addAttendee(currentUser);
+								myArray[i][50].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -2440,29 +2432,29 @@ void Executive::AddAvailability(Events event1)
 							{
 								//index 51 =
 								myArray[i][51].increaseAtt();
-								myArray[i][51].addAttendee(currentUser);
+								myArray[i][51].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 52 = true
 								myArray[i][52].increaseAtt();
-								myArray[i][52].addAttendee(currentUser);
+								myArray[i][52].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 53 = true
 								myArray[i][53].increaseAtt();
-								myArray[i][53].addAttendee(currentUser);
+								myArray[i][53].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 51,52,53 = true
 								myArray[i][51].increaseAtt();
-								myArray[i][51].addAttendee(currentUser);
+								myArray[i][51].addAttendee(m_currentUser);
 								myArray[i][52].increaseAtt();
-								myArray[i][52].addAttendee(currentUser);
+								myArray[i][52].addAttendee(m_currentUser);
 								myArray[i][53].increaseAtt();
-								myArray[i][53].addAttendee(currentUser);
+								myArray[i][53].addAttendee(m_currentUser);
 							}
 							else if (timeSelection == 5)
 							{
@@ -2583,4 +2575,9 @@ bool Executive::validEventName(std::string name, unsigned int value) {
 		return false;
 	else
 		return true;
+}
+
+void Executive::setCurrentUser(std::string name)
+{
+	m_currentUser = name; //set the current user to the name passed in
 }

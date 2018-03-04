@@ -11,6 +11,7 @@
 using namespace std;
 Path::Path()
 {
+	exec = new Executive(); //creates the executive object to run the program
 	TT1 = false;
 	EmptyString = "";
 	initscr();
@@ -31,8 +32,9 @@ Path::Path()
 }
 Path::~Path()
 {
-	delete H;
-	delete Des;
+	delete H; //deletes the highlight object
+	delete Des; //deletes the designs object
+	delete exec; //deletes the executive object
 }
 void Path::Login(int screen, int AdminOrUser)
 {
@@ -46,38 +48,38 @@ void Path::Login(int screen, int AdminOrUser)
 
 	if(screen == 1)
 	{
-		mvwprintw(win0,1,1,"Enter name");
-		mvwprintw(win0,3,1,"Username: ");
+		mvwprintw(win0,1,1,"Enter name"); //asks the user to enter in their name
+		mvwprintw(win0,3,1,"Username: "); //gives the user a place to input their name
 		wrefresh(win0);
 		box(win1,0,0);
 		wrefresh(win1);
 		refresh();
-		string Username = Input(win1);
+		exec.setCurrentUser(Input(win1)); //sets the name of the current user to the name typed in
 		wclear(win1);
 		wrefresh(win1);
 		Login(3,1);
 	}
 	else if((screen == 5)&&(AdminOrUser==0))
 	{
-		mvwprintw(win0,1,1,"Enter even name");
-		mvwprintw(win0,3,1,"Name:");
+		mvwprintw(win0,1,1,"Enter event name"); //asks the user for the name of the event to be created
+		mvwprintw(win0,3,1,"Name:"); //gives the user a place to input the name
 		wrefresh(win0);
 		box(win1,0,0);
 		wrefresh(win1);
 		refresh();
-		Input(win1);
+		eventName = Input(win1); //takes in the name of the event to be created and stores it
 		Login(6,0);
 	}
 	else if((screen == 6)&&(AdminOrUser==0))
 	{
-		mvwprintw(win0,1,1,"Enter date");
-		mvwprintw(win0,3,1,"Date: ");
-		mvwprintw(win0,6,1,"(MM/DD/YYYY)");
+		mvwprintw(win0,1,1,"Enter date"); //asks the user for the date of the event
+		mvwprintw(win0,3,1,"Date: "); //gives the user a place to input the date
+		mvwprintw(win0,6,1,"(MM/DD/YYYY)"); //tells the user what the format of the date should be
 		wrefresh(win0);
 		box(win1,0,0);
 		wrefresh(win1);
 		refresh();
-		string Username = Input(win1);
+		date = Input(win1); //takes in and stores the date for the event
 		wclear(win1);
 		wrefresh(win1);
 		Login(4,0);
