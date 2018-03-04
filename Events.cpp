@@ -22,11 +22,11 @@ Events::Events(std::string name, int numOfDays, TimeSlots** times)
 
 }
 
-Events::~Events()
+/*Events::~Events()
 {
 	delete m_TimeSlot;
 	delete m_Task;
-}
+}*/
 
 void Events::setName(std::string name)
 {

@@ -37,7 +37,7 @@ public:
 	*	@param None
 	*	@return None
 	*/
-	~Events();
+	//~Events();
 
 	static const std::string holidays[3];
 

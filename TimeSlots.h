@@ -20,7 +20,7 @@ public:
 	*	@param None
 	*	@return None
 	*/
-	~TimeSlots();
+	//~TimeSlots();
 
 	/**
 	*	A new time slot is created with default values

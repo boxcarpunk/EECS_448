@@ -47,10 +47,10 @@ std::vector<std::string> TimeSlots::getAttendees()
 	return m_attendees;
 }
 
-TimeSlots::~TimeSlots()
+/*TimeSlots::~TimeSlots()
 {
 	//Destructor for good coding practice
-}
+}*/
 
 bool TimeSlots::operator==(const TimeSlots& rhs) const
 {

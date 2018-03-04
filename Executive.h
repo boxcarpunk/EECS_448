@@ -24,7 +24,7 @@ class Executive
 	*	@param None
 	*	@return None
 	*/
-	~Executive();
+	//~Executive();
 
 	/**
 	*	The program begins and the user can interact with it
