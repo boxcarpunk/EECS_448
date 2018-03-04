@@ -160,7 +160,7 @@ void Executive::run()
 	{
 		Events temp = eventList->getEntry(i); //stores an event in a temp variable
 		outFile << temp.getName() << ",";
-		for (int i = 0; i < temp.getDates().size(); i++)
+		for (unsigned int i = 0; i < temp.getDates().size(); i++)
 		{
 			outFile << temp.getDates()[i]; //writes the event info to file
 		}
@@ -362,127 +362,6 @@ bool Executive::userFunc(bool mode12)
 	}
 }
 
-/*bool Executive::addEvent(bool mode12)
-{
-	std::string name = ""; //creates a placeholder variable for a name of an event
-	int month = 0; //creates a placeholder variable for a month of an event
-	int day = 0; //creates a placeholder variable for a day of an event
-	int year = 0; //creates a placeholder variable for a year of an event
-	int numOfDays = 0;
-
-	std::cout << "\nWhat is the name of your event?\n";
-	std::cin.ignore(); //wipes cin
-	std::getline(std::cin, name); //gets the name of the event
-	std::cout << "How many days would you like to add?\n";
-	//TODO: Error check input
-	std::cin >> numOfDays;
-
-	TimeSlots** myArray = new TimeSlots*[numOfDays];
-	for (int i = 0; i < numOfDays; i++)
-	{
-		myArray[i] = new TimeSlots[54];
-  }
-
-	if (validEventName(name, 17))//checks if event name entered is >0 and less than 17 characters
-	{
-		Events event1(name, numOfDays, myArray);
-		
-		for (int i = 0; i < numOfDays; i++)
-		{
-			std::cout << "Day " << i + 1 << ": \n";
-
-			while (1) //runs infinitely
-			{
-				std::cout << "\nWhat year will your event take place?\n";
-				std::cin.ignore(); //wipes cin
-				std::cin >> year; //takes in the year
-				while (std::cin.fail()) //fail bit code to recover from bad input
-				{
-					std::cin.clear();
-					std::cin.ignore();
-					std::cout << "Invalid input, please enter a year\n";
-					std::cin >> year;
-				}
-				std::cout << "\nWhat month will your event take place?\n";
-				for (int i = 0; i < 12; i++)
-				{
-					std::cout << "  (" << i + 1 << ")" << " " << m_months[i] << std::endl;
-				}
-				std::cin.ignore(); //wipes cin
-				std::cin >> month; //takes in the month
-				while (std::cin.fail()) //fail bit code to recover from bad input
-				{
-					std::cin.clear();
-					std::cin.ignore();
-					std::cout << "Invalid input, please select '1'-'12'\n";
-					std::cin >> month;
-				}
-				std::cout << "\nWhat day will your event take place?\n";
-				std::cin.ignore(); //wipes cin
-				std::cin >> day; //takes in the day
-				while (std::cin.fail()) //fail bit code to recover from bad input
-				{
-					std::cin.clear();
-					std::cin.ignore();
-					std::cout << "Invalid input, please enter a day\n";
-					std::cin >> day;
-				}
-
-				if (dateCheck(year, month, day) == true) //if the date is valid
-				{
-					break; //break out of the while loop
-				}
-				else //if the date is invalid
-				{
-					std::cout << "\nThis date is invalid, please enter a valid date\n"; //notify the user that the date is invalid
-				}
-			}
-		}
-		std::cout << "Here1\n";
-
-		std::string strMonth, strDay, strYear, date;
-		strMonth = std::to_string(month);
-		strDay = std::to_string(day);
-		strYear = std::to_string(year);
-
-		if (strMonth.length() == 1)
-		{
-			strMonth = "0" + strMonth;
-		}
-
-		if (strDay.length() == 1)
-		{
-			strDay = "0" + strDay;
-		}
-		std::cout << "Here2\n";
-
-		date = strMonth + "/" + strDay + "/" + strYear;
-		
-		std::cout << "Here3\n";
-
-		event1.setDates(date);
-		std::cout << "Here4\n";
-
-		eventList->addBack(event1);
-
-		std::cout << "Here5\n";
-
-		//std::cout << eventList->getLength();
-		eventList->sort();
-		std::cout << "Here6\n";
-		AddAvailability(event1);
-		std::cout << "Here7\n";
-	}
-	else
-	{
-		std::cout << "\nInvalid name. Please enter a valid name. (The event name needs to be less than 17 characters.)";
-		addEvent(mode12);
-	}
-
-
-
-	return true;
-}*/
 
 bool Executive::addEvent(bool mode12)
 {
@@ -510,7 +389,7 @@ bool Executive::addEvent(bool mode12)
 
 		for (int i = 0; i < numOfDays; i++)
 		{
-			std::cout << "Day " << i + 1 << ": \n";
+			std::cout << "\nDay " << i + 1 << ":";
 			while (1) //runs infinitely
 			{
 				std::cout << "\nWhat year will your event take place?\n";
@@ -537,15 +416,17 @@ bool Executive::addEvent(bool mode12)
 					std::cin >> month;
 				}
 				std::cout << "\nWhat day will your event take place?\n";
-				std::cin.ignore(); //wipes cin
-				std::cin >> day; //takes in the day
+
+				//std::cin.ignore(); //wipes cin
+				std::cin >> day; //takes in the day //this is the seg fault
+
 				while (std::cin.fail()) //fail bit code to recover from bad input
 				{
-					std::cin.clear();
-					std::cin.ignore();
-					std::cout << "Invalid input, please enter a day\n";
-					std::cin >> day;
-				}
+			 	std::cin.clear();
+			 	std::cin.ignore();
+			 	std::cout << "Invalid input, please enter a day\n";
+			 	std::cin >> day;
+			 }
 
 				if (dateCheck(year, month, day) == true) //if the date is valid
 				{
@@ -2080,7 +1961,7 @@ void Executive::AddAvailability(Events event1)
 							std::cin >> timeSelection;
 							if (timeSelection == 1)
 							{
-								//index 24 = 
+								//index 24 =
 								myArray[i][24].increaseAtt();
 								myArray[i][24].addAttendee(currentUser);
 							}
@@ -2557,7 +2438,7 @@ void Executive::AddAvailability(Events event1)
 							std::cin >> timeSelection;
 							if (timeSelection == 1)
 							{
-								//index 51 = 
+								//index 51 =
 								myArray[i][51].increaseAtt();
 								myArray[i][51].addAttendee(currentUser);
 							}
@@ -2614,9 +2495,9 @@ void Executive::printEvents()
 
 bool Executive::dateCheck(int y, int m, int d)
 {///next few lines are important to keep running on Anna's computer
+
 	time_t now = time(0);
-	tm* ltm = new tm();
-	localtime_s(ltm, &now);
+	tm* ltm = localtime(&now);
 	int curY = (1900 + ltm->tm_year);
 	if(y < curY)
 	{
@@ -2690,8 +2571,8 @@ bool Executive::dateCheck(int y, int m, int d)
 	return true;
 }
 
-bool Executive::validEventName(std::string name, int value) {
-	if (name.length() == 0 || name.length()>(value-1)) 
+bool Executive::validEventName(std::string name, unsigned int value) {
+	if (name.length() == 0 || name.length()>=(value))
 		return false;
 	else
 		return true;

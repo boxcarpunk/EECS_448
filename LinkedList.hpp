@@ -55,7 +55,6 @@ void LinkedList<keyType, searchType>::addBack(keyType value)
   {
 		  addFront(value); //add the value to the front
 
-	std::cout << "HERE2\n";
   }
   else //if the list is not empty
   {
@@ -88,7 +87,6 @@ void LinkedList<keyType, searchType>::addFront(keyType value)
     }
 
     m_length++; //increases the length of the list by one since a node was added
-	std::cout << "HERE1\n";
 
 }
 
@@ -217,7 +215,7 @@ bool LinkedList<keyType, searchType>::removeAt(int position)
 template <typename keyType, typename searchType>
 bool LinkedList<keyType, searchType>::setEntry(int position, keyType value)
 {
-	if ((position < 1) || (position > length)) //if the position is invalid (it isn't between one and the length inclusively)
+	if ((position < 1) || (position > m_length)) //if the position is invalid (it isn't between one and the length inclusively)
 	{
 		return(false); //returns false since the entry at the position couldn't be set
 	}
@@ -333,7 +331,7 @@ void LinkedList<keyType, searchType>::sort()
 					currentNode -> setValue(currentNode -> getNext() -> getValue()); //overrides the current node's value with the next node's value
 					currentNode -> getNext() -> setValue(temp); //overrides the next node's value with the value that was in the current node
 	    		}
-				
+
 				currentNode = currentNode->getNext(); //moves along the list
 			}
 		}

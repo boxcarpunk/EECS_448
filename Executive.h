@@ -98,7 +98,7 @@ class Executive
 	* @param String name of the event and the int value is the greatest amount of characters the event name can have
 	* @return returns true if a valid name and false if invalid name
 	*/
-	bool validEventName(std::string name, int value);
+	bool validEventName(std::string name, unsigned int value);
 
 
 
