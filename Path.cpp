@@ -55,6 +55,7 @@ void Path::Login(int screen, int AdminOrUser)
 		string Username = Input(win1);
 		wclear(win1);
 		wrefresh(win1);
+<<<<<<< HEAD
 		Login(3,1);
 	}
 	else if((screen == 5)&&(AdminOrUser==0))
@@ -81,6 +82,115 @@ void Path::Login(int screen, int AdminOrUser)
 		wclear(win1);
 		wrefresh(win1);
 		Login(4,0);
+=======
+		int Choice = AOrU(win0, win1);
+		if(Choice==2)
+		{
+			Login(1,3);
+		}
+		else if(Choice == 0)
+		{
+			Choice = AdminActions(win0,win1);
+			if(Choice==0)
+			{
+				wclear(win0);
+				mvwprintw(win0,1,1,"Enter event name");
+				mvwprintw(win0,3,1,"Name:");
+				box(win0,0,0);
+				box(win1,0,0);
+				wrefresh(win0);
+				wrefresh(win1);
+				refresh();
+				string EventN = Input(win1);
+				wclear(win0);
+				wclear(win1);
+				mvwprintw(win0,1,1,"Enter number of dates");
+				mvwprintw(win0,3,1,"Number: ");
+				box(win0,0,0);
+				box(win1,0,0);
+				wrefresh(win0);
+				wrefresh(win1);
+				refresh();
+				int num = stoi(Input(win1));
+				for(int i = 0; i<num;i++)
+				{
+					wclear(win0);
+					wclear(win1);
+					mvwprintw(win0,1,1,"Enter date");
+					mvwprintw(win0,3,1,"Date: ");
+					mvwprintw(win0,6,1,"(MM/DD/YYYY)");
+					box(win0,0,0);
+					box(win1,0,0);
+					wrefresh(win0);
+					wrefresh(win1);
+					refresh();
+					string Date = Input(win1);
+					wclear(win1);
+					wrefresh(win1);
+				}
+				wclear(win1);
+				wrefresh(win1);
+				Choice = AddATask(win0,win1);
+				if(!Choice)
+				{
+					mvwprintw(win0,1,1,"Enter name");
+					mvwprintw(win0,3,1,"Task name: ");
+					wrefresh(win0);
+					box(win1,0,0);
+					wrefresh(win1);
+					refresh();
+					string TaskName = Input(win1);
+					wclear(win1);
+					wrefresh(win1);
+				}
+					Login(1,0);
+			}
+			else if(Choice==1)
+			{
+				Choice = SelectEvents(win0,win1);
+				Choice = H->print_scroll(win0,Edit,3,2,2);
+				if(Choice==0)
+				{
+					wclear(win0);
+					mvwprintw(win0,1,1,"Enter event name");
+					mvwprintw(win0,3,1,"Name:");
+					box(win0,0,0);
+					box(win1,0,0);
+					wrefresh(win0);
+					wrefresh(win1);
+					refresh();
+					string EventN = Input(win1);
+				}
+				else
+				{
+					wclear(win0);
+					wclear(win1);
+					mvwprintw(win0,1,1,"Enter date");
+					mvwprintw(win0,3,1,"Date: ");
+					mvwprintw(win0,6,1,"(MM/DD/YYYY)");
+					box(win0,0,0);
+					box(win1,0,0);
+					wrefresh(win0);
+					wrefresh(win1);
+					refresh();
+					string Date = Input(win1);
+				}
+				wclear(win0);
+				wclear(win1);
+				wrefresh(win0);
+				wrefresh(win1);
+				Login(1,0);
+			}
+			else
+			{
+				//Login(3,1);
+			}
+		}
+		else
+		{
+			Login(4,1);
+		}
+>>>>>>> parent of ccc69f7... fixed admit edit event option
 	}
 	else if(screen == 3)
 	{
