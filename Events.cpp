@@ -2,16 +2,17 @@
 
 Events::Events()
 {
-	m_name = "None"; //sets the name of the event to None
+	m_eventName = "None"; //sets the name of the event to None
+	m_adminName = "None"; //sets the name of the admin to None
 	m_numOfDays = 0; //sets the number of days for the event to 0
 
 	m_Task = new LinkedList(); //creates an empty task list for the event
-
 }
 
-Events::Events(std::string name, int numOfDays, std::vector<std::string> dates)
+Events::Events(std::string eventName, std::string adminName int numOfDays, std::vector<std::string> dates)
 {
-	m_name = name; //sets the name of the event
+	m_eventName = eventName; //sets the name of the event
+	m_adminName = adminName; //sets the name of the admin
 	m_numOfDays = numOfDays; //sets the number of days for the event
 	m_dates = dates; //sets the dates that the event will occur
 
@@ -35,14 +36,14 @@ Events::Events(std::string name, int numOfDays, std::vector<std::string> dates)
 	delete m_Task;
 }*/
 
-void Events::setName(std::string name)
+void Events::setEventName(std::string name)
 {
-	m_name = name; //sets the name to what was passed in
+	m_eventName = name; //sets the name to what was passed in
 }
 
-std::string Events::getName() const
+std::string Events::getEventName() const
 {
-	return m_name; //returns the name of the event
+	return m_eventName; //returns the name of the event
 }
 
 int Events::getNumOfDays() const
@@ -128,9 +129,14 @@ std::vector<Task> Events::getTasks()
 
 bool Events::operator==(const Events& rhs) const
 {
-	if (m_name != rhs.m_name)
+	if (m_eventName != rhs.m_eventName)
 	{
 		return(false); //returns false if the names of the events are not the same
+	}
+	
+	if (m_adminName != rhs.m_adminName)
+	{
+		return(false); //returns false if the names of the admins are not the same
 	}
 
 	if (m_numOfDays != rhs.m_numOfDays)

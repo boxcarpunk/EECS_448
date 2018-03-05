@@ -42,10 +42,10 @@ public:
 	*	Creates an event and adds it to the event list
 	*	@pre None
 	*	@post An event is added to the list of events
-	*	@param A string representing the name, an int representing the number of days, and a vector of dates for the event
-	*	@return True if the event could be added, false otherwise
+	*	@param Two strings representing the name of the event and the admin, an int representing the number of days, and a vector of dates for the event
+	*	@return The newly created event
 	*/
-	bool addEvent(std::string name, int numOfDays, std::vector<std::string> dates);
+	Event& addEvent(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates);
 
 	/**
 	*	Returns the list of events

@@ -22,10 +22,10 @@ public:
 	*	Creates an event with the values passed in
 	*	@pre None
 	*	@post Assigns member variables the corresponding values passed in and creates an event
-	*	@param A string representing the name, an int representing the number of days, and a vector of dates for the event
+	*	@param Two strings representing hte name of the event and the name of the admin, an int representing the number of days, and a vector of dates for the event
 	*	@return None
 	*/
-	Events(std::string name, int numOfDays, std::vector<std::string> dates);
+	Events(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates);
 
 	/**
 	*	Destructor deletes the linked lists
@@ -43,7 +43,7 @@ public:
 	*	@param String representing the name of an event
 	*	@return None
 	*/
-	void setName(std::string name);
+	void setEventName(std::string name);
 
 	/**
 	*	Returns the name of the event
@@ -52,7 +52,7 @@ public:
 	*	@param None
 	*	@return A string representing the name of the event
 	*/
-	std::string getName() const;
+	std::string getEventName() const;
 
 	/**
 	*	Returns the number of days the event will occur
@@ -127,11 +127,11 @@ public:
 	std::vector<Task> getTasks();
 
 	/**
-	*	Operator overload for == between two events, checks the name and dates of the events
+	*	Operator overload for == between two events, checks the event name, admin name, and dates of the events
 	*	@pre None
 	*	@post None
 	*	@param The event to be compared to this one
-	*	@return True if the name and dates of the events are the same, false otherwise
+	*	@return True if the names and dates of the events are the same, false otherwise
 	*/
 	bool operator==(const Events& rhs) const;
 
@@ -154,7 +154,8 @@ public:
 	bool operator>(const Events& rhs) const;
 
 private:
-	std::string m_name; /**< The name of the Event */
+	std::string m_eventName; /**< The name of the event */
+	std::string m_adminName; /**< The name of the admin for the event */
 	int m_numOfDays; /**< The number of days the event will occur */
 	std::vector<std::string> m_dates; /**< The actual dates that the event will occur */
 	TimeSlots** timeSlot; /**< The time slots for the event, the first index cooresponds to the day and the second index cooresponds to the actual time slot */

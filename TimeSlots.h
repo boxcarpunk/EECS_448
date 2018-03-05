@@ -75,7 +75,7 @@ public:
 	*	@param This time slot is made equal to the one passed in
 	*	@return This time slot
 	*/
-	TimeSlot& operator=(const TimeSlots& rhs);
+	TimeSlots& operator=(const TimeSlots& rhs);
 
 	/**
 	*	Operator overload for > between two time slots

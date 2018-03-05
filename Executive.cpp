@@ -28,7 +28,7 @@ Executive::Executive()
 		strMonth = month;
 		strDay = day;
 		strYear = year;
-		//TODO: Add numOfDays to constructor
+		
 		Events event(name,  0, 0); //creates a new event with the given name, month, day, and year
 		while (true) //runs infinitely
 		{
@@ -80,10 +80,12 @@ void Executive::setCurrentUser(std::string name)
 	m_currentUser = name; //set the current user to the name passed in
 }
 
-bool Executive::addEvent(std::string name, int numOfDays, std::vector<std::string> dates)
+bool Executive::addEvent(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates)
 {
-	eventList->addBack(Event(name, numOfDays, dates)); //creates a new event with the parameters passed in and stores them in the back of the event list
+	Event newEvent = new Event(eventName, adminName, numOfDays, dates); //creates a new event with the parameters passed in
+	eventList->addBack(Event(newEvent); //adds the event to the back of the event list
 	eventList->sort(); //sorts the event list
+	return(newEvent); //returns the newly created event
 }
 
 std::vector<Events> Executive::getEventList()
@@ -105,15 +107,15 @@ bool Executive::dateCheck(int y, int m, int d)
 	int curY = (1900 + ltm->tm_year);
 	if (y < curY)
 	{
-		std::cout << "The year needs to be this year or later, you cannot create a past event!\n";
+		//std::cout << "The year needs to be this year or later, you cannot create a past event!\n";
 		return false;
 		if (m <= ltm->tm_mon)
 		{
-			std::cout << "The month needs to be this month or later, you cannot create a past event!\n";
+			//std::cout << "The month needs to be this month or later, you cannot create a past event!\n";
 			return false;
 			if (d <= ltm->tm_mday)
 			{
-				std::cout << "The day needs to be this day or later, you cannot create a past event!\n";
+				//std::cout << "The day needs to be this day or later, you cannot create a past event!\n";
 				return false;
 			}
 		}
@@ -121,14 +123,14 @@ bool Executive::dateCheck(int y, int m, int d)
 	}
 	if (d < 1)
 	{
-		std::cout << "\nThe day must be 1 or higher.\n";
+		//std::cout << "\nThe day must be 1 or higher.\n";
 		return false;
 	}
 	if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
 	{
 		if (d > 31)
 		{
-			std::cout << "\nYou have selected a day outside the range of this month.\n";
+			//std::cout << "\nYou have selected a day outside the range of this month.\n";
 			return false;
 		}
 	}
@@ -136,17 +138,17 @@ bool Executive::dateCheck(int y, int m, int d)
 	{
 		if (d > 30)
 		{
-			std::cout << "\nYou have selected a day outside the range of this month.\n";
+			//std::cout << "\nYou have selected a day outside the range of this month.\n";
 			return false;
 		}
 	}
 	else if (m == 2)
 	{
-		if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0))			//Leep year conditions: cite "crazzyguy101 - cplusplus.com"
+		if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0)) //Leep year conditions: cite "crazzyguy101 - cplusplus.com"
 		{
 			if (d > 29)
 			{
-				std::cout << "\nYou have selected a day outside the range of this month.\n";
+				//std::cout << "\nYou have selected a day outside the range of this month.\n";
 				return false;
 			}
 		}
@@ -154,7 +156,7 @@ bool Executive::dateCheck(int y, int m, int d)
 		{
 			if (d > 28)
 			{
-				std::cout << "\nYou have selected a day outside the range of this month.\n";
+				//std::cout << "\nYou have selected a day outside the range of this month.\n";
 				return false;
 			}
 		}
