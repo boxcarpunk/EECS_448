@@ -37,6 +37,15 @@ public:
 	*	@return None
 	*/
 	void setCurrentUser(std::string name);
+	
+	/**
+	*	Gets the name of the current user
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return A string representing the name of the current user
+	*/
+	std::string getCurrentUser() const;
 
 	/**
 	*	Creates an event and adds it to the event list
@@ -54,7 +63,7 @@ public:
 	*	@param None
 	*	@return The list of events
 	*/
-	std::vector<Events> getEventList();
+	std::vector<Events> getEventList() const;
 
 	/**
 	*	Wasn't included in documentation

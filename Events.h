@@ -53,6 +53,15 @@ public:
 	*	@return A string representing the name of the event
 	*/
 	std::string getEventName() const;
+	
+	/**
+	*	Returns the name of the admin
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return A string representing the name of the admin
+	*/
+	std::string getAdminName() const;
 
 	/**
 	*	Returns the number of days the event will occur
@@ -71,6 +80,24 @@ public:
 	*	@return A vector containing the list of dates the event will occur on in MM/DD/YYYY format
 	*/
 	std::vector<std::string> getDates() const;
+	
+	/**
+	*	Removes a date from the event
+	*	@pre A date is at the given index
+	*	@post The date at the given index is removed
+	*	@param An int corresponding to the index of the date to be removed, indexing starts at 0
+	*	@return None
+	*/
+	void removeDate(int index);
+	
+	/**
+	*	Adds a date that the event will take place
+	*	@pre None
+	*	@post The date is added to the event
+	*	@param A string representing a date in MM/DD/YYYY format
+	*	@return None
+	*/
+	void addDate(std::string date);
 
 	/**
 	*	The 2D array of time slots will be returned. The first index refers to the day of the event and the second index refers to the 20min time slot for that day
@@ -98,6 +125,15 @@ public:
 	*	@return None
 	*/
 	void addTask(std::string name);
+	
+	/**
+	*	Removes a task from the task list
+	*	@pre A task exists at the given index
+	*	@post The task at the given index is removed
+	*	@param An int representing the index of the task to be removed
+	*	@return None
+	*/
+	void removeTask(int index);
 
 	/**
 	*	Allows a user to sign up for a task
@@ -156,8 +192,10 @@ public:
 private:
 	std::string m_eventName; /**< The name of the event */
 	std::string m_adminName; /**< The name of the admin for the event */
+	
 	int m_numOfDays; /**< The number of days the event will occur */
 	std::vector<std::string> m_dates; /**< The actual dates that the event will occur */
 	TimeSlots** timeSlot; /**< The time slots for the event, the first index cooresponds to the day and the second index cooresponds to the actual time slot */
+	
 	LinkedList<Task, std::string>* m_Task; /**< The list of tasks for the event */
 };

@@ -80,6 +80,11 @@ void Executive::setCurrentUser(std::string name)
 	m_currentUser = name; //set the current user to the name passed in
 }
 
+std::string Executive::getCurrentUser() const
+{
+	return(m_currentUser); //returns the name of the current user
+}
+
 bool Executive::addEvent(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates)
 {
 	Event newEvent = new Event(eventName, adminName, numOfDays, dates); //creates a new event with the parameters passed in
@@ -88,7 +93,7 @@ bool Executive::addEvent(std::string eventName, std::string adminName, int numOf
 	return(newEvent); //returns the newly created event
 }
 
-std::vector<Events> Executive::getEventList()
+std::vector<Events> Executive::getEventList() const
 {
 	std::vector<Events> temp; //creates the temp vector that will be returned
 

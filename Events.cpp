@@ -46,6 +46,11 @@ std::string Events::getEventName() const
 	return m_eventName; //returns the name of the event
 }
 
+std::string Events::getAdminName() const
+{
+	return m_adminName; //returns the name of the admin
+}
+
 int Events::getNumOfDays() const
 {
 	return m_numOfDays; //returns the number of days the event will occur
@@ -56,6 +61,73 @@ std::vector<std::string> Events::getDates() const
 	return m_dates; //returns the list of days the event will occur on
 }
 
+void Events::removeDate(int index)
+{
+	if((index >=0) && (index < m_dates.size())) //if the index is valid
+	{
+		m_dates.erase(m_dates.begin()+index); //erases the date at the given index
+		m_numOfDays--; //decrements the number of days the event will occur
+		TimeSlots** temp = new TimeSlots*[m_numOfDays]; //makes a new time slot 2D array of the new size
+		
+		for(int i = 0; i < m_numOfDays; i++) //iterates through the days of the event
+		{
+			temp[i] = new TimeSlots[54]; //makes the 20min time slots for the date
+		
+			if(i < index) //if the current date is less than the removed index
+			{
+				for(int j =0; j < 54; j++) //iterates through the time slots
+				{
+					temp[i][j] = timeSlot[i][j]; //makes the new time slot equal to the old one
+				}
+			}
+			else //if the current date is equal to or greater than the removed index
+			{
+				for(int j =0; j < 54; j++) //iterates through the time slots
+				{
+					temp[i][j] = timeSlot[i+1][j]; //makes the new time slot equal to the old one accounting for the removed index
+				}
+			}
+		}
+		
+		for(int i = 0; i < m_numOfDays+1; i++) //runs through the old dates
+		{
+			delete[] timeSlot[i]; //deletes the old time slots
+		}
+		
+		delete[] timeSlot; //deletes the old dates
+		
+		timeSlot = temp; //makes the time slot 2D array equal to the temp one
+	}
+}
+
+void Events::addDate(std::string date)
+{
+	m_dates.push_back(date); //adds the date to the back of the date vector
+	m_numOfDates++; //increments the number of days the event will occur
+	TimeSlots** temp = new TimeSlots*[m_numOfDays]; //makes a new time slot 2D array of the new size
+		
+		for(int i = 0; i < m_numOfDays; i++) //iterates through the days of the event
+		{
+			temp[i] = new TimeSlots[54]; //makes the 20min time slots for the date
+		
+			if(i < (m_numOfDays-1)) //if the current date is part of the old dates
+			{
+				for(int j =0; j < 54; j++) //iterates through the time slots
+				{
+					temp[i][j] = timeSlot[i][j]; //makes the new time slot equal to the old one
+				}
+			}
+		}
+		
+		for(int i = 0; i < m_numOfDays-1; i++) //runs through the old dates
+		{
+			delete[] timeSlot[i]; //deletes the old time slots
+		}
+		
+		delete[] timeSlot; //deletes the old dates
+		
+		timeSlot = temp; //makes the time slot 2D array equal to the temp one
+}
 
 TimeSlots** Events::getTimes() const
 {
@@ -76,6 +148,11 @@ void Events::setTimes(TimeSlots** times)
 void Events::addTask(std::string name)
 {
 	m_Task->addFront(Task(name)); //makes a new task with the given name and adds it to the front of the list
+}
+
+void Events::removeTask(int index)
+{
+	m_Task->removeAt(index); //removes the task at the given index
 }
 
 bool Events::signUpTask(std::string userName, std::string taskName)
