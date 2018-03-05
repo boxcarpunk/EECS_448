@@ -17,8 +17,8 @@ public:
 	* Prints an array
 	*	@pre None
 	*	@post None
-	*	@param None
-	*	@return None
+	*	@param WINDOW win, char Menu[], int size, int Actual, int StartLine
+	*	@return Index of where user is in the menu
 	*/
 	int print_scroll(WINDOW * win, char * Menu[], int size, int Actual, int StartLine);
 	/**
@@ -26,7 +26,7 @@ public:
 	*	@pre None
 	*	@post None
 	*	@param None
-	*	@return None
+	*	@return Index of where user is in the menu
 	*/
 	int print_vec(WINDOW * win, std::vector<char *> Menu, int Actual, int StartLine);
 private:
