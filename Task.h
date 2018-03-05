@@ -23,6 +23,8 @@ public:
 	*/
 	Task(std::string name);
 
+	Task(const Task& oldTask);
+
 	/**
 	*	Allows someone to sign up to handle the task
 	*	@pre The task is not being handled already
@@ -94,6 +96,8 @@ public:
 	*	@return True if the string is equal to the task's name, false otherwise
 	*/
 	bool operator==(const std::string& rhs);
+
+	Task& operator=(const Task& rhs);
 
 private:
 	std::string m_taskName; /**< name of the task */

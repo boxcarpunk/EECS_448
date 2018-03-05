@@ -3,6 +3,7 @@
 #include <vector>
 #include "TimeSlots.h"
 #include "Task.h"
+#include "LinkedList.h"
 
 class Events
 {
@@ -18,13 +19,13 @@ public:
 	Events();
 
 	/**
-	*	Creates an event with the values passed in
+	*	Creates an event with default values
 	*	@pre None
-	*	@post Assigns member variables the corresponding values passed in and creates an event
-	*	@param Two strings representing hte name of the event and the name of the admin, an int representing the number of days, and a vector of dates for the event
+	*	@post Assigns member variables the corresponding value passed in and creates an event
+	*	@param String for name and integers for month, day, and year
 	*	@return None
 	*/
-	Events(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates);
+	Events(std::string name,std::string adminName, int numOfDays, TimeSlots**);
 
 	/**
 	*	Destructor deletes the linked lists
@@ -70,6 +71,15 @@ public:
 	*	@return An int representing the number of days the event will occur
 	*/
 	int getNumOfDays() const;
+
+	/**
+	*	The name of the event being accessed is returned to the program
+	*	@pre None
+	*	@post The name of an event it returned
+	*	@param None
+	*	@return A string representing the name of the event
+	*/
+	std::string getName() const;
 
 	/**
 	*	The list of days the event will occur on will be returned
@@ -135,6 +145,15 @@ public:
 	void removeTask(int index);
 
 	/**
+	*	The list of time slots for the event being accessed is returned to the program
+	*	@pre None
+	*	@post The list of time slots for an event it returned
+	*	@param None
+	*	@return Head pointer to m_TimeSlot. Specifically created for >, <, == operator overloads
+	*/
+	LinkedList<TimeSlots, TimeSlots>* getTimeSlots() const;
+
+	/**
 	*	Allows a user to sign up for a task
 	*	@pre There is an unhandled task in the list with the given name
 	*	@post The task is handled
@@ -171,6 +190,15 @@ public:
 	bool operator==(const Events& rhs) const;
 
 	/**
+	*	Operator overload for == between two events, checks the event name, admin name, and dates of the events
+	*	@pre None
+	*	@post None
+	*	@param The event to be compared to this one
+	*	@return True if the names and dates of the events are the same, false otherwise
+	*/
+	Events& operator<<(Events& rhs);
+
+	/**
 	*	Operator overload for == between an event and a string, checks the string against the event's name
 	*	@pre None
 	*	@post None
@@ -188,6 +216,19 @@ public:
 	*/
 	bool operator>(const Events& rhs) const;
 
+	/**
+	*	The information for an event is printed out so that the user can see it
+	*	@pre None
+	*	@post The info for an event is printed
+	*	@param None
+	*	@return None
+	*/
+	void getInfo();
+
+	void setDates(std::string date);
+
+
+
 private:
 	std::string m_eventName; /**< The name of the event */
 	std::string m_adminName; /**< The name of the admin for the event */
@@ -197,4 +238,7 @@ private:
 	TimeSlots** timeSlot; /**< The time slots for the event, the first index cooresponds to the day and the second index cooresponds to the actual time slot */
 	
 	std::vector<Task> m_Task; /**< The list of tasks for the event */
+
+	LinkedList<TimeSlots, TimeSlots>* m_TimeSlot; /**< pointer to list of time slots for this event */
+
 };

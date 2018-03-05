@@ -1,4 +1,5 @@
 #include "Task.h"
+#include <iostream>
 
 Task::Task()
 {
@@ -14,6 +15,11 @@ Task::Task(std::string name)
 	m_handled = false; //sets the task as not being handled
 }
 
+Task::Task(const Task & oldTask)
+{
+	*this = oldTask;
+}
+
 bool Task::signUp(std::string name)
 {
 	if (m_handled) //if the task is already being handled
@@ -22,6 +28,7 @@ bool Task::signUp(std::string name)
 	}
 	else //if the task is not being handled already
 	{
+		std::cout<<"CURRENTUSER: " << name << std::endl;
 		m_personName = name; //sets the name of the person handling the task to the name passed in
 		m_handled = true; //sets the task as being handled
 		return(true); //the person was able to sign up for the task
@@ -70,4 +77,12 @@ bool Task::operator>(const Task& rhs)
 bool Task::operator==(const std::string& rhs)
 {
 	return(m_taskName == rhs); //returns whether the task's name is equal to the string passed in
+}
+
+Task& Task::operator=(const Task & rhs)
+{
+	m_taskName = rhs.m_taskName;
+	m_personName = rhs.m_personName;
+	m_handled = rhs.m_handled;
+	return(*this);
 }

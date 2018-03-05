@@ -79,6 +79,24 @@ public:
 	bool operator==(const TimeSlots& rhs) const;
 
 	/**
+	*	Increases the number of attendees by one
+	*	@pre None
+	*	@post The value of m_numOfAtt is increased by one
+	*	@param None
+	*	@return None
+	*/
+	void increaseAtt();
+
+	/**
+	*	The time slot for an attendee is returned to the program
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return An int representing the timeslot
+	*/
+	int getTimeSlot();
+
+	/**
 	*	Operator overload for = between two time slots
 	*	@pre None
 	*	@post None
@@ -99,5 +117,7 @@ public:
 private:
 	int m_numOfAtt;  /**< the number of attendants for this time slot */
 	int m_Index;  /**< the index of the time slot */
-	std::vector<std::string> m_attendees; /**< the list of users avaliable for this time slot */
+
+	int m_TimeSlot;  /**< the timeslot for an event */
+	std::vector<std::string> m_attendees;
 };

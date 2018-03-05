@@ -1,4 +1,5 @@
 #include "Events.h"
+#include <iostream>
 
 Events::Events()
 {
@@ -7,25 +8,17 @@ Events::Events()
 	m_numOfDays = 0; //sets the number of days for the event to 0
 }
 
-Events::Events(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates)
+Events::Events(std::string name,std::string adminName, int numOfDays, TimeSlots** times)
 {
-	m_eventName = eventName; //sets the name of the event
-	m_adminName = adminName; //sets the name of the admin
-	m_numOfDays = numOfDays; //sets the number of days for the event
-	m_dates = dates; //sets the dates that the event will occur
+	//std::string date = month + "/" + day + "/" + year;
 
-	timeSlot = new TimeSlots*[numOfDays]; //creates time slot ptrs for each day of the event
-
-	for (int i = 0; i < numOfDays; i++) //iterates for every day of the event
-	{
-		timeSlot[i] = new TimeSlots[54]; //creates an array of TimeSlots that corresponds to each possible 20min slot
-
-		for (int j = 0; j < 54; j++) //runs through the time slot array
-		{
-			timeSlot[i][j].setIndex(i); //gives each time slot its index
-		}
-	}
+	m_TimeSlot = new LinkedList<TimeSlots, TimeSlots>(); //creates a linked list of time slots
+	m_numOfDays = numOfDays;
+	m_eventName = name;
+	timeSlot = times;
 }
+
+
 
 /*Events::~Events()
 {
@@ -57,7 +50,56 @@ std::vector<std::string> Events::getDates() const
 	return m_dates; //returns the list of days the event will occur on
 }
 
-void Events::removeDate(int index)
+LinkedList<TimeSlots, TimeSlots>* Events::getTimeSlots() const
+{
+	return m_TimeSlot; //returns the linked list of time slots
+}
+
+void Events::setDates(std::string date)
+{
+	m_dates.push_back(date); //sets the month to what was passed in
+}
+
+void Events::getInfo()
+{
+	std::string year, month, day;
+	std::string myArray[54] = { "5:00 - 5:20 AM", "5:20 - 5:40 AM", "5:40 - 6:00 AM",  "6:00 - 6:20 AM", "6:20 - 6:40 AM", "6:40 - 7:00 AM",  "7:00 - 7:20 AM", "7:20 - 7:40 AM", "7:40 - 8:00 AM",  "8:00 - 8:20 AM", "8:20 - 8:40 AM", "8:40 - 9:00 AM",  "9:00 - 9:20 AM", "9:20 - 9:40 AM", "9:40 - 10:00 AM",  "10:00 - 10:20 AM", "10:20 - 10:40 AM", "10:40 - 11:00 AM",  "11:00 - 11:20 AM", "11:20 - 11:40 AM", "11:40 - 12:00 AM",  "1:00 - 1:20 PM", "1:20 - 1:40 PM", "1:40 - 2:00 PM",  "2:00 - 2:20 PM", "2:20 - 2:40 PM", "2:40 - 3:00 PM",  "3:00 - 3:20 PM", "3:20 - 3:40 PM", "3:40 - 4:00 PM",  "4:00 - 4:20 PM", "4:20 - 4:40 PM", "4:40 - 5:00 PM",  "5:00 - 5:20 PM", "5:20 - 5:40 PM", "5:40 - 6:00 PM",  "6:00 - 6:20 PM", "6:20 - 6:40 PM", "6:40 - 7:00 PM",  "7:00 - 7:20 PM", "7:20 - 7:40 PM", "7:40 - 8:00 PM",  "8:00 - 8:20 PM", "8:20 - 8:40 PM", "8:40 - 9:00 PM",  "9:00 - 9:20 PM", "9:20 - 9:40 PM", "9:40 - 10:00 PM",  "10:00 - 10:20 PM", "10:20 - 10:40 PM", "10:40 - 11:00 PM",  "11:00 - 11:20 PM", "11:20 - 11:40 PM", "11:40 PM - 12:00 AM" };
+	std::cout << "\n" << m_eventName << " is occuring on ";
+	for (int i = 0; i < m_numOfDays; i++)
+	{
+		std::string date = m_dates[i];
+		day = date.substr(0, 2);
+		month = date.substr(3, 2);
+		year = date.substr(6, 4);
+		std::cout << "\nDay #" << i+1 << " " << month << "/" << day << "/" << year; //prints the name and date of the event
+		std::cout << "\n----------------\n" << std::endl; //prints the name and date of the event
+
+		for (int j = 0; j < 54; j++)
+		{
+			if (timeSlot[i][j].getNum() != 0)
+			{
+				std::cout << "At " << myArray[j] << ", the following people are attending:";
+				std::vector<std::string> names;
+
+				names = timeSlot[i][j].getAttendees();
+				for (int l = 0; l < names.size(); l++)
+				{
+					std::cout << names[l] <<", ";
+				}
+				std::cout << std::endl;
+			}
+		}
+	}
+
+	std::cout << "\nTasks\n";
+	std::cout << "-----\n\n";
+	for (int i = 0; i < m_Task.size(); i++)
+	{
+		std::cout << i+1 << ") " << m_Task[i].getTaskName() << " is being handled by " << m_Task[i].getPersonName() << std::endl;
+	}
+}
+
+/*void Events::removeDate(int index)
 {
 	if((index >=0) && (index < m_dates.size())) //if the index is valid
 	{
@@ -94,9 +136,9 @@ void Events::removeDate(int index)
 		
 		timeSlot = temp; //makes the time slot 2D array equal to the temp one
 	}
-}
+}*/
 
-void Events::addDate(std::string date)
+/*void Events::addDate(std::string date)
 {
 	m_dates.push_back(date); //adds the date to the back of the date vector
 	m_numOfDays++; //increments the number of days the event will occur
@@ -123,11 +165,17 @@ void Events::addDate(std::string date)
 		delete[] timeSlot; //deletes the old dates
 		
 		timeSlot = temp; //makes the time slot 2D array equal to the temp one
+}*/
+
+
+std::string Events::getName() const
+{
+	return m_eventName; //returns the name of the event
 }
 
-TimeSlots** Events::getTimes() const
+TimeSlots ** Events::getTimes() const
 {
-	return timeSlot; //returns the 2D array of time slots
+	return timeSlot;
 }
 
 void Events::setTimes(TimeSlots** times)
@@ -151,7 +199,8 @@ void Events::addTask(std::string name)
 		}
 	}
 
-	m_Task.push_back(Task(name)); //makes a new task with the given name and adds it to the back of the list
+	Task* newTask = new Task(name);
+	m_Task.push_back(*newTask); //makes a new task with the given name and adds it to the back of the list
 }
 
 void Events::removeTask(int index)
@@ -164,14 +213,14 @@ void Events::removeTask(int index)
 
 bool Events::signUpTask(std::string userName, std::string taskName)
 {
-	Task temp; //creates a temp task
+	int temp; //creates a temp task
 	bool found = false; //a flag to state whether the task was found or not
 
 	for(int i = 0; i < m_Task.size(); i++) //runs through the task list
 	{
 		if(m_Task[i] == taskName) //if the task is found
 		{
-			temp = m_Task[i]; //stores the task in temp
+			temp = i; //stores the task in temp
 			found = true; //set the flag to true since the task was found
 		}
 	}
@@ -181,7 +230,7 @@ bool Events::signUpTask(std::string userName, std::string taskName)
 		return(false); //return false
 	}
 
-	return(temp.signUp(userName)); //passes along the name of the user to the task and returns whether they were able to sign up or not
+	return(m_Task[temp].signUp(userName)); //passes along the name of the user to the task and returns whether they were able to sign up or not
 }
 
 bool Events::cancelSignUpTask(std::string userName, std::string taskName)
@@ -220,30 +269,24 @@ std::vector<Task> Events::getTasks()
 
 bool Events::operator==(const Events& rhs) const
 {
-	if (m_eventName != rhs.m_eventName)
-	{
-		return(false); //returns false if the names of the events are not the same
-	}
-	
-	if (m_adminName != rhs.m_adminName)
-	{
-		return(false); //returns false if the names of the admins are not the same
-	}
+	std::string rhsYear, rhsMonth, rhsDay, rhsDate;
+	rhsDate = rhs.getDates()[0];
+	rhsDay = rhsDate.substr(0, 2);
+	rhsMonth = rhsDate.substr(3, 2);
+	rhsYear = rhsDate.substr(6, 10);
 
-	if (m_numOfDays != rhs.m_numOfDays)
-	{
-		return(false); //returns false if the events do not have the same number of days
-	}
+	std::string year, month, day;
+	std::string date = m_dates[0];
+	day = date.substr(0, 2);
+	month = date.substr(3, 2);
+	year = date.substr(6, 10);
 
-	for (int i = 0; i < m_numOfDays; i ++) //runs through the days of the event
-	{
-		if (m_dates[i] != rhs.m_dates[i])
-		{
-			return(false); //returns false if the events do not occur on the same dates
-		}
-	}
+	return((m_eventName == rhs.m_eventName) && (year == rhsYear) && (month == rhsMonth) && (day == rhsDay)); //returns true if the name, year, month, and day are the same
+}
 
-	return(true); //if name and dates are not different then return true
+Events& Events::operator<<(Events & rhs)
+{
+	return(rhs);
 }
 
 bool Events::operator==(const std::string& rhs) const

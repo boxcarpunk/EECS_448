@@ -24,7 +24,7 @@ Executive::Executive()
 
 	inFile.open("eventslist.txt"); //opens the file
 	eventList = new LinkedList<Events, std::string>(); //creates the linked list of events
-	while(inFile) //while not at end of file
+	/*while(inFile) //while not at end of file
 	{
 		std::getline(inFile, name, ','); //gets the name of an event
 		if (inFile.eof()) //if the end of file character was reached
@@ -62,7 +62,7 @@ Executive::Executive()
 		}
 		eventList->addBack(event); //adds the event to the back of the list
 		eventList -> sort(); //sorts the list
-	}
+	}*/
 	inFile.close(); //close the file
 
 }
@@ -274,7 +274,7 @@ bool Executive::userFunc(bool mode12)
 				std::cout << "\nThe event was found: " << nameToSearch << "\n\n";
 				std::cout <<"Would you like to attend this event?\n";
 				std::cout <<"  (1) Yes\n  (2) No\n\n";
-				std::cin.ignore(); //wipes cin
+				//std::cin.ignore(); //wipes cin
 				std::cin >> userChoice; //takes in and stores the attend input
 				while(std::cin.fail()) //fail bit code to recover from bad input
 				{
@@ -301,7 +301,7 @@ bool Executive::userFunc(bool mode12)
 				if(userChoice == 1) //if the user would like to attend the event
 				{
 					Events temp = eventList -> search(nameToSearch); //stores the event
-					for(int i = 1; i <= temp.getTimeSlots() -> getLength(); i++) //runs through the time slots
+					/*for(int i = 1; i <= temp.getTimeSlots() -> getLength(); i++) //runs through the time slots
 					{
 						std::cout <<"(" << i << ") " << temp.getTimeSlots() -> getEntry(i).getTimeSlot() << "\n"; //prints the time slot
 						std::cout <<"Are you Available for this Time Slot?\n (1)Yes\n (2)No\n";
@@ -336,7 +336,30 @@ bool Executive::userFunc(bool mode12)
 						{
 							std::cout << "Thank You! You will not be added to the Attendee list!\n\n";
 						}
+					}*/
+
+
+					int taskNum = temp.getTasks().size();
+					std::cout << "Sign up for task(s):\n";
+					for (int o = 0; o < taskNum; o++)
+					{
+						std::cout << o + 1 << ") " << temp.getTasks()[o].getTaskName() << std::endl;
 					}
+					std::cout <<taskNum+1 << ") None\n";
+					int taskSelection = 0;
+					std::cin >> taskSelection;
+					if (taskSelection <= taskNum)
+					{
+						bool test = temp.signUpTask(currentUser, temp.getTasks()[taskSelection-1].getTaskName());
+						std::cout << "HERE:: " << test << std::endl;
+
+						eventList->search(nameToSearch) = temp;
+					}
+					else
+					{
+						//no task handled
+					}
+					AddAvailability(temp);
 				}
 			}
 			else //if the event is not in the list
@@ -380,7 +403,7 @@ bool Executive::addEvent(bool mode12)
 		myArray[i] = new TimeSlots[54];
 	}
 
-	Events event1(name, numOfDays, myArray);
+	Events event1(name, currentUser, numOfDays, myArray);
 
 	for (int i = 0; i < numOfDays; i++)
 	{
@@ -456,9 +479,27 @@ bool Executive::addEvent(bool mode12)
 
 	}
 
+	std::string taskOption = "";
+	std::cout << "Would you like to add tasks?\n";
+	std::cin >> taskOption;
+
+	if (taskOption == "y" || taskOption == "Y")
+	{
+		int taskCount = 0;
+		std::cout << "How many tasks would you like to add?\n";
+		std::cin >> taskCount;
+		std::string task;
+
+		std::cin.ignore();
+		for (int i = 0; i < taskCount; i++)
+		{
+			std::cout << "Enter task " << i+1<<":\n";
+			std::getline(std::cin, task);
+			event1.addTask(task);
+		}
+	}
 
 	eventList->addBack(event1);
-	//std::cout << eventList->getLength();
 	eventList->sort();
 
 	AddAvailability(event1);
@@ -472,6 +513,16 @@ void Executive::AddAvailability(Events event1)
 	for (int i = 0; i < event1.getNumOfDays(); i++)
 	{
 		myArray[i] = new TimeSlots[54];
+	}
+
+	TimeSlots** temp = event1.getTimes();
+
+	for (int i = 0; i < event1.getNumOfDays(); i++)
+	{
+		for (int j = 0; j < 54; j++)
+		{
+			myArray[i][j] = temp[i][j];
+		}
 	}
 
 	for (int i = 0; i < event1.getNumOfDays(); i++)
@@ -511,6 +562,8 @@ void Executive::AddAvailability(Events event1)
 				int hourSelection = 0;
 				do
 				{
+					//std::cin.ignore();
+					hourSelection = 0;
 					std::cout << "Select Time\n";
 					std::cout << "1) 5:00 AM\n";
 					std::cout << "2) 6:00 AM\n";
@@ -531,7 +584,6 @@ void Executive::AddAvailability(Events event1)
 					std::cout << "17) 10:00 PM\n";
 					std::cout << "18) 11:00 PM\n";
 					std::cout << "19) Finish\n";
-
 					std::cin >> hourSelection;
 					if (hourSelection == 1)
 					{

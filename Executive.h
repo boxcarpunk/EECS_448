@@ -4,7 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
-
+#include <sstream>
 class Executive
 {
 	public:
