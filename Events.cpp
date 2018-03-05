@@ -1,5 +1,4 @@
 #include "Events.h"
-#include <iostream>
 
 Events::Events()
 {
@@ -18,7 +17,14 @@ Events::Events(std::string name,std::string adminName, int numOfDays, TimeSlots*
 	timeSlot = times;
 }
 
-
+Events::Events(std::string name, std::string adminName, int numOfDays, TimeSlots** times, std::vector<std::string> dates)
+{
+	m_TimeSlot = new LinkedList<TimeSlots, TimeSlots>(); //creates a linked list of time slots
+	m_numOfDays = numOfDays;
+	m_eventName = name;
+	timeSlot = times;
+	m_dates = dates;
+}
 
 /*Events::~Events()
 {

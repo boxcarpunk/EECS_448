@@ -5,6 +5,12 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
+#include <string>
+#include <math.h>
+#include <ctime>
+#include <cctype>
+
 class Executive
 {
 	public:
@@ -63,6 +69,9 @@ class Executive
 
 	private:
 	LinkedList<Events, std::string>* eventList; /**< List which holds the event objects */
+	int timeMode; /**< Set to indicate whether the program should run in 12 or 24 hr mode */
+	std::string currentUser = ""; /**< String containing the name of the current user */
+	const std::string fileName; /**< The name of the file to be read from/written to */
 
 	/**
 	*	The program initializes the admin mode
@@ -90,9 +99,4 @@ class Executive
 	*	@return Wasn't included in documentation
 	*/
 	bool addEvent(bool mode12);
-
-	int timeMode;
-	std::string m_attNum = ""; // placeholder variable for an attendance number of an event, to be passed to Event class as an argument
-	std::string m_months[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-	std::string currentUser = "";
 };

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <iostream>
 #include "TimeSlots.h"
 #include "Task.h"
 #include "LinkedList.h"
@@ -25,7 +26,16 @@ public:
 	*	@param String for name and integers for month, day, and year
 	*	@return None
 	*/
-	Events(std::string name,std::string adminName, int numOfDays, TimeSlots**);
+	Events(std::string name, std::string adminName, int numOfDays, TimeSlots** times);
+
+	/**
+	*	Creates an event with default values
+	*	@pre None
+	*	@post Assigns member variables the corresponding value passed in and creates an event
+	*	@param String for name and integers for month, day, and year
+	*	@return None
+	*/
+	Events(std::string name, std::string adminName, int numOfDays, TimeSlots** times, std::vector<std::string> dates);
 
 	/**
 	*	Destructor deletes the linked lists
@@ -226,8 +236,6 @@ public:
 	void getInfo();
 
 	void setDates(std::string date);
-
-
 
 private:
 	std::string m_eventName; /**< The name of the event */

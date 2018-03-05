@@ -1,74 +1,131 @@
-/**
-* @author Leon Kleyn
-* @cal448
-* @date 12 February 2017
-* @brief Executive class implementation
-* @file Executive.cpp
-Test comment**/
-
 #include "Executive.h"
-#include "Events.h"
-#include "LinkedList.h"
-#include <algorithm>
-#include <string>
-#include <math.h>
-#include <ctime>
 
-Executive::Executive()
+Executive::Executive() : fileName("eventlist.txt")
 {
-	std::ifstream inFile; //creates the object to read from file
-	std::string name = ""; //creates a placeholder variable for a name of an event
-	std::string month = ""; //creates a placeholder variable for a month of an event
-	std::string day = ""; //creates a placeholder variable for a day of an event
-	std::string year = ""; //creates a placeholder variable for a year of an event
-
-	inFile.open("eventslist.txt"); //opens the file
-	eventList = new LinkedList<Events, std::string>(); //creates the linked list of events
-	/*while(inFile) //while not at end of file
+	std::ifstream inFile;
+	inFile.open(fileName);
+	eventList = new LinkedList<Events, std::string>;
+	if (inFile.is_open())
 	{
-		std::getline(inFile, name, ','); //gets the name of an event
-		if (inFile.eof()) //if the end of file character was reached
+		std::string strEventList;
+		while (std::getline(inFile, strEventList))
 		{
-			break; //breaks out of the while loop
-		}
-		if (name[0] == '\n') //if the first character in the name is a new line
-		{
-			name.erase(0,1); //deletes the new line character
-		}
-		std::getline(inFile, month, ','); //gets the month of the event
-		std::getline(inFile, day, ','); //gets the day of the event
-		std::getline(inFile, year, ','); //gets the year of the event
-		std::string strMonth, strDay, strYear;
-		strMonth = month;
-		strDay = day;
-		strYear = year;
-		//TODO: Add numOfDays to constructor
-		Events event(name,  0, 0); //creates a new event with the given name, month, day, and year
-		while (true) //runs infinitely
-		{
-			if (inFile.peek() == '.') //if the next character is a period
-			{
-				std::string time = ""; //creates a string to store the time
-				std::string attendants = ""; //creates a string to store the attendants
-				std::getline(inFile, time, ','); //gets the time
-				time.erase(0,1); //deletes the first character of the time
-				std::getline(inFile, attendants, ','); //gets the attendants
-				event.addTimeSlots(stoi(time), stoi(attendants)); //adds the time and attendants to the event
-			}
-			else //if the next character is not a period
-			{
-				break; //break out of the while loop
-			}
-		}
-		eventList->addBack(event); //adds the event to the back of the list
-		eventList -> sort(); //sorts the list
-	}*/
-	inFile.close(); //close the file
+			std::vector<std::string> strEventParts = split(strEventList, ',');
 
+			std::string eventName = strEventParts[0]; //read the event name
+			std::string eventAdminName = strEventParts[1]; //read the admin for the event
+
+			std::vector<std::string> strDateParts = split(strEventParts[2], '~'); //get all parts of the date which include the days of the event, the time slots and the attendees
+			std::vector<std::string> strDates;
+			std::vector<std::string> strTimeSlots;
+			std::vector<std::vector<TimeSlots>> timeSlotsVector;
+
+			for (int i = 0; i < strDateParts.size(); i++) //TimeSlots
+			{
+				if (i % 2 == 0) //read the day of the event
+				{
+					strDates.push_back(strDateParts[i]);
+				}
+				else //get the timeslots and the attendees
+				{
+					strTimeSlots = split(strDateParts[i], '|'); // split all the time slots parts grouped by the time slot
+					std::vector<std::string> strTimeSlotsParts; // read all the index, and attendees
+						std::vector<TimeSlots> timeSlots; //
+					for (int b = 0; b < strTimeSlots.size(); b++)
+					{
+
+						strTimeSlotsParts = split(strTimeSlots[b], ';');
+						std::string index = strTimeSlotsParts[0]; //read the index of the time slot
+							TimeSlots ts(std::stoi(index));
+							std::string numOfAttendees = strTimeSlotsParts[1]; // read the number of attendees
+							for (int c = 2; c < strTimeSlotsParts.size(); c++) // read all the attendees
+							{
+								ts.addAttendee(strTimeSlotsParts[c]);
+							}
+						timeSlots.push_back(ts);
+					}
+					timeSlotsVector.push_back(timeSlots); //add all timeslots to the 2d timeslots vector
+				}
+			}
+
+			//convert the 2d vector to a 2d array
+			TimeSlots** timeSlotsArr = new TimeSlots*[timeSlotsVector.size()];
+			for (int b = 0; b < strDates.size(); b++)
+			{
+				timeSlotsArr[b] = new TimeSlots[54];
+				timeSlotsArr[b] = &timeSlotsVector[b][0];
+			}
+
+			//create the event, and populate it with event name, admin, dates, and time slots
+			Events readEvent(eventName, eventAdminName, strDates.size(), timeSlotsArr, strDates);
+			readEvent.setTimes(timeSlotsArr);
+
+			//read the tasks
+			std::vector<std::string> strTaskList = split(strEventParts[3], '~'); //Tasks
+			for (int taskIndex = 0; taskIndex < strTaskList.size(); taskIndex++)
+			{
+				std::vector<std::string>  strTaskParts = split(strTaskList[taskIndex], ';');
+				readEvent.addTask(strTaskParts[0]); //stores the task name
+				if (strTaskParts[1] == "1")
+				{
+					readEvent.signUpTask(strTaskParts[2], strTaskParts[0]); //sign up for a task
+				}
+			}
+			eventList->addBack(readEvent);
+		}
+		inFile.close();
+	}
 }
 
 Executive::~Executive()
 {
+	std::ofstream outFile;
+	outFile.open(fileName);
+	//go through all the events
+	for (int eventIndex = 1; eventIndex <= eventList->getLength(); eventIndex++)
+	{
+		Events writeEvent = eventList->getEntry(eventIndex);
+		outFile << writeEvent.getName() << ',';  //write the event name
+		outFile << writeEvent.getAdminName() << ',';  //write the admin name
+		for (int dateIndex = 0; dateIndex < writeEvent.getNumOfDays(); dateIndex++)
+		{
+			outFile << writeEvent.getDates()[dateIndex] << '~';  //write the date of the event
+			for (int timeIndex = 0; timeIndex < 54; timeIndex++)
+			{
+				TimeSlots ts = writeEvent.getTimes()[dateIndex][timeIndex];
+				outFile << ts.getIndex() << ';';  //write the index of the time slot
+				outFile << ts.getNum();  //write the number of attendees
+				if (timeIndex < 53 || ts.getNum() != 0)
+				{
+					outFile << ';';
+				}
+				for (int attendeesIndex = 0; attendeesIndex < ts.getNum(); attendeesIndex++)
+				{
+					outFile << ts.getAttendees()[attendeesIndex];  //write the attendees if they exist
+					if (attendeesIndex < ts.getNum() - 1 )
+						outFile << ';';
+				}
+				if (timeIndex < 53)
+					outFile << '|';
+			}
+			if (dateIndex <  writeEvent.getNumOfDays() - 1)
+				outFile << '~';
+		}
+		outFile << ',';
+		std::vector<Task> eTasks = writeEvent.getTasks();
+		for (int taskIndex = 0; taskIndex < eTasks.size(); taskIndex++)
+		{
+			outFile << eTasks[taskIndex].getTaskName() << ';';  //write the task name
+			outFile << eTasks[taskIndex].isHandled() << ';';  //write if the task is being handled
+			if (eTasks[taskIndex].isHandled())
+				outFile << eTasks[taskIndex].getPersonName() << ';';  //write the person handling the task if they exist
+			if (taskIndex < 54)
+				outFile << '~';
+		}
+		if (eventIndex != eventList->getLength())
+			outFile << "\n";
+	}
+	outFile.close();
 }
 
 void Executive::run()
@@ -348,10 +405,16 @@ bool Executive::userFunc(bool mode12)
 					std::cout <<taskNum+1 << ") None\n";
 					int taskSelection = 0;
 					std::cin >> taskSelection;
+					while (std::cin.fail()) //fail bit code to recover bad input
+					{
+						std::cin.clear();
+						std::cin.ignore();
+						std::cout << "Invalid input\n";
+						std::cin >> taskSelection;
+					}
 					if (taskSelection <= taskNum)
 					{
 						bool test = temp.signUpTask(currentUser, temp.getTasks()[taskSelection-1].getTaskName());
-						std::cout << "HERE:: " << test << std::endl;
 
 						eventList->search(nameToSearch) = temp;
 					}
@@ -396,6 +459,13 @@ bool Executive::addEvent(bool mode12)
 	std::cout << "How many days would you like to add?\n";
 	//TODO: Error check input
 	std::cin >> numOfDays;
+	while (std::cin.fail()) //fail bit code to recover bad input
+	{
+		std::cin.clear();
+		std::cin.ignore();
+		std::cout << "Invalid input\n";
+		std::cin >> numOfDays;
+	}
 
 	TimeSlots** myArray = new TimeSlots*[numOfDays];
 	for (int i = 0; i < numOfDays; i++)
@@ -404,6 +474,7 @@ bool Executive::addEvent(bool mode12)
 	}
 
 	Events event1(name, currentUser, numOfDays, myArray);
+	std::string m_months[12] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
 	for (int i = 0; i < numOfDays; i++)
 	{
@@ -488,6 +559,13 @@ bool Executive::addEvent(bool mode12)
 		int taskCount = 0;
 		std::cout << "How many tasks would you like to add?\n";
 		std::cin >> taskCount;
+		while (std::cin.fail()) //fail bit code to recover bad input
+		{
+			std::cin.clear();
+			std::cin.ignore();
+			std::cout << "Invalid input\n";
+			std::cin >> taskCount;
+		}
 		std::string task;
 
 		std::cin.ignore();
@@ -535,6 +613,13 @@ void Executive::AddAvailability(Events event1)
 			std::cout << "Copy the previous day's times? (y/n)\n";
 			//TODO Error check input
 			std::cin >> strCopy;
+			while (std::cin.fail()) //fail bit code to recover bad input
+			{
+				std::cin.clear();
+				std::cin.ignore();
+				std::cout << "Invalid input\n";
+				std::cin >> strCopy;
+			}
 			if (strCopy == "y" || strCopy == "Y")
 			{
 				copy = true;
@@ -585,6 +670,13 @@ void Executive::AddAvailability(Events event1)
 					std::cout << "18) 11:00 PM\n";
 					std::cout << "19) Finish\n";
 					std::cin >> hourSelection;
+					while (std::cin.fail()) //fail bit code to recover bad input
+					{
+						std::cin.clear();
+						std::cin.ignore();
+						std::cout << "Invalid input, please select '1'-'19'\n";
+						std::cin >> hourSelection;
+					}
 					if (hourSelection == 1)
 					{
 						std::cout << "1) 5:00 - 5:20 AM\n";
@@ -598,31 +690,38 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input, please select '1'-'5'\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 0 = true
-									myArray[i][0].increaseAtt();
+									
 									myArray[i][0].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 1 = true
-									myArray[i][1].increaseAtt();
+									
 									myArray[i][1].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 2 = true
-									myArray[i][2].increaseAtt();
+									
 									myArray[i][2].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
-									myArray[i][0].increaseAtt();
+									
 									myArray[i][0].addAttendee(currentUser);
-									myArray[i][1].increaseAtt();
+									
 									myArray[i][1].addAttendee(currentUser);
-									myArray[i][2].increaseAtt();
+									
 									myArray[i][2].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -633,6 +732,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input, please select '1'-'5'\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -650,32 +756,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input, please select '1'-'4'\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 3 = true
-									myArray[i][3].increaseAtt();
+									
 									myArray[i][3].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 4 = true
-									myArray[i][4].increaseAtt();
+									
 									myArray[i][4].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 5 = true
-									myArray[i][5].increaseAtt();
+									
 									myArray[i][5].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 3,4,5 = true
-									myArray[i][3].increaseAtt();
+									
 									myArray[i][3].addAttendee(currentUser);
-									myArray[i][4].increaseAtt();
+									
 									myArray[i][4].addAttendee(currentUser);
-									myArray[i][5].increaseAtt();
+									
 									myArray[i][5].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -686,6 +799,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -703,32 +823,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 6 = true
-									myArray[i][6].increaseAtt();
+									
 									myArray[i][6].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 7 = true
-									myArray[i][7].increaseAtt();
+									
 									myArray[i][7].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 8 = true
-									myArray[i][8].increaseAtt();
+									
 									myArray[i][8].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 6,7,8 = true
-									myArray[i][6].increaseAtt();
+									
 									myArray[i][6].addAttendee(currentUser);
-									myArray[i][7].increaseAtt();
+									
 									myArray[i][7].addAttendee(currentUser);
-									myArray[i][8].increaseAtt();
+									
 									myArray[i][8].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -739,6 +866,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -756,32 +890,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 9 = true
-									myArray[i][9].increaseAtt();
+									
 									myArray[i][9].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 10 = true
-									myArray[i][10].increaseAtt();
+									
 									myArray[i][10].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 11 = true
-									myArray[i][11].increaseAtt();
+									
 									myArray[i][11].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 9,10,11 = true
-									myArray[i][9].increaseAtt();
+									
 									myArray[i][9].addAttendee(currentUser);
-									myArray[i][10].increaseAtt();
+									
 									myArray[i][10].addAttendee(currentUser);
-									myArray[i][11].increaseAtt();
+									
 									myArray[i][11].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -792,6 +933,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -809,32 +957,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 12 = true
-									myArray[i][12].increaseAtt();
+									
 									myArray[i][12].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 13 = true
-									myArray[i][13].increaseAtt();
+									
 									myArray[i][13].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 14 = true
-									myArray[i][14].increaseAtt();
+									
 									myArray[i][14].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 12,13,14 = true
-									myArray[i][12].increaseAtt();
+									
 									myArray[i][12].addAttendee(currentUser);
-									myArray[i][13].increaseAtt();
+									
 									myArray[i][13].addAttendee(currentUser);
-									myArray[i][14].increaseAtt();
+									
 									myArray[i][14].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -845,6 +1000,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -862,32 +1024,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 15 = true
-									myArray[i][15].increaseAtt();
+									
 									myArray[i][15].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 16 = true
-									myArray[i][16].increaseAtt();
+									
 									myArray[i][16].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 17 = true
-									myArray[i][17].increaseAtt();
+									
 									myArray[i][17].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 15,16,17 = true
-									myArray[i][15].increaseAtt();
+									
 									myArray[i][15].addAttendee(currentUser);
-									myArray[i][16].increaseAtt();
+									
 									myArray[i][16].addAttendee(currentUser);
-									myArray[i][17].increaseAtt();
+									
 									myArray[i][17].addAttendee(currentUser);
 
 								}
@@ -899,6 +1068,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -916,32 +1092,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 18 = true
-									myArray[i][18].increaseAtt();
+									
 									myArray[i][18].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 19 = true
-									myArray[i][19].increaseAtt();
+									
 									myArray[i][19].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 20 = true
-									myArray[i][20].increaseAtt();
+									
 									myArray[i][20].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 18,19,20 = true
-									myArray[i][18].increaseAtt();
+									
 									myArray[i][18].addAttendee(currentUser);
-									myArray[i][19].increaseAtt();
+									
 									myArray[i][19].addAttendee(currentUser);
-									myArray[i][20].increaseAtt();
+									
 									myArray[i][20].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -952,6 +1135,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -969,32 +1159,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 21 = true
-									myArray[i][21].increaseAtt();
+									
 									myArray[i][21].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 22 = true
-									myArray[i][22].increaseAtt();
+									
 									myArray[i][22].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 23 = true
-									myArray[i][23].increaseAtt();
+									
 									myArray[i][23].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 21,22,23 = true
-									myArray[i][21].increaseAtt();
+									
 									myArray[i][21].addAttendee(currentUser);
-									myArray[i][22].increaseAtt();
+									
 									myArray[i][22].addAttendee(currentUser);
-									myArray[i][23].increaseAtt();
+									
 									myArray[i][23].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -1005,6 +1202,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -1022,32 +1226,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 24 = true
-									myArray[i][24].increaseAtt();
+									
 									myArray[i][24].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 25 = true
-									myArray[i][25].increaseAtt();
+									
 									myArray[i][25].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 26 = true
-									myArray[i][26].increaseAtt();
+									
 									myArray[i][26].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 24,25,26 = true
-									myArray[i][24].increaseAtt();
+									
 									myArray[i][24].addAttendee(currentUser);
-									myArray[i][25].increaseAtt();
+									
 									myArray[i][25].addAttendee(currentUser);
-									myArray[i][26].increaseAtt();
+									
 									myArray[i][26].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -1058,6 +1269,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -1075,32 +1293,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 27 = true
-									myArray[i][27].increaseAtt();
+									
 									myArray[i][27].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 28 = true
-									myArray[i][28].increaseAtt();
+									
 									myArray[i][28].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 29 = true
-									myArray[i][29].increaseAtt();
+									
 									myArray[i][29].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 27,28,29 = true
-									myArray[i][27].increaseAtt();
+									
 									myArray[i][27].addAttendee(currentUser);
-									myArray[i][28].increaseAtt();
+									
 									myArray[i][28].addAttendee(currentUser);
-									myArray[i][29].increaseAtt();
+									
 									myArray[i][29].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -1111,6 +1336,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -1128,32 +1360,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 30 = true
-									myArray[i][30].increaseAtt();
+									
 									myArray[i][30].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 31 = true
-									myArray[i][31].increaseAtt();
+									
 									myArray[i][31].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 32 = true
-									myArray[i][32].increaseAtt();
+									
 									myArray[i][32].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 30,31,32 = true
-									myArray[i][30].increaseAtt();
+									
 									myArray[i][30].addAttendee(currentUser);
-									myArray[i][31].increaseAtt();
+									
 									myArray[i][31].addAttendee(currentUser);
-									myArray[i][32].increaseAtt();
+									
 									myArray[i][32].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -1164,6 +1403,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -1181,32 +1427,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 33 = true
-									myArray[i][33].increaseAtt();
+									
 									myArray[i][33].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 34 = true
-									myArray[i][34].increaseAtt();
+									
 									myArray[i][34].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 35 = true
-									myArray[i][35].increaseAtt();
+									
 									myArray[i][35].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 33,34,35 = true
-									myArray[i][33].increaseAtt();
+									
 									myArray[i][33].addAttendee(currentUser);
-									myArray[i][34].increaseAtt();
+									
 									myArray[i][34].addAttendee(currentUser);
-									myArray[i][35].increaseAtt();
+									
 									myArray[i][35].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -1217,6 +1470,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -1234,32 +1494,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 36 = true
-									myArray[i][36].increaseAtt();
+									
 									myArray[i][36].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 37 = true
-									myArray[i][37].increaseAtt();
+									
 									myArray[i][37].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 38 = true
-									myArray[i][38].increaseAtt();
+									
 									myArray[i][38].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 36,37,38 = true
-									myArray[i][36].increaseAtt();
+									
 									myArray[i][36].addAttendee(currentUser);
-									myArray[i][37].increaseAtt();
+									
 									myArray[i][37].addAttendee(currentUser);
-									myArray[i][38].increaseAtt();
+									
 									myArray[i][38].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -1270,6 +1537,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -1287,32 +1561,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 39 = true
-									myArray[i][39].increaseAtt();
+									
 									myArray[i][39].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 40 = true
-									myArray[i][40].increaseAtt();
+									
 									myArray[i][40].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 41 = true
-									myArray[i][41].increaseAtt();
+									
 									myArray[i][41].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 39,40,41 = true
-									myArray[i][39].increaseAtt();
+									
 									myArray[i][39].addAttendee(currentUser);
-									myArray[i][40].increaseAtt();
+									
 									myArray[i][40].addAttendee(currentUser);
-									myArray[i][41].increaseAtt();
+									
 									myArray[i][41].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -1323,6 +1604,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -1340,32 +1628,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 42 = true
-									myArray[i][42].increaseAtt();
+									
 									myArray[i][42].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 43 = true
-									myArray[i][43].increaseAtt();
+									
 									myArray[i][43].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 44 = true
-									myArray[i][44].increaseAtt();
+									
 									myArray[i][44].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 42,43,44 = true
-									myArray[i][42].increaseAtt();
+									
 									myArray[i][42].addAttendee(currentUser);
-									myArray[i][43].increaseAtt();
+									
 									myArray[i][43].addAttendee(currentUser);
-									myArray[i][44].increaseAtt();
+									
 									myArray[i][44].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -1376,6 +1671,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -1393,32 +1695,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 45 = true
-									myArray[i][45].increaseAtt();
+									
 									myArray[i][45].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 46 = true
-									myArray[i][46].increaseAtt();
+									
 									myArray[i][46].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 47 = true
-									myArray[i][47].increaseAtt();
+									
 									myArray[i][47].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 45,46,47 = true
-									myArray[i][45].increaseAtt();
+									
 									myArray[i][45].addAttendee(currentUser);
-									myArray[i][46].increaseAtt();
+									
 									myArray[i][46].addAttendee(currentUser);
-									myArray[i][47].increaseAtt();
+									
 									myArray[i][47].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -1429,6 +1738,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -1446,32 +1762,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 48 = true
-									myArray[i][48].increaseAtt();
+									
 									myArray[i][48].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 49 = true
-									myArray[i][49].increaseAtt();
+									
 									myArray[i][49].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 50 = true
-									myArray[i][50].increaseAtt();
+									
 									myArray[i][50].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 48,49,50 = true
-									myArray[i][48].increaseAtt();
+									
 									myArray[i][48].addAttendee(currentUser);
-									myArray[i][49].increaseAtt();
+									
 									myArray[i][49].addAttendee(currentUser);
-									myArray[i][50].increaseAtt();
+									
 									myArray[i][50].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -1482,6 +1805,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -1499,32 +1829,39 @@ void Executive::AddAvailability(Events event1)
 							while (timeSelection != 5)
 							{
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 								if (timeSelection == 1)
 								{
 									//index 51 = true
-									myArray[i][51].increaseAtt();
+									
 									myArray[i][51].addAttendee(currentUser);
 								}
 								else if (timeSelection == 2)
 								{
 									//index 52 = true
-									myArray[i][52].increaseAtt();
+									
 									myArray[i][52].addAttendee(currentUser);
 								}
 								else if (timeSelection == 3)
 								{
 									//index 53 = true
-									myArray[i][53].increaseAtt();
+									
 									myArray[i][53].addAttendee(currentUser);
 								}
 								else if (timeSelection == 4)
 								{
 									//index 51,52,53 = true
-									myArray[i][51].increaseAtt();
+									
 									myArray[i][51].addAttendee(currentUser);
-									myArray[i][52].increaseAtt();
+									
 									myArray[i][52].addAttendee(currentUser);
-									myArray[i][53].increaseAtt();
+									
 									myArray[i][53].addAttendee(currentUser);
 								}
 								else if (timeSelection == 5)
@@ -1535,6 +1872,13 @@ void Executive::AddAvailability(Events event1)
 								{
 									std::cout << "Please enter a valid selection:\n";
 									std::cin >> timeSelection;
+									while (std::cin.fail()) //fail bit code to recover bad input
+									{
+										std::cin.clear();
+										std::cin.ignore();
+										std::cout << "Invalid input\n";
+										std::cin >> timeSelection;
+									}
 								}
 							}
 						}
@@ -1568,6 +1912,13 @@ void Executive::AddAvailability(Events event1)
 				std::cout << "19) Finish\n";
 
 				std::cin >> hourSelection;
+				while (std::cin.fail()) //fail bit code to recover bad input
+				{
+					std::cin.clear();
+					std::cin.ignore();
+					std::cout << "Invalid input\n";
+					std::cin >> hourSelection;
+				}
 				if (hourSelection == 1)
 				{
 					std::cout << "1) 05:00 - 05:20\n";
@@ -1581,32 +1932,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 0 = true
-								myArray[i][0].increaseAtt();
+								
 								myArray[i][0].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 1 = true
-								myArray[i][1].increaseAtt();
+								
 								myArray[i][1].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 2 = true
-								myArray[i][2].increaseAtt();
+								
 								myArray[i][2].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 0,1,2 = true
-								myArray[i][0].increaseAtt();
+								
 								myArray[i][0].addAttendee(currentUser);
-								myArray[i][1].increaseAtt();
+								
 								myArray[i][1].addAttendee(currentUser);
-								myArray[i][2].increaseAtt();
+								
 								myArray[i][2].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -1617,6 +1975,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -1634,32 +1999,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 3 = true
-								myArray[i][3].increaseAtt();
+								
 								myArray[i][3].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 4 = true
-								myArray[i][4].increaseAtt();
+								
 								myArray[i][4].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 5 = true
-								myArray[i][5].increaseAtt();
+								
 								myArray[i][5].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 3,4,5 = true
-								myArray[i][3].increaseAtt();
+								
 								myArray[i][3].addAttendee(currentUser);
-								myArray[i][4].increaseAtt();
+								
 								myArray[i][4].addAttendee(currentUser);
-								myArray[i][5].increaseAtt();
+								
 								myArray[i][5].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -1670,6 +2042,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -1687,32 +2066,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 6 = true
-								myArray[i][6].increaseAtt();
+								
 								myArray[i][6].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 7 = true
-								myArray[i][7].increaseAtt();
+								
 								myArray[i][7].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 8 = true
-								myArray[i][8].increaseAtt();
+								
 								myArray[i][8].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 6,7,8 = true
-								myArray[i][6].increaseAtt();
+								
 								myArray[i][6].addAttendee(currentUser);
-								myArray[i][7].increaseAtt();
+								
 								myArray[i][7].addAttendee(currentUser);
-								myArray[i][8].increaseAtt();
+								
 								myArray[i][8].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -1723,6 +2109,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -1740,32 +2133,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 9 = true
-								myArray[i][9].increaseAtt();
+								
 								myArray[i][9].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 10 = true
-								myArray[i][10].increaseAtt();
+								
 								myArray[i][10].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 11 = true
-								myArray[i][11].increaseAtt();
+								
 								myArray[i][11].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 9,10,11 = true
-								myArray[i][9].increaseAtt();
+								
 								myArray[i][9].addAttendee(currentUser);
-								myArray[i][10].increaseAtt();
+								
 								myArray[i][10].addAttendee(currentUser);
-								myArray[i][11].increaseAtt();
+								
 								myArray[i][11].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -1776,6 +2176,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -1793,32 +2200,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 12 = true
-								myArray[i][12].increaseAtt();
+								
 								myArray[i][12].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 13 = true
-								myArray[i][13].increaseAtt();
+								
 								myArray[i][13].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 14 = true
-								myArray[i][14].increaseAtt();
+								
 								myArray[i][14].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 12,13,14 = true
-								myArray[i][12].increaseAtt();
+								
 								myArray[i][12].addAttendee(currentUser);
-								myArray[i][13].increaseAtt();
+								
 								myArray[i][13].addAttendee(currentUser);
-								myArray[i][14].increaseAtt();
+								
 								myArray[i][14].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -1829,6 +2243,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -1846,32 +2267,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 15 = true
-								myArray[i][15].increaseAtt();
+								
 								myArray[i][15].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 16 = true
-								myArray[i][16].increaseAtt();
+								
 								myArray[i][16].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 17 = true
-								myArray[i][17].increaseAtt();
+								
 								myArray[i][17].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 15,16,17 = true
-								myArray[i][15].increaseAtt();
+								
 								myArray[i][15].addAttendee(currentUser);
-								myArray[i][16].increaseAtt();
+								
 								myArray[i][16].addAttendee(currentUser);
-								myArray[i][17].increaseAtt();
+								
 								myArray[i][17].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -1882,6 +2310,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -1899,32 +2334,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 18 = true
-								myArray[i][18].increaseAtt();
+								
 								myArray[i][18].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 19 = true
-								myArray[i][19].increaseAtt();
+								
 								myArray[i][19].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 20 = true
-								myArray[i][20].increaseAtt();
+								
 								myArray[i][20].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 18,19,20 = true
-								myArray[i][18].increaseAtt();
+								
 								myArray[i][18].addAttendee(currentUser);
-								myArray[i][19].increaseAtt();
+								
 								myArray[i][19].addAttendee(currentUser);
-								myArray[i][20].increaseAtt();
+								
 								myArray[i][20].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -1935,6 +2377,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -1952,32 +2401,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 21 = true
-								myArray[i][21].increaseAtt();
+								
 								myArray[i][21].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 22 = true
-								myArray[i][22].increaseAtt();
+								
 								myArray[i][22].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 23 = true
-								myArray[i][23].increaseAtt();
+								
 								myArray[i][23].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 21,22,23 = true
-								myArray[i][21].increaseAtt();
+								
 								myArray[i][21].addAttendee(currentUser);
-								myArray[i][22].increaseAtt();
+								
 								myArray[i][22].addAttendee(currentUser);
-								myArray[i][23].increaseAtt();
+								
 								myArray[i][23].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -1988,6 +2444,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -2005,32 +2468,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 24 = 
-								myArray[i][24].increaseAtt();
+								
 								myArray[i][24].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 25 = true
-								myArray[i][25].increaseAtt();
+								
 								myArray[i][25].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 26 = true
-								myArray[i][26].increaseAtt();
+								
 								myArray[i][26].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 24,25,26 = true
-								myArray[i][24].increaseAtt();
+								
 								myArray[i][24].addAttendee(currentUser);
-								myArray[i][25].increaseAtt();
+								
 								myArray[i][25].addAttendee(currentUser);
-								myArray[i][26].increaseAtt();
+								
 								myArray[i][26].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -2041,6 +2511,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -2058,32 +2535,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 27 = true
-								myArray[i][27].increaseAtt();
+								
 								myArray[i][27].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 28 = true
-								myArray[i][28].increaseAtt();
+								
 								myArray[i][28].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 29 = true
-								myArray[i][29].increaseAtt();
+								
 								myArray[i][29].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 27,28,29 = true
-								myArray[i][27].increaseAtt();
+								
 								myArray[i][27].addAttendee(currentUser);
-								myArray[i][28].increaseAtt();
+								
 								myArray[i][28].addAttendee(currentUser);
-								myArray[i][29].increaseAtt();
+								
 								myArray[i][29].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -2094,6 +2578,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -2111,32 +2602,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 30 = true
-								myArray[i][30].increaseAtt();
+								
 								myArray[i][30].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 31 = true
-								myArray[i][31].increaseAtt();
+								
 								myArray[i][31].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 32 = true
-								myArray[i][32].increaseAtt();
+								
 								myArray[i][32].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 30,31,32 = true
-								myArray[i][30].increaseAtt();
+								
 								myArray[i][30].addAttendee(currentUser);
-								myArray[i][31].increaseAtt();
+								
 								myArray[i][31].addAttendee(currentUser);
-								myArray[i][32].increaseAtt();
+								
 								myArray[i][32].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -2147,6 +2645,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -2164,32 +2669,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 33 = true
-								myArray[i][33].increaseAtt();
+								
 								myArray[i][33].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 34 = true
-								myArray[i][34].increaseAtt();
+								
 								myArray[i][34].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 35 = true
-								myArray[i][35].increaseAtt();
+								
 								myArray[i][35].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 33,34,35 = true
-								myArray[i][33].increaseAtt();
+								
 								myArray[i][33].addAttendee(currentUser);
-								myArray[i][34].increaseAtt();
+								
 								myArray[i][34].addAttendee(currentUser);
-								myArray[i][35].increaseAtt();
+								
 								myArray[i][35].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -2200,6 +2712,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -2217,32 +2736,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 36 = true
-								myArray[i][36].increaseAtt();
+								
 								myArray[i][36].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 37 = true
-								myArray[i][37].increaseAtt();
+								
 								myArray[i][37].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 38 = true
-								myArray[i][38].increaseAtt();
+								
 								myArray[i][38].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 36,37,38 = true
-								myArray[i][36].increaseAtt();
+								
 								myArray[i][36].addAttendee(currentUser);
-								myArray[i][37].increaseAtt();
+								
 								myArray[i][37].addAttendee(currentUser);
-								myArray[i][38].increaseAtt();
+								
 								myArray[i][38].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -2253,6 +2779,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -2270,32 +2803,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 39 = true
-								myArray[i][39].increaseAtt();
+								
 								myArray[i][39].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 40 = true
-								myArray[i][40].increaseAtt();
+								
 								myArray[i][40].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 41 = true
-								myArray[i][41].increaseAtt();
+								
 								myArray[i][41].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 39,40,41 = true
-								myArray[i][39].increaseAtt();
+								
 								myArray[i][39].addAttendee(currentUser);
-								myArray[i][40].increaseAtt();
+								
 								myArray[i][40].addAttendee(currentUser);
-								myArray[i][41].increaseAtt();
+								
 								myArray[i][41].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -2306,6 +2846,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -2323,32 +2870,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 42 = true
-								myArray[i][42].increaseAtt();
+								
 								myArray[i][42].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 43 = true
-								myArray[i][43].increaseAtt();
+								
 								myArray[i][43].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 44 = true
-								myArray[i][44].increaseAtt();
+								
 								myArray[i][44].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 42,43,44 = true
-								myArray[i][42].increaseAtt();
+								
 								myArray[i][42].addAttendee(currentUser);
-								myArray[i][43].increaseAtt();
+								
 								myArray[i][43].addAttendee(currentUser);
-								myArray[i][44].increaseAtt();
+								
 								myArray[i][44].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -2359,6 +2913,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -2376,32 +2937,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 45 = true
-								myArray[i][45].increaseAtt();
+								
 								myArray[i][45].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 46 = true
-								myArray[i][46].increaseAtt();
+								
 								myArray[i][46].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 47 = true
-								myArray[i][47].increaseAtt();
+								
 								myArray[i][47].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 45,46,47 = true
-								myArray[i][45].increaseAtt();
+								
 								myArray[i][45].addAttendee(currentUser);
-								myArray[i][46].increaseAtt();
+								
 								myArray[i][46].addAttendee(currentUser);
-								myArray[i][47].increaseAtt();
+								
 								myArray[i][47].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -2412,6 +2980,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -2429,32 +3004,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 48 = true
-								myArray[i][48].increaseAtt();
+								
 								myArray[i][48].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 49 = true
-								myArray[i][49].increaseAtt();
+								
 								myArray[i][49].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 50 = true
-								myArray[i][50].increaseAtt();
+								
 								myArray[i][50].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 48,49,50 = true
-								myArray[i][48].increaseAtt();
+								
 								myArray[i][48].addAttendee(currentUser);
-								myArray[i][49].increaseAtt();
+								
 								myArray[i][49].addAttendee(currentUser);
-								myArray[i][50].increaseAtt();
+								
 								myArray[i][50].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -2465,6 +3047,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}
@@ -2482,32 +3071,39 @@ void Executive::AddAvailability(Events event1)
 						while (timeSelection != 5)
 						{
 							std::cin >> timeSelection;
+							while (std::cin.fail()) //fail bit code to recover bad input
+							{
+								std::cin.clear();
+								std::cin.ignore();
+								std::cout << "Invalid input\n";
+								std::cin >> timeSelection;
+							}
 							if (timeSelection == 1)
 							{
 								//index 51 = 
-								myArray[i][51].increaseAtt();
+								
 								myArray[i][51].addAttendee(currentUser);
 							}
 							else if (timeSelection == 2)
 							{
 								//index 52 = true
-								myArray[i][52].increaseAtt();
+								
 								myArray[i][52].addAttendee(currentUser);
 							}
 							else if (timeSelection == 3)
 							{
 								//index 53 = true
-								myArray[i][53].increaseAtt();
+								
 								myArray[i][53].addAttendee(currentUser);
 							}
 							else if (timeSelection == 4)
 							{
 								//index 51,52,53 = true
-								myArray[i][51].increaseAtt();
+								
 								myArray[i][51].addAttendee(currentUser);
-								myArray[i][52].increaseAtt();
+								
 								myArray[i][52].addAttendee(currentUser);
-								myArray[i][53].increaseAtt();
+								
 								myArray[i][53].addAttendee(currentUser);
 							}
 							else if (timeSelection == 5)
@@ -2518,6 +3114,13 @@ void Executive::AddAvailability(Events event1)
 							{
 								std::cout << "Please enter a valid selection:\n";
 								std::cin >> timeSelection;
+								while (std::cin.fail()) //fail bit code to recover bad input
+								{
+									std::cin.clear();
+									std::cin.ignore();
+									std::cout << "Invalid input\n";
+									std::cin >> timeSelection;
+								}
 							}
 						}
 					}

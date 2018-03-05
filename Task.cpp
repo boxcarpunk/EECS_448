@@ -28,7 +28,6 @@ bool Task::signUp(std::string name)
 	}
 	else //if the task is not being handled already
 	{
-		std::cout<<"CURRENTUSER: " << name << std::endl;
 		m_personName = name; //sets the name of the person handling the task to the name passed in
 		m_handled = true; //sets the task as being handled
 		return(true); //the person was able to sign up for the task

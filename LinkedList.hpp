@@ -213,7 +213,7 @@ bool LinkedList<keyType, searchType>::removeAt(int position)
 template <typename keyType, typename searchType>
 bool LinkedList<keyType, searchType>::setEntry(int position, keyType value)
 {
-	if ((position < 1) || (position > length)) //if the position is invalid (it isn't between one and the length inclusively)
+	if ((position < 1) || (position > m_length)) //if the position is invalid (it isn't between one and the length inclusively)
 	{
 		return(false); //returns false since the entry at the position couldn't be set
 	}
