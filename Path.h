@@ -12,6 +12,10 @@ class Path
 		Path();
 		~Path();
 		void Login(int screen,int AdminOrUser);
+		int AOrU(WINDOW * win0, WINDOW * win1);
+		int AdminActions(WINDOW * win0, WINDOW * win1);
+		int SelectEvents(WINDOW * win0,WINDOW * win1);
+		std::string EventName(WINDOW * win0, WINDOW * win1);
 		std::string Input(WINDOW * win1);
 
 	private:
@@ -27,7 +31,7 @@ class Path
 		int m_SpawnEnemy;
 		int m_MenuCounter;
 		std::string EmptyString;
-		char * FirstAdminMenu[3]={"Add Event","Edit Event","Back"};
+		char * FirstAdminMenu[3]={"Add Event","Edit Event","Quit"};
 		char * FirstUserMenu[3]={"Add Availability","Back","Submit"};
 		char * Events[3]={"Even1","Event2","Event3"};
 		char * SecondUserMenu[3]={"Add Available Tasks","Submit","Back"};

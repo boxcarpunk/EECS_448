@@ -46,16 +46,100 @@ void Path::Login(int screen, int AdminOrUser)
 
 	if(screen == 1)
 	{
-		mvwprintw(win0,1,1,"Enter name");
-		mvwprintw(win0,3,1,"Username: ");
-		wrefresh(win0);
-		box(win1,0,0);
-		wrefresh(win1);
-		refresh();
-		string Username = Input(win1);
+		if((AdminOrUser!=0)&&(AdminOrUser!=1))
+		{
+			mvwprintw(win0,1,1,"Enter name");
+			mvwprintw(win0,3,1,"Username: ");
+			wrefresh(win0);
+			box(win1,0,0);
+			wrefresh(win1);
+			refresh();
+			string Username = Input(win1);
+		}
 		wclear(win1);
 		wrefresh(win1);
-		Login(3,1);
+		int Choice = AOrU(win0, win1);
+		if(Choice==2)
+		{
+			Login(1,1);
+		}
+		else if(Choice == 0)
+		{
+			Choice = AdminActions(win0,win1);
+			if(Choice==0)
+			{
+				wclear(win0);
+				mvwprintw(win0,1,1,"Enter event name");
+				mvwprintw(win0,3,1,"Name:");
+				box(win0,0,0);
+				box(win1,0,0);
+				wrefresh(win0);
+				wrefresh(win1);
+				refresh();
+				string EventN = Input(win1);
+				//Login(5,0);
+				wclear(win0);
+				wclear(win1);
+				mvwprintw(win0,1,1,"Enter date");
+				mvwprintw(win0,3,1,"Date: ");
+				mvwprintw(win0,6,1,"(MM/DD/YYYY)");
+				box(win0,0,0);
+				box(win1,0,0);
+				wrefresh(win0);
+				wrefresh(win1);
+				refresh();
+				string Date = Input(win1);
+				wclear(win1);
+				wrefresh(win1);
+				Login(1,0);
+				//end of add event
+			}
+			else if(Choice==1)
+			{
+				Choice = SelectEvents(win0,win1);
+				Choice = H->print_scroll(win0,Edit,3,2,2);
+				if(Choice==0)
+				{
+					wclear(win0);
+					mvwprintw(win0,1,1,"Enter event name");
+					mvwprintw(win0,3,1,"Name:");
+					box(win0,0,0);
+					box(win1,0,0);
+					wrefresh(win0);
+					wrefresh(win1);
+					refresh();
+					string EventN = Input(win1);
+				}
+				else
+				{
+					wclear(win0);
+					wclear(win1);
+					mvwprintw(win0,1,1,"Enter date");
+					mvwprintw(win0,3,1,"Date: ");
+					mvwprintw(win0,6,1,"(MM/DD/YYYY)");
+					box(win0,0,0);
+					box(win1,0,0);
+					wrefresh(win0);
+					wrefresh(win1);
+					refresh();
+					string Date = Input(win1);
+				}
+				wclear(win0);
+				wclear(win1);
+				wrefresh(win0);
+				wrefresh(win1);
+				Login(1,0);
+			}
+			else
+			{
+				//Login(3,1);
+			}
+			//Login(4,Choice);
+		}
+		else
+		{
+			Login(4,1);
+		}
 	}
 	else if((screen == 5)&&(AdminOrUser==0))
 	{
@@ -392,6 +476,85 @@ void Path::Login(int screen, int AdminOrUser)
 			Login(6,1);
 		}
 	}
+}
+string Path::EventName(WINDOW * win0, WINDOW * win1)
+{
+	mvwprintw(win0,1,1,"Enter event name");
+	mvwprintw(win0,3,1,"Name:");
+	box(win1,0,0);
+	wrefresh(win1);
+	refresh();
+	return(Input(win1));
+}
+int Path::AOrU(WINDOW * win0, WINDOW * win1)
+{
+	wclear(win0);
+	wclear(win1);
+	box(win0,0,0);
+	wrefresh(win0);
+	mvwprintw(win0,1,1,"User or Admin?");
+	int Choice = H->print_scroll(win0,AorUMenu, 3,3, 2);
+	wclear(win0);
+	wrefresh(win0);
+	return(Choice);
+}
+int Path::AdminActions(WINDOW * win0, WINDOW * win1)
+{
+	wclear(win0);
+	wclear(win1);
+	box(win0,0,0);
+	wrefresh(win0);
+	mvwprintw(win0,1,1,"Admin Actions:");
+	int Choice = H->print_scroll(win0,FirstAdminMenu,3,3,2);
+	wclear(win0);
+	wrefresh(win0);
+	return(Choice);
+}
+int Path::SelectEvents(WINDOW * win0, WINDOW * win1)
+{
+	wclear(win0);
+	wclear(win1);
+	box(win0,0,0);
+	wrefresh(win0);
+	mvwprintw(win0,1,1,"Select events:");
+	vector<char *> Ev;
+	vector<char *> Ev1D;
+	vector<char *> Ev2D;
+	vector<char *> Ev3D;
+	Ev3D.push_back("Day1");
+	Ev3D.push_back("Day2");
+	Ev.push_back("Event1");
+	Ev.push_back("Event2");
+	Ev.push_back("Event3");
+	int Choice = H->print_vec(win0,Ev,3,2);
+	return(Choice);
+	/*
+	int Choice2 = H->print_scroll(win0,Edit,3,2,2);
+	wclear(win1);
+	if(Choice2 == 0)
+	{
+		mvwprintw(win0,1,1,"Enter even name");
+		mvwprintw(win0,3,1,"Name:");
+		box(win1,0,0);
+		wrefresh(win1);
+		refresh();
+		string Name = Input(win1);
+	}
+	else if(Choice == 1)
+	{
+		mvwprintw(win0,1,1,"Enter event date");
+		mvwprintw(win0,3,1,"Date:");
+		wrefresh(win0);
+		box(win1,0,0);
+		wrefresh(win1);
+		refresh();
+		string Date = Input(win1);
+	}
+	else if(Choice ==2)
+	{
+		Login(8,0);
+	}
+	*/
 }
 string Path::Input(WINDOW * win1)
 {
