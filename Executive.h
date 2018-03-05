@@ -7,6 +7,7 @@
 #include <string>
 #include <math.h>
 #include <ctime>
+#include <sstream>
 
 class Executive
 {
@@ -54,7 +55,7 @@ public:
 	*	@param Two strings representing the name of the event and the admin, an int representing the number of days, and a vector of dates for the event
 	*	@return The newly created event
 	*/
-	Event& addEvent(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates);
+	Events& addEvent(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates);
 
 	/**
 	*	Returns the list of events

@@ -44,11 +44,11 @@ bool TimeSlots::operator==(const TimeSlots& rhs) const
 	return((m_Index == rhs.m_Index) && (m_numOfAtt == rhs.m_numOfAtt)); //true if the index and number of attendees are the same, false otherwise
 }
 
-TimeSlot& operator=(const TimeSlots& rhs)
+TimeSlots& TimeSlots::operator=(const TimeSlots& rhs)
 {
 	m_numOfAtt = rhs.m_numOfAtt; //makes the number of attendees equal
 	m_Index = rhs.m_Index; //makes the indices equal
-	m_attendees = rhs.getAttendees; //makes the list of attendee names equal
+	m_attendees = rhs.m_attendees; //makes the list of attendee names equal
 
 	return(*this); //returns this object
 }

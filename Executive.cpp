@@ -2,7 +2,7 @@
 
 Executive::Executive()
 {
-	std::ifstream inFile; //creates the object to read from file
+/*	std::ifstream inFile; //creates the object to read from file
 	std::string name = ""; //creates a placeholder variable for a name of an event
 	std::string month = ""; //creates a placeholder variable for a month of an event
 	std::string day = ""; //creates a placeholder variable for a day of an event
@@ -50,11 +50,11 @@ Executive::Executive()
 		eventList -> sort(); //sorts the list
 	}
 	inFile.close(); //close the file
-
+*/
 }
 
 Executive::~Executive()
-{
+{/*
 	outFile.open("eventslist.txt"); //opens the file
 	for (int i = 1; i <= eventList->getLength(); i++) //goes through the event list
 	{
@@ -73,7 +73,7 @@ Executive::~Executive()
 		}
 	}
 	outFile.close(); //closes the file
-}
+*/}
 
 void Executive::setCurrentUser(std::string name)
 {
@@ -85,12 +85,12 @@ std::string Executive::getCurrentUser() const
 	return(m_currentUser); //returns the name of the current user
 }
 
-bool Executive::addEvent(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates)
+Events& Executive::addEvent(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates)
 {
-	Event newEvent = new Event(eventName, adminName, numOfDays, dates); //creates a new event with the parameters passed in
-	eventList->addBack(Event(newEvent); //adds the event to the back of the event list
+	Events* newEvent = new Events(eventName, adminName, numOfDays, dates); //creates a new event with the parameters passed in
+	eventList->addBack(Events(*newEvent)); //adds the event to the back of the event list
 	eventList->sort(); //sorts the event list
-	return(newEvent); //returns the newly created event
+	return(*newEvent); //returns the newly created event
 }
 
 std::vector<Events> Executive::getEventList() const
@@ -149,7 +149,7 @@ bool Executive::dateCheck(int y, int m, int d)
 	}
 	else if (m == 2)
 	{
-		if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0)) //Leep year conditions: cite "crazzyguy101 - cplusplus.com"
+		if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0)) //Leap year conditions: cite "crazzyguy101 - cplusplus.com"
 		{
 			if (d > 29)
 			{
@@ -167,7 +167,7 @@ bool Executive::dateCheck(int y, int m, int d)
 		}
 	}
 
-	const std::string Events::holidays[3] = { "01/01", "07/4","12/25" };
+	const std::string holidays[3] = { "01/01", "07/4","12/25" };
 	int size = sizeof(holidays);
 
 	//check if holiday (uses holiday size)

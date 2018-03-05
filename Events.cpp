@@ -6,17 +6,17 @@ Events::Events()
 	m_adminName = "None"; //sets the name of the admin to None
 	m_numOfDays = 0; //sets the number of days for the event to 0
 
-	m_Task = new LinkedList(); //creates an empty task list for the event
+	m_Task = new LinkedList<Task, std::string>(); //creates an empty task list for the event
 }
 
-Events::Events(std::string eventName, std::string adminName int numOfDays, std::vector<std::string> dates)
+Events::Events(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates)
 {
 	m_eventName = eventName; //sets the name of the event
 	m_adminName = adminName; //sets the name of the admin
 	m_numOfDays = numOfDays; //sets the number of days for the event
 	m_dates = dates; //sets the dates that the event will occur
 
-	m_Task = new LinkedList(); //creates an empty task list for the event
+	m_Task = new LinkedList<Task, std::string>(); //creates an empty task list for the event
 	timeSlot = new TimeSlots*[numOfDays]; //creates time slot ptrs for each day of the event
 
 	for (int i = 0; i < numOfDays; i++) //iterates for every day of the event
@@ -103,7 +103,7 @@ void Events::removeDate(int index)
 void Events::addDate(std::string date)
 {
 	m_dates.push_back(date); //adds the date to the back of the date vector
-	m_numOfDates++; //increments the number of days the event will occur
+	m_numOfDays++; //increments the number of days the event will occur
 	TimeSlots** temp = new TimeSlots*[m_numOfDays]; //makes a new time slot 2D array of the new size
 		
 		for(int i = 0; i < m_numOfDays; i++) //iterates through the days of the event
@@ -234,7 +234,7 @@ bool Events::operator==(const Events& rhs) const
 
 bool Events::operator==(const std::string& rhs) const
 {
-	return(m_name == rhs); //returns true of the string is equal to the name of the event
+	return(m_eventName == rhs); //returns true of the string is equal to the name of the event
 }
 
 bool Events::operator>(const Events& rhs) const
