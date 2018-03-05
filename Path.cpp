@@ -22,10 +22,6 @@ Path::Path()
 	m_StartRow = 15;
 	m_StartCol = 10;
 	m_MenuCounter = 1;
-	ValAdUser = "Nick";
-	ValAdPass = "Alvarez";
-	ValUser = "Ryan";
-	ValPass = "Alvarez";
 	Twelve = true;
 	Login(1, 3);
 }
@@ -288,7 +284,7 @@ void Path::Login(int screen, int AdminOrUser)
 		Ev.push_back("Event1");
 		Ev.push_back("Event2");
 		Ev.push_back("Event3");*/
-		
+
 		int Choice = H->print_vec(win0, Ev, 3, 2);
 		//Interface will only currectly print days of event 1
 		//appropriate data structure will need to be applied so that the interface displays correct vector when event is picked
