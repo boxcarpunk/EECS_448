@@ -1,5 +1,4 @@
 #pragma once
-#include "LinkedList.h"
 #include "Events.h"
 #include <fstream>
 #include <vector>
@@ -7,6 +6,7 @@
 #include <string>
 #include <math.h>
 #include <ctime>
+#include <sstream>
 
 class Executive
 {
@@ -37,35 +37,44 @@ public:
 	*	@return None
 	*/
 	void setCurrentUser(std::string name);
+	
+	/**
+	*	Gets the name of the current user
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return A string representing the name of the current user
+	*/
+	std::string getCurrentUser() const;
 
 	/**
 	*	Creates an event and adds it to the event list
 	*	@pre None
 	*	@post An event is added to the list of events
-	*	@param A string representing the name, an int representing the number of days, and a vector of dates for the event
-	*	@return True if the event could be added, false otherwise
+	*	@param Two strings representing the name of the event and the admin, an int representing the number of days, and a vector of dates for the event
+	*	@return The newly created event
 	*/
-	bool addEvent(std::string name, int numOfDays, std::vector<std::string> dates);
+	Events& addEvent(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates);
 
 	/**
 	*	Returns the list of events
 	*	@pre None
 	*	@post None
 	*	@param None
-	*	@return The list of events
+	*	@return The vector list of events
 	*/
-	std::vector<Events> getEventList();
+	std::vector<Events> getEventList() const;
 
 	/**
-	*	Wasn't included in documentation
+	* Checks if the date is valid or not
 	*	@pre None
 	*	@post None
-	*	@param None
-	*	@return None
+	*	@param Integer values representing the year, month and day are taken in
+	*	@return True if the date is valid. False if the date is invalid.
 	*/
 	bool dateCheck(int y, int m, int d);
 
 private:
-	LinkedList<Events, std::string>* eventList; /**< List which holds the event objects */
+	std::vector<Events> m_eventList; /**< List which holds the event objects */
 	std::string m_currentUser; /**< The name of the current user */
 };

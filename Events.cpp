@@ -2,20 +2,18 @@
 
 Events::Events()
 {
-	m_name = "None"; //sets the name of the event to None
+	m_eventName = "None"; //sets the name of the event to None
+	m_adminName = "None"; //sets the name of the admin to None
 	m_numOfDays = 0; //sets the number of days for the event to 0
-
-	m_Task = new LinkedList(); //creates an empty task list for the event
-
 }
 
-Events::Events(std::string name, int numOfDays, std::vector<std::string> dates)
+Events::Events(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates)
 {
-	m_name = name; //sets the name of the event
+	m_eventName = eventName; //sets the name of the event
+	m_adminName = adminName; //sets the name of the admin
 	m_numOfDays = numOfDays; //sets the number of days for the event
 	m_dates = dates; //sets the dates that the event will occur
 
-	m_Task = new LinkedList(); //creates an empty task list for the event
 	timeSlot = new TimeSlots*[numOfDays]; //creates time slot ptrs for each day of the event
 
 	for (int i = 0; i < numOfDays; i++) //iterates for every day of the event
@@ -32,17 +30,21 @@ Events::Events(std::string name, int numOfDays, std::vector<std::string> dates)
 /*Events::~Events()
 {
 	delete m_TimeSlot;
-	delete m_Task;
 }*/
 
-void Events::setName(std::string name)
+void Events::setEventName(std::string name)
 {
-	m_name = name; //sets the name to what was passed in
+	m_eventName = name; //sets the name to what was passed in
 }
 
-std::string Events::getName() const
+std::string Events::getEventName() const
 {
-	return m_name; //returns the name of the event
+	return m_eventName; //returns the name of the event
+}
+
+std::string Events::getAdminName() const
+{
+	return m_adminName; //returns the name of the admin
 }
 
 int Events::getNumOfDays() const
@@ -55,6 +57,73 @@ std::vector<std::string> Events::getDates() const
 	return m_dates; //returns the list of days the event will occur on
 }
 
+void Events::removeDate(int index)
+{
+	if((index >=0) && (index < m_dates.size())) //if the index is valid
+	{
+		m_dates.erase(m_dates.begin()+index); //erases the date at the given index
+		m_numOfDays--; //decrements the number of days the event will occur
+		TimeSlots** temp = new TimeSlots*[m_numOfDays]; //makes a new time slot 2D array of the new size
+		
+		for(int i = 0; i < m_numOfDays; i++) //iterates through the days of the event
+		{
+			temp[i] = new TimeSlots[54]; //makes the 20min time slots for the date
+		
+			if(i < index) //if the current date is less than the removed index
+			{
+				for(int j =0; j < 54; j++) //iterates through the time slots
+				{
+					temp[i][j] = timeSlot[i][j]; //makes the new time slot equal to the old one
+				}
+			}
+			else //if the current date is equal to or greater than the removed index
+			{
+				for(int j =0; j < 54; j++) //iterates through the time slots
+				{
+					temp[i][j] = timeSlot[i+1][j]; //makes the new time slot equal to the old one accounting for the removed index
+				}
+			}
+		}
+		
+		for(int i = 0; i < m_numOfDays+1; i++) //runs through the old dates
+		{
+			delete[] timeSlot[i]; //deletes the old time slots
+		}
+		
+		delete[] timeSlot; //deletes the old dates
+		
+		timeSlot = temp; //makes the time slot 2D array equal to the temp one
+	}
+}
+
+void Events::addDate(std::string date)
+{
+	m_dates.push_back(date); //adds the date to the back of the date vector
+	m_numOfDays++; //increments the number of days the event will occur
+	TimeSlots** temp = new TimeSlots*[m_numOfDays]; //makes a new time slot 2D array of the new size
+		
+		for(int i = 0; i < m_numOfDays; i++) //iterates through the days of the event
+		{
+			temp[i] = new TimeSlots[54]; //makes the 20min time slots for the date
+		
+			if(i < (m_numOfDays-1)) //if the current date is part of the old dates
+			{
+				for(int j =0; j < 54; j++) //iterates through the time slots
+				{
+					temp[i][j] = timeSlot[i][j]; //makes the new time slot equal to the old one
+				}
+			}
+		}
+		
+		for(int i = 0; i < m_numOfDays-1; i++) //runs through the old dates
+		{
+			delete[] timeSlot[i]; //deletes the old time slots
+		}
+		
+		delete[] timeSlot; //deletes the old dates
+		
+		timeSlot = temp; //makes the time slot 2D array equal to the temp one
+}
 
 TimeSlots** Events::getTimes() const
 {
@@ -74,19 +143,42 @@ void Events::setTimes(TimeSlots** times)
 
 void Events::addTask(std::string name)
 {
-	m_Task->addFront(Task(name)); //makes a new task with the given name and adds it to the front of the list
+	for(int i = 0; i < m_Task.size(); i++) //runs through the task list
+	{
+		if(m_Task[i] == name) //if the task is already in the list
+		{
+			return; //we don't want to add the same task twice
+		}
+	}
+
+	m_Task.push_back(Task(name)); //makes a new task with the given name and adds it to the back of the list
+}
+
+void Events::removeTask(int index)
+{
+	if((index >=0) && (index < m_Task.size())) //if the index is valid
+	{
+		m_Task.erase(m_Task.begin()+index); //removes the task at the given index
+	}
 }
 
 bool Events::signUpTask(std::string userName, std::string taskName)
 {
 	Task temp; //creates a temp task
-	try
+	bool found = false; //a flag to state whether the task was found or not
+
+	for(int i = 0; i < m_Task.size(); i++) //runs through the task list
 	{
-		temp = m_Task->search(taskName); //searchs for the task with the given name and stores it in temp if found
+		if(m_Task[i] == taskName) //if the task is found
+		{
+			temp = m_Task[i]; //stores the task in temp
+			found = true; //set the flag to true since the task was found
+		}
 	}
-	catch (std::runtime_error) //if search threw an error
+	
+	if(!found) //if the task was not found
 	{
-		return(false); //return false because the taskName passed in is not the name of a task in the list
+		return(false); //return false
 	}
 
 	return(temp.signUp(userName)); //passes along the name of the user to the task and returns whether they were able to sign up or not
@@ -95,13 +187,20 @@ bool Events::signUpTask(std::string userName, std::string taskName)
 bool Events::cancelSignUpTask(std::string userName, std::string taskName)
 {
 	Task temp; //creates a temp task
-	try
+	bool found = false; //a flag to state whether the task was found or not
+	
+	for(int i = 0; i < m_Task.size(); i++) //runs through the task list
 	{
-		temp = m_Task->search(taskName); //searchs for the task with the given name and stores it in temp if found
+		if(m_Task[i] == taskName) //if the task is found
+		{
+			temp = m_Task[i]; //stores the task in temp
+			found = true; //set the flag to true since the task was found
+		}
 	}
-	catch (std::runtime_error) //if search threw an error
+	
+	if(!found) //if the task was not found
 	{
-		return(false); //return false because the taskName passed in is not the name of a task in the list
+		return(false); //return false
 	}
 
 	if (userName == temp.getPersonName()) //if the name of the user trying to un-sign up is the same as the user who is handling the task
@@ -116,21 +215,19 @@ bool Events::cancelSignUpTask(std::string userName, std::string taskName)
 
 std::vector<Task> Events::getTasks()
 {
-	std::vector<Task> temp; //creates the temp vector that will be returned
-
-	for (int i = 0; i < m_Task->getLength(); i++) //iterates through the task list
-	{
-		temp.push_back(m_Task->getEntry(i+1)); //adds the task at index i+1 to the vector
-	}
-
-	return(temp); //returns the vector
+	return(m_Task); //returns the vector
 }
 
 bool Events::operator==(const Events& rhs) const
 {
-	if (m_name != rhs.m_name)
+	if (m_eventName != rhs.m_eventName)
 	{
 		return(false); //returns false if the names of the events are not the same
+	}
+	
+	if (m_adminName != rhs.m_adminName)
+	{
+		return(false); //returns false if the names of the admins are not the same
 	}
 
 	if (m_numOfDays != rhs.m_numOfDays)
@@ -151,7 +248,7 @@ bool Events::operator==(const Events& rhs) const
 
 bool Events::operator==(const std::string& rhs) const
 {
-	return(m_name == rhs); //returns true of the string is equal to the name of the event
+	return(m_eventName == rhs); //returns true of the string is equal to the name of the event
 }
 
 bool Events::operator>(const Events& rhs) const

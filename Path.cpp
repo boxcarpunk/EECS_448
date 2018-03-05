@@ -22,10 +22,6 @@ Path::Path()
 	m_StartRow = 15;
 	m_StartCol = 10;
 	m_MenuCounter = 1;
-	ValAdUser = "Nick";
-	ValAdPass = "Alvarez";
-	ValUser = "Ryan";
-	ValPass = "Alvarez";
 	Twelve = true;
 	Login(1, 3);
 }
@@ -44,6 +40,10 @@ void Path::Login(int screen, int AdminOrUser)
 	box(win0, 0, 0);
 	wrefresh(win0);
 
+	int num;
+	string EventN;
+	std::vector<std::string> dates;
+
 	if (screen == 1)
 	{
 		if ((AdminOrUser != 0) && (AdminOrUser != 1))
@@ -55,6 +55,7 @@ void Path::Login(int screen, int AdminOrUser)
 			wrefresh(win1);
 			refresh();
 			string Username = Input(win1);
+			exec.setCurrentUser(Username);
 		}
 		wclear(win1);
 		wrefresh(win1);
@@ -76,7 +77,7 @@ void Path::Login(int screen, int AdminOrUser)
 				wrefresh(win0);
 				wrefresh(win1);
 				refresh();
-				string EventN = Input(win1);
+				EventN = Input(win1);
 				wclear(win0);
 				wclear(win1);
 				mvwprintw(win0, 1, 1, "Enter number of dates");
@@ -86,7 +87,7 @@ void Path::Login(int screen, int AdminOrUser)
 				wrefresh(win0);
 				wrefresh(win1);
 				refresh();
-				int num = stoi(Input(win1));
+				num = stoi(Input(win1));
 				for (int i = 0; i<num;i++)
 				{
 					wclear(win0);
@@ -102,7 +103,9 @@ void Path::Login(int screen, int AdminOrUser)
 					string Date = Input(win1);
 					wclear(win1);
 					wrefresh(win1);
+					dates.push_back(Date);
 				}
+				Events event1 = exec.addEvent(EventN, Username, num, dates);
 				wclear(win1);
 				wrefresh(win1);
 				Choice = AddATask(win0, win1);
@@ -117,12 +120,22 @@ void Path::Login(int screen, int AdminOrUser)
 					string TaskName = Input(win1);
 					wclear(win1);
 					wrefresh(win1);
+					event1.addTask(TaskName);
 				}
 				Login(1, 0);
 			}
 			else if (Choice == 1)
 			{
-				Choice = SelectEvents(win0, win1);
+				std::vector<Events> allEventsVector = exec.getEventList();
+				std::vector<Events> usersEventsVector;
+				for (int i = 0; i < allEventsVector.size(); i++)
+				{
+					if (allEventsVector[i].getAdminName() == exec.getCurrentUser())
+					{
+						usersEventsVector.push_back(allEventsVector[i]);
+					}
+				}
+				int vectorIndex = SelectEvents(win0, win1); //returns index of selected event in usersEventsVector
 				Choice = H->print_scroll(win0, Edit, 3, 6, 2);
 				if (Choice == 0)
 				{
@@ -135,6 +148,7 @@ void Path::Login(int screen, int AdminOrUser)
 					wrefresh(win1);
 					refresh();
 					string EventN = Input(win1);
+					usersEventsVector[vectorIndex].setName(EventN);
 				}
 				else if (Choice == 1)
 				{
@@ -149,15 +163,23 @@ void Path::Login(int screen, int AdminOrUser)
 					wrefresh(win1);
 					refresh();
 					string Date = Input(win1);
+					usersEventsVector[vectorIndex].addDate(Date);
 				}
 				else if (Choice == 2)
 				{
 					//needs to be fed appropriate date vector
-					vector<char *> DateVec;
-					DateVec.push_back("Date 1");
+					vector<char *> DateVec; //Vector of events that currentuser is admin of
+					char* temp;
+					for (int i = 0; i < usersEventsVector.size(); i++)
+					{
+						temp = &usersEventsVector[i].getDates[i][0u]; //TODO - Check if this works (convert the name of the event at index i from string to char*)
+						DateVec.push_back(temp);
+					}
+					/*DateVec.push_back("Date 1");
 					DateVec.push_back("Date 2");
-					DateVec.push_back("Date 3");
+					DateVec.push_back("Date 3");*/
 					Choice = H->print_vec(win0, DateVec, 3, 2);
+					usersEventsVector[vectorIndex].removeDate(Choice);
 					wclear(win0);
 					wclear(win1);
 					wrefresh(win0);
@@ -231,16 +253,29 @@ void Path::Login(int screen, int AdminOrUser)
 	}
 	else if ((screen == 5) && (AdminOrUser == 1))
 	{
+		//User Events - Print All Events
+
+
 		wclear(win0);
 		wclear(win1);
 		box(win0, 0, 0);
 		wrefresh(win0);
 		mvwprintw(win0, 1, 1, "Events:");
 		vector<char *> Ev;
-		vector<char *> Ev1D;
-		vector<char *> Ev2D;
-		vector<char *> Ev3D;
-		Ev1D.push_back("Day1");
+		vector<char *> EvD;
+
+		std::vector<Events> allEvents = exec.getEventList();
+
+		char* temp;
+		for (int i = 0; i < allEvents.size(); i++)
+		{
+			temp = &allEvents[i].getName[0u]; //TODO - Check if this works (convert the name of the event at index i from string to char*)
+			Ev.push_back(temp);
+		}
+
+
+
+		/*Ev1D.push_back("Day1");
 		Ev1D.push_back("Day2");
 		Ev2D.push_back("Day1");
 		Ev2D.push_back("Day2");
@@ -248,11 +283,18 @@ void Path::Login(int screen, int AdminOrUser)
 		Ev3D.push_back("Day2");
 		Ev.push_back("Event1");
 		Ev.push_back("Event2");
-		Ev.push_back("Event3");
+		Ev.push_back("Event3");*/
+
 		int Choice = H->print_vec(win0, Ev, 3, 2);
 		//Interface will only currectly print days of event 1
 		//appropriate data structure will need to be applied so that the interface displays correct vector when event is picked
-		Choice = H->print_vec(win0, Ev1D, 3, 2);
+		char* temp2;
+		for (int i = 0; i < allEvents[Choice].getNumOfDays(); i++)
+		{
+			temp = &allEvents[Choice].getDates[i][0u]; //TODO - Check if this works (convert the dates of the event at index i from string to char*)
+			Ev.push_back(temp2);
+		}
+		Choice = H->print_vec(win0, EvD, 3, 2);
 		Login(6, 1);
 	}
 	else if ((screen == 6) && (AdminOrUser == 1))
@@ -372,28 +414,45 @@ void Path::Login(int screen, int AdminOrUser)
 			Login(7, 1);
 		}
 	}
-	else if ((screen == 7) && (AdminOrUser == 0))
+	/*else if ((screen == 7) && (AdminOrUser == 0))
 	{
+		std::vector<Events> allEvents = exec.getEventList();
+
 		wclear(win0);
 		wclear(win1);
 		box(win0, 0, 0);
 		wrefresh(win0);
 		mvwprintw(win0, 1, 1, "Select events:");
 		vector<char *> Ev;
-		vector<char *> Ev1D;
+		vector<char *> EvD;
 		vector<char *> Ev2D;
 		vector<char *> Ev3D;
+
+		char* temp;
+		for (int i = 0; i < allEvents.size(); i++)
+		{
+			temp = &allEvents[i].getName[0u]; //TODO - Check if this works (convert the name of the event at index i from string to char*)
+			Ev.push_back(temp);
+		}
+
 		Ev3D.push_back("Day1");
 		Ev3D.push_back("Day2");
 		Ev.push_back("Event1");
 		Ev.push_back("Event2");
 		Ev.push_back("Event3");
+
 		int Choice = H->print_vec(win0, Ev, 3, 2);
+		char* temp2;
+		for (int i = 0; i < allEvents[Choice].getNumOfDays(); i++)
+		{
+			temp = &allEvents[Choice].getDates[i][0u]; //TODO - Check if this works (convert the dates of the event at index i from string to char*)
+			EvD.push_back(temp2);
+		}
 		int Choice2 = H->print_scroll(win0, Edit, 3, 2, 2);
 		wclear(win1);
 		if (Choice2 == 0)
 		{
-			mvwprintw(win0, 1, 1, "Enter even name");
+			mvwprintw(win0, 1, 1, "Enter event name");
 			mvwprintw(win0, 3, 1, "Name:");
 			box(win1, 0, 0);
 			wrefresh(win1);
@@ -435,12 +494,13 @@ void Path::Login(int screen, int AdminOrUser)
 			wclear(win1);
 			wrefresh(win1);
 		}
-	}
+	}*/
 	else if ((screen == 7) && (AdminOrUser == 1))
 	{
 		int Choice2 = H->print_scroll(win0, SecondUserMenu, 3, 3, 2);
 		if (Choice2 == 0)
-		{
+		{//delete task
+			//vector<Task> allTasks = event.getTask
 			//Interface will only currectly print unrelated vector of tasks
 			//appropriate data structure will need to be applied so that the interface displays correct vector when event is picked
 			vector<char *> Taskvec;
@@ -508,6 +568,7 @@ int Path::AdminActions(WINDOW * win0, WINDOW * win1)
 }
 int Path::SelectEvents(WINDOW * win0, WINDOW * win1)
 {
+	//Admin Events - Print all events that current user is admin of
 	wclear(win0);
 	wclear(win1);
 	box(win0, 0, 0);

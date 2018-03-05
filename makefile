@@ -4,10 +4,10 @@ Project1: main.o Executive.o Events.o TimeSlots.o Task.o Path.o Highlight.o Desi
 main.o: main.cpp
 	g++ -std=c++11 -g -Wall -c main.cpp
 
-Executive.o: Executive.h Executive.cpp Events.h LinkedList.h Node.h
+Executive.o: Executive.h Executive.cpp Events.h
 	g++ -std=c++11 -g -Wall -c Executive.cpp
 	
-Events.o: Events.h Events.cpp TimeSlots.h Task.h LinkedList.h
+Events.o: Events.h Events.cpp TimeSlots.h Task.h
 	g++ -std=c++11 -g -Wall -c Events.cpp
 
 TimeSlots.o: TimeSlots.h TimeSlots.cpp

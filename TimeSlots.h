@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 class TimeSlots
 {
@@ -58,6 +59,15 @@ public:
 	*	@return A vector containing the list of names of the attendees
 	*/
 	std::vector<std::string> getAttendees();
+	
+	/**
+	*	Adds an attendee to the time slot
+	*	@pre None
+	*	@post An attendee is added to m_attendees and m_numOfAtt is incremented
+	*	@param A string representing the name of the attendee to be added
+	*	@return None
+	*/
+	void addAttendee(std::string name);
 
 	/**
 	*	Operator overload for == between two time slots
@@ -75,7 +85,7 @@ public:
 	*	@param This time slot is made equal to the one passed in
 	*	@return This time slot
 	*/
-	TimeSlot& operator=(const TimeSlots& rhs);
+	TimeSlots& operator=(const TimeSlots& rhs);
 
 	/**
 	*	Operator overload for > between two time slots

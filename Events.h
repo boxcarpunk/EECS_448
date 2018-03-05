@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "LinkedList.h"
 #include "TimeSlots.h"
 #include "Task.h"
 
@@ -22,10 +21,10 @@ public:
 	*	Creates an event with the values passed in
 	*	@pre None
 	*	@post Assigns member variables the corresponding values passed in and creates an event
-	*	@param A string representing the name, an int representing the number of days, and a vector of dates for the event
+	*	@param Two strings representing hte name of the event and the name of the admin, an int representing the number of days, and a vector of dates for the event
 	*	@return None
 	*/
-	Events(std::string name, int numOfDays, std::vector<std::string> dates);
+	Events(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates);
 
 	/**
 	*	Destructor deletes the linked lists
@@ -43,7 +42,7 @@ public:
 	*	@param String representing the name of an event
 	*	@return None
 	*/
-	void setName(std::string name);
+	void setEventName(std::string name);
 
 	/**
 	*	Returns the name of the event
@@ -52,7 +51,16 @@ public:
 	*	@param None
 	*	@return A string representing the name of the event
 	*/
-	std::string getName() const;
+	std::string getEventName() const;
+	
+	/**
+	*	Returns the name of the admin
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return A string representing the name of the admin
+	*/
+	std::string getAdminName() const;
 
 	/**
 	*	Returns the number of days the event will occur
@@ -71,6 +79,24 @@ public:
 	*	@return A vector containing the list of dates the event will occur on in MM/DD/YYYY format
 	*/
 	std::vector<std::string> getDates() const;
+	
+	/**
+	*	Removes a date from the event
+	*	@pre A date is at the given index
+	*	@post The date at the given index is removed
+	*	@param An int corresponding to the index of the date to be removed, indexing starts at 0
+	*	@return None
+	*/
+	void removeDate(int index);
+	
+	/**
+	*	Adds a date that the event will take place
+	*	@pre None
+	*	@post The date is added to the event
+	*	@param A string representing a date in MM/DD/YYYY format
+	*	@return None
+	*/
+	void addDate(std::string date);
 
 	/**
 	*	The 2D array of time slots will be returned. The first index refers to the day of the event and the second index refers to the 20min time slot for that day
@@ -98,6 +124,15 @@ public:
 	*	@return None
 	*/
 	void addTask(std::string name);
+	
+	/**
+	*	Removes a task from the task list
+	*	@pre A task exists at the given index
+	*	@post The task at the given index is removed
+	*	@param An int representing the index of the task to be removed
+	*	@return None
+	*/
+	void removeTask(int index);
 
 	/**
 	*	Allows a user to sign up for a task
@@ -127,11 +162,11 @@ public:
 	std::vector<Task> getTasks();
 
 	/**
-	*	Operator overload for == between two events, checks the name and dates of the events
+	*	Operator overload for == between two events, checks the event name, admin name, and dates of the events
 	*	@pre None
 	*	@post None
 	*	@param The event to be compared to this one
-	*	@return True if the name and dates of the events are the same, false otherwise
+	*	@return True if the names and dates of the events are the same, false otherwise
 	*/
 	bool operator==(const Events& rhs) const;
 
@@ -154,9 +189,12 @@ public:
 	bool operator>(const Events& rhs) const;
 
 private:
-	std::string m_name; /**< The name of the Event */
+	std::string m_eventName; /**< The name of the event */
+	std::string m_adminName; /**< The name of the admin for the event */
+	
 	int m_numOfDays; /**< The number of days the event will occur */
 	std::vector<std::string> m_dates; /**< The actual dates that the event will occur */
 	TimeSlots** timeSlot; /**< The time slots for the event, the first index cooresponds to the day and the second index cooresponds to the actual time slot */
-	LinkedList<Task, std::string>* m_Task; /**< The list of tasks for the event */
+	
+	std::vector<Task> m_Task; /**< The list of tasks for the event */
 };
