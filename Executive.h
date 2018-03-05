@@ -1,5 +1,4 @@
 #pragma once
-#include "LinkedList.h"
 #include "Events.h"
 #include <fstream>
 #include <vector>
@@ -76,6 +75,6 @@ public:
 	bool dateCheck(int y, int m, int d);
 
 private:
-	LinkedList<Events, std::string>* eventList; /**< List which holds the event objects */
+	std::vector<Events> m_eventList; /**< List which holds the event objects */
 	std::string m_currentUser; /**< The name of the current user */
 };

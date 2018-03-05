@@ -5,8 +5,6 @@ Events::Events()
 	m_eventName = "None"; //sets the name of the event to None
 	m_adminName = "None"; //sets the name of the admin to None
 	m_numOfDays = 0; //sets the number of days for the event to 0
-
-	m_Task = new LinkedList<Task, std::string>(); //creates an empty task list for the event
 }
 
 Events::Events(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates)
@@ -16,7 +14,6 @@ Events::Events(std::string eventName, std::string adminName, int numOfDays, std:
 	m_numOfDays = numOfDays; //sets the number of days for the event
 	m_dates = dates; //sets the dates that the event will occur
 
-	m_Task = new LinkedList<Task, std::string>(); //creates an empty task list for the event
 	timeSlot = new TimeSlots*[numOfDays]; //creates time slot ptrs for each day of the event
 
 	for (int i = 0; i < numOfDays; i++) //iterates for every day of the event
@@ -33,7 +30,6 @@ Events::Events(std::string eventName, std::string adminName, int numOfDays, std:
 /*Events::~Events()
 {
 	delete m_TimeSlot;
-	delete m_Task;
 }*/
 
 void Events::setEventName(std::string name)
@@ -147,24 +143,42 @@ void Events::setTimes(TimeSlots** times)
 
 void Events::addTask(std::string name)
 {
-	m_Task->addFront(Task(name)); //makes a new task with the given name and adds it to the front of the list
+	for(int i = 0; i < m_Task.size(); i++) //runs through the task list
+	{
+		if(m_Task[i] == name) //if the task is already in the list
+		{
+			return; //we don't want to add the same task twice
+		}
+	}
+
+	m_Task.push_back(Task(name)); //makes a new task with the given name and adds it to the back of the list
 }
 
 void Events::removeTask(int index)
 {
-	m_Task->removeAt(index); //removes the task at the given index
+	if((index >=0) && (index < m_Task.size())) //if the index is valid
+	{
+		m_Task.erase(m_Task.begin()+index); //removes the task at the given index
+	}
 }
 
 bool Events::signUpTask(std::string userName, std::string taskName)
 {
 	Task temp; //creates a temp task
-	try
+	bool found = false; //a flag to state whether the task was found or not
+
+	for(int i = 0; i < m_Task.size(); i++) //runs through the task list
 	{
-		temp = m_Task->search(taskName); //searchs for the task with the given name and stores it in temp if found
+		if(m_Task[i] == taskName) //if the task is found
+		{
+			temp = m_Task[i]; //stores the task in temp
+			found = true; //set the flag to true since the task was found
+		}
 	}
-	catch (std::runtime_error) //if search threw an error
+	
+	if(!found) //if the task was not found
 	{
-		return(false); //return false because the taskName passed in is not the name of a task in the list
+		return(false); //return false
 	}
 
 	return(temp.signUp(userName)); //passes along the name of the user to the task and returns whether they were able to sign up or not
@@ -173,13 +187,20 @@ bool Events::signUpTask(std::string userName, std::string taskName)
 bool Events::cancelSignUpTask(std::string userName, std::string taskName)
 {
 	Task temp; //creates a temp task
-	try
+	bool found = false; //a flag to state whether the task was found or not
+	
+	for(int i = 0; i < m_Task.size(); i++) //runs through the task list
 	{
-		temp = m_Task->search(taskName); //searchs for the task with the given name and stores it in temp if found
+		if(m_Task[i] == taskName) //if the task is found
+		{
+			temp = m_Task[i]; //stores the task in temp
+			found = true; //set the flag to true since the task was found
+		}
 	}
-	catch (std::runtime_error) //if search threw an error
+	
+	if(!found) //if the task was not found
 	{
-		return(false); //return false because the taskName passed in is not the name of a task in the list
+		return(false); //return false
 	}
 
 	if (userName == temp.getPersonName()) //if the name of the user trying to un-sign up is the same as the user who is handling the task
@@ -194,14 +215,7 @@ bool Events::cancelSignUpTask(std::string userName, std::string taskName)
 
 std::vector<Task> Events::getTasks()
 {
-	std::vector<Task> temp; //creates the temp vector that will be returned
-
-	for (int i = 0; i < m_Task->getLength(); i++) //iterates through the task list
-	{
-		temp.push_back(m_Task->getEntry(i+1)); //adds the task at index i+1 to the vector
-	}
-
-	return(temp); //returns the vector
+	return(m_Task); //returns the vector
 }
 
 bool Events::operator==(const Events& rhs) const

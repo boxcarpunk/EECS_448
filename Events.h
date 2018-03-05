@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "LinkedList.h"
 #include "TimeSlots.h"
 #include "Task.h"
 
@@ -197,5 +196,5 @@ private:
 	std::vector<std::string> m_dates; /**< The actual dates that the event will occur */
 	TimeSlots** timeSlot; /**< The time slots for the event, the first index cooresponds to the day and the second index cooresponds to the actual time slot */
 	
-	LinkedList<Task, std::string>* m_Task; /**< The list of tasks for the event */
+	std::vector<Task> m_Task; /**< The list of tasks for the event */
 };
