@@ -4,9 +4,9 @@
 #include <vector>
 class Designs
 {
-	public:
-		Designs();
-		void Title();
-	private:
+public:
+	Designs();
+	void Title();
+private:
 };
 #endif
