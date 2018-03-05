@@ -77,10 +77,8 @@ void Path::Login(int screen, int AdminOrUser)
 				wrefresh(win1);
 				refresh();
 				string EventN = Input(win1);
-				//Login(5,0);
 				wclear(win0);
 				wclear(win1);
-				//-------------
 				mvwprintw(win0,1,1,"Enter number of dates");
 				mvwprintw(win0,3,1,"Number: ");
 				box(win0,0,0);
@@ -105,8 +103,22 @@ void Path::Login(int screen, int AdminOrUser)
 					wclear(win1);
 					wrefresh(win1);
 				}
+				wclear(win1);
+				wrefresh(win1);
+				Choice = AddATask(win0,win1);
+				if(!Choice)
+				{
+					mvwprintw(win0,1,1,"Enter name");
+					mvwprintw(win0,3,1,"Task name: ");
+					wrefresh(win0);
+					box(win1,0,0);
+					wrefresh(win1);
+					refresh();
+					string TaskName = Input(win1);
+					wclear(win1);
+					wrefresh(win1);
+				}
 					Login(1,0);
-				//end of add event
 			}
 			else if(Choice==1)
 			{
@@ -148,37 +160,11 @@ void Path::Login(int screen, int AdminOrUser)
 			{
 				//Login(3,1);
 			}
-			//Login(4,Choice);
 		}
 		else
 		{
 			Login(4,1);
 		}
-	}
-	else if((screen == 5)&&(AdminOrUser==0))
-	{
-		mvwprintw(win0,1,1,"Enter even name");
-		mvwprintw(win0,3,1,"Name:");
-		wrefresh(win0);
-		box(win1,0,0);
-		wrefresh(win1);
-		refresh();
-		Input(win1);
-		Login(6,0);
-	}
-	else if((screen == 6)&&(AdminOrUser==0))
-	{
-		mvwprintw(win0,1,1,"Enter date");
-		mvwprintw(win0,3,1,"Date: ");
-		mvwprintw(win0,6,1,"(MM/DD/YYYY)");
-		wrefresh(win0);
-		box(win1,0,0);
-		wrefresh(win1);
-		refresh();
-		string Username = Input(win1);
-		wclear(win1);
-		wrefresh(win1);
-		Login(4,0);
 	}
 	else if(screen == 3)
 	{
@@ -202,29 +188,6 @@ void Path::Login(int screen, int AdminOrUser)
 		else
 		{
 			Login(4,Choice);
-		}
-	}
-	else if((screen == 4)&&(AdminOrUser==0))
-	{
-		wclear(win0);
-		wclear(win1);
-		box(win0,0,0);
-		wrefresh(win0);
-		mvwprintw(win0,1,1,"Admin Actions:");
-		int Choice = H->print_scroll(win0,FirstAdminMenu,3,3,2);
-		wclear(win0);
-		wrefresh(win0);
-		if(Choice==0)
-		{
-			Login(5,0);
-		}
-		else if(Choice==1)
-		{
-			Login(7,0);
-		}
-		else
-		{
-			Login(3,1);
 		}
 	}
 	else if((screen == 4)&&(AdminOrUser==1))
@@ -510,6 +473,16 @@ int Path::AOrU(WINDOW * win0, WINDOW * win1)
 	int Choice = H->print_scroll(win0,AorUMenu, 3,3, 2);
 	wclear(win0);
 	wrefresh(win0);
+	return(Choice);
+}
+int Path::AddATask(WINDOW * win0,WINDOW * win1)
+{
+	wclear(win0);
+	wclear(win1);
+	box(win0,0,0);
+	wrefresh(win0);
+	mvwprintw(win0,1,1,"Add Task?");
+	int Choice = H->print_scroll(win0,AddTask,3,2,2);
 	return(Choice);
 }
 int Path::AdminActions(WINDOW * win0, WINDOW * win1)

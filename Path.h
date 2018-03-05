@@ -15,6 +15,7 @@ class Path
 		int AOrU(WINDOW * win0, WINDOW * win1);
 		int AdminActions(WINDOW * win0, WINDOW * win1);
 		int SelectEvents(WINDOW * win0,WINDOW * win1);
+		int AddATask(WINDOW * win0, WINDOW * win1);
 		std::string EventName(WINDOW * win0, WINDOW * win1);
 		std::string Input(WINDOW * win1);
 
