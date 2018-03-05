@@ -37,7 +37,7 @@ public:
 	*	@return None
 	*/
 	void setCurrentUser(std::string name);
-	
+
 	/**
 	*	Gets the name of the current user
 	*	@pre None
@@ -73,6 +73,8 @@ public:
 	*	@return True if the date is valid. False if the date is invalid.
 	*/
 	bool dateCheck(int y, int m, int d);
+
+	std::vector<std::string> split(std::string baseString, char splitChar);
 
 private:
 	std::vector<Events> m_eventList; /**< List which holds the event objects */
