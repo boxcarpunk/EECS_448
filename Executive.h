@@ -52,16 +52,17 @@ public:
 	*	@pre None
 	*	@post None
 	*	@param None
-	*	@return The list of events
+	*	@return The vector list of events
 	*/
+
 	std::vector<Events> getEventList();
 
 	/**
-	*	Wasn't included in documentation
+	* Checks if the date is valid or not
 	*	@pre None
 	*	@post None
-	*	@param None
-	*	@return None
+	*	@param Integer values representing the year, month and day are taken in
+	*	@return True if the date is valid. False if the date is invalid.
 	*/
 	bool dateCheck(int y, int m, int d);
 
