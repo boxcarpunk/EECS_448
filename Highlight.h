@@ -5,9 +5,29 @@
 class Highlight
 {
 public:
+	/**
+	* Constructor does nothing
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return None
+	*/
 	Highlight();
-	int print_menu(WINDOW * win, char * Menu[], int size, int StartLine);
+	/**
+	* Prints an array
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return None
+	*/
 	int print_scroll(WINDOW * win, char * Menu[], int size, int Actual, int StartLine);
+	/**
+	* Prints a vector, just like print_scroll but vector
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return None
+	*/
 	int print_vec(WINDOW * win, std::vector<char *> Menu, int Actual, int StartLine);
 private:
 };

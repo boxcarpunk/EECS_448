@@ -6,7 +6,7 @@ class Designs
 {
 public:
 	/**
-	* Doesn't do anything
+	* Doesn't do anything - Nick
 	*	@pre None
 	*	@post None
 	*	@param None
