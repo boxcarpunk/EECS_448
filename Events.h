@@ -34,11 +34,7 @@ public:
 	*	@param None
 	*	@return None
 	*/
-<<<<<<< HEAD
-	~Events();
-=======
 	//~Events();
->>>>>>> Event/Availability
 
 	/**
 	*	Sets the name of the event

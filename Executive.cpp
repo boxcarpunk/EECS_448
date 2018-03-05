@@ -55,88 +55,6 @@ Executive::Executive()
 
 Executive::~Executive()
 {
-<<<<<<< HEAD
-}
-
-void Executive::run()
-{
-	bool programStatus = true; //a flag to keep track of the state of the program
-	int choice = 0; //an int that stores input from the user
-	std::ofstream outFile; //the object used to write to file
-
-	std::cout << "\n-------------------------\nWelcome to cal448!\n-------------------------\n\n";
-	while (programStatus == true) //main program loop condition
-	{
-		std::cout << "Are you an admin or a user?\n  (1) Admin\n  (2) User\n  (3) Quit\n\n  Choice: ";
-		std::cin >> choice; //takes in and stores the menu input
-		while(std::cin.fail()) //fail bit code to recover bad input
-		{
-			std::cin.clear();
-			std::cin.ignore();
-			std::cout << "Invalid input, please select '1'-'3'\n";
-			std::cin >> choice;
-		}
-
-
-		if (choice == 1) //if an admin logs in
-		{
-			std::cout<<"Which time mode would you like to use?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
-			std::cin.ignore(); //wipes cin
-			std::cin>>choice; //takes in and stores the time input
-			while(std::cin.fail()) //fail bit code to recover from bad input
-			{
-				std::cin.clear();
-				std::cin.ignore();
-				std::cout << "Invalid input, please select '1'-'2'\n";
-				std::cin >> choice;
-			}
-
-			if(choice == 1) //if 12hr mode
-			{
-				std::cout << "\n--------- Admin Mode Starting ---------\n";
-				programStatus = adminFunc(true); //goes into admin mode with a 12-hr format
-			}
-			else //if 24hr mode
-			{
-				std::cout << "\n--------- Admin Mode Starting ---------\n";
-				programStatus = adminFunc(false); //goes into admin mode with a 24-hr format
-			}
-		}
-		else if (choice == 2) //if a user logs in
-		{
-			std::cout<<"Which time mode?\n  (1) 12-hour\n  (2) 24-hour\n\n Choice: ";
-			std::cin.ignore(); //wipes cin
-			std::cin>>choice; //takes in and stores the time input
-			while(std::cin.fail()) //fail bit code to recover from bad input
-			{
-				std::cin.clear();
-				std::cin.ignore();
-				std::cout << "Invalid input, please select '1'-'2'\n";
-				std::cin >> choice;
-			}
-			if(choice == 1) //if 12hr mode
-			{
-				std::cout << "\n--------- User Mode Starting ---------\n";
-				programStatus = userFunc(true); //goes into user mode with a 12-hr format
-			}
-			else //if 24hr mode
-			{
-				std::cout << "\n--------- User Mode Starting ---------\n";
-				programStatus = userFunc(false); //goes into user mode with a 24-hr format
-			}
-		}
-		else if(choice == 3) //if exiting the program
-		{
-			std::cout << "Thank you for using cal448!\n";
-			break; //breaks out of the while loop
-		}
-		else //if not 1-3
-		{
-			std::cout<<"\nInvalid input. Try again: \n";
-		}
-	}
-=======
->>>>>>> Event/Availability
 	outFile.open("eventslist.txt"); //opens the file
 	for (int i = 1; i <= eventList->getLength(); i++) //goes through the event list
 	{
@@ -170,147 +88,9 @@ bool Executive::addEvent(std::string name, int numOfDays, std::vector<std::strin
 
 std::vector<Events> Executive::getEventList()
 {
-<<<<<<< HEAD
-	std::string name = ""; //creates a placeholder variable for a name of an event
-	int month = 0; //creates a placeholder variable for a month of an event
-	int day = 0; //creates a placeholder variable for a day of an event
-	int year = 0; //creates a placeholder variable for a year of an event
-	std::string AMPM ="";
-	std::cout << "\nWhat is the name of your event?\n";
-	std::cin.ignore(); //wipes cin
-	std::getline(std::cin, name); //gets the name of the event
-	if (validEventName(name,17) == true) {//checks if event name entered is >0 and less than 17 characters
-		while (1) //runs infinitely
-		{
-			std::cout << "\nWhat year will your event take place?\n";
-			std::cin >> year; //takes in the year
-			while (std::cin.fail()) //fail bit code to recover from bad input
-			{
-				std::cin.clear();
-				std::cin.ignore();
-				std::cout << "Invalid input, please enter a year\n";
-				std::cin >> year;
-			}
-			std::cout << "\nWhat month will your event take place?\n";
-			for (int i = 0; i < 12; i++)
-			{
-				std::cout << "  (" << i + 1 << ")" << " " << m_months[i] << std::endl;
-			}
-			std::cin.ignore(); //wipes cin
-			std::cin >> month; //takes in the month
-			while (std::cin.fail()) //fail bit code to recover from bad input
-			{
-				std::cin.clear();
-				std::cin.ignore();
-				std::cout << "Invalid input, please select '1'-'12'\n";
-				std::cin >> month;
-			}
-			std::cout << "\nWhat day will your event take place?\n";
-			std::cin.ignore(); //wipes cin
-			std::cin >> day; //takes in the day
-			while (std::cin.fail()) //fail bit code to recover from bad input
-			{
-				std::cin.clear();
-				std::cin.ignore();
-				std::cout << "Invalid input, please enter a day\n";
-				std::cin >> day;
-			}
-
-			if (dateCheck(year, month, day) == true) //if the date is valid
-			{
-				break; //break out of the while loop
-			}
-			else //if the date is invalid
-			{
-				std::cout << "\nThis date is invalid, please enter a valid date\n"; //notify the user that the date is invalid
-			}
-		}
-	}
-	else
-	{
-		std::cout << "\nInvalid name. Please enter a valid name. (The event name needs to be less than 17 characters.)";
-		addEvent(mode12);
-	}
-
-	if(mode12) //if 12-hr mode
-	{
-		std::cout << "\nWhat time will your event start? \n";
-
-		int hourMin = 0; //an int that stores the time of the event
-		std::string AMPM = ""; //a string that stores whether the time is am or pm
-
-		std::cout<<"Start Time (format like 1000 for 10:00): ";
-		std::cin.ignore(); //wipes cin
-		std::cin>>hourMin; //takes in and stores starting the time
-		while (std::cin.fail()) //fail bit code to recover from bad input
-		{
-			std::cin.clear();
-			std::cin.ignore();
-			std::cout << "Invalid input, please enter a time\n";
-			std::cin >> hourMin;
-		}
-		while(AMPM!="AM" && AMPM!="PM" &&  AMPM != "p.m." && AMPM != "a.m." && AMPM != "pm" && AMPM != "am" && AMPM != "P.M." && AMPM != "A.M."){
-			std::cout<<"\nIs this AM or PM (enter AM or PM): ";
-			std::cin.ignore(); //wipes cin
-			std::cin >> AMPM; //takes in whether the time is am or pm
-//		std::cout << AMPM;
-		}
-		if(AMPM == "PM" || AMPM == "p.m." || AMPM == "pm" || AMPM == "P.M.") //if the time is pm
-		{
-			hourMin = hourMin + 1200; //add 12 hours to the time
-		}
-
-		m_stime = std::to_string(hourMin);
-
-		std::cout<<"\nEnd Time (format like 1000 for 10:00): ";
-		std::cin.ignore(); //wipes cin
-		std::cin>>hourMin;
-		AMPM = "";//resets the AMPM string
-		while(AMPM!="AM" && AMPM!="PM" &&  AMPM != "p.m." && AMPM != "a.m." && AMPM != "pm" && AMPM != "am" && AMPM != "P.M." && AMPM != "A.M."){
-		{
-			std::cout<<"\nIs this AM or PM (enter AM or PM): ";
-			std::cin.ignore(); //wipes cin
-			std::cin>>AMPM;
-		}
-		if(AMPM == "PM" || AMPM == "p.m." || AMPM == "pm" || AMPM == "P.M.") //if the time is pm
-			hourMin = hourMin + 1200;
-		}
-
-		m_etime = std::to_string(hourMin);
-	} else {
-		std::cout << "\nWhat time will your event start?\n";
-		std::cin.ignore(); //wipes cin
-		std::cin >> m_stime;
-		while(std::stoi(m_stime) >= 2359 || std::stoi(m_stime) < 500 || (std::stoi(m_stime) >= 1201 && std::stoi(m_stime) <= 1259))
-		{
-			std::cout <<"Invalid Time input! Try Again!\n";
-			std::cin.ignore(); //wipes cin
-			std::cin >> m_stime;
-		}
-		std::cout << "\nWhat time will your event end?\n";
-		std::cin.ignore(); //wipes cin
-		std::cin >> m_etime;
-		while(std::stoi(m_etime) >= 2359 || std::stoi(m_etime) < 500 || (std::stoi(m_etime) >= 1201 && std::stoi(m_etime) <= 1259))
-		{
-			std::cout <<"Invalid Time input! Try Again!\n";
-			std::cin.ignore(); //wipes cin
-			std::cin >> m_etime;
-		}
-	}
-
-	Events event1(name, month, day, year);
-
-	m_intSTime = stoi(m_stime);
-	m_intETime = stoi(m_etime);
-	double numTs = ceil(((std::stod(m_etime) - std::stod(m_stime))/100) * 3);
-	std::cout << numTs << "\n";
-	int tsup = ceil(m_intSTime);
-	for (int i = 0; i < numTs; i ++)
-=======
 	std::vector<Events> temp; //creates the temp vector that will be returned
 
 	for (int i = 0; i < eventList->getLength(); i++) //iterates through the event list
->>>>>>> Event/Availability
 	{
 		temp.push_back(eventList->getEntry(i+1)); //adds the event at index i+1 to the vector
 	}
@@ -320,9 +100,6 @@ std::vector<Events> Executive::getEventList()
 
 bool Executive::dateCheck(int y, int m, int d)
 {
-<<<<<<< HEAD
-	// if the day is less than 1, then it can't possibly be a valid day
-=======
 	time_t now = time(0);
 	tm* ltm = localtime(&now);
 	int curY = (1900 + ltm->tm_year);
@@ -342,16 +119,12 @@ bool Executive::dateCheck(int y, int m, int d)
 		}
 
 	}
->>>>>>> Event/Availability
 	if (d < 1)
 	{
 		std::cout << "\nThe day must be 1 or higher.\n";
 		return false;
 	}
-
-	// Check if day is greater than the max amount of days of the month
-	//        Jan       March     May       July      August    October    December
-	else if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
+	if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
 	{
 		if (d > 31)
 		{
@@ -359,7 +132,6 @@ bool Executive::dateCheck(int y, int m, int d)
 			return false;
 		}
 	}
-	//       April     June      September November
 	else if (m == 4 || m == 6 || m == 9 || m == 11)
 	{
 		if (d > 30)
@@ -368,9 +140,6 @@ bool Executive::dateCheck(int y, int m, int d)
 			return false;
 		}
 	}
-
-	// Check if the day is greater than the amount of days in February
-	//       February
 	else if (m == 2)
 	{
 		if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0))			//Leep year conditions: cite "crazzyguy101 - cplusplus.com"
@@ -391,38 +160,6 @@ bool Executive::dateCheck(int y, int m, int d)
 		}
 	}
 
-<<<<<<< HEAD
-	//check if the day is in the past
-	const int monthIndex = 0;
-	const int dayIndex = 1;
-	const int yearIndex = 2;
-
-	time_t now = time(0);
-	tm* ltm = localtime(&now);
-	char currentDate[32];
-	std::strftime(currentDate, 32, "%m/%d/%Y", ltm);
-	std::vector<std::string> currentDateVector = split(currentDate, '/');
-	if ( y < std::stoi(currentDateVector[yearIndex])) {
-		std::cout <<"The year needs to be this year or later, you cannot create a past event!\n";
-		return false;
-	}
-	else if (y == std::stoi(currentDateVector[yearIndex]) && m < std::stoi(currentDateVector[monthIndex])){
-		std::cout << "The month needs to be this month or later, you cannot create a past event!\n";
-		return false;
-	}
-	else if (y == std::stoi(currentDateVector[yearIndex]) && m == std::stoi(currentDateVector[monthIndex]) && d < std::stoi(currentDateVector[dayIndex])) {
-		std::cout << "The day needs to be this day or later, you cannot create a past event!\n";
-		return false;
-	}
-
-
-	// check if event date is on a holiday
-	int size = sizeof(holidays) / sizeof(holidays[0]);
-	for (int i = 0; i < size; i++) {
-		std::vector<std::string> holiday = split(holidays[i], '/');
-		if (std::stoi(holiday[monthIndex]) == m && std::stoi(holiday[dayIndex]) == d) {
-			std::cout << "The event cannot be on a holiday!\n";
-=======
 	const std::string Events::holidays[3] = { "01/01", "07/4","12/25" };
 	int size = sizeof(holidays);
 
@@ -435,28 +172,8 @@ bool Executive::dateCheck(int y, int m, int d)
 			holiday.push_back(f);
 		}
 		if (std::stoi(holiday[0]) == m && std::stoi(holiday[1]) == d) {
->>>>>>> Event/Availability
 			return false;
 		}
 	}
 	return true;
 }
-<<<<<<< HEAD
-bool Executive::validEventName(std::string name, unsigned int value) {
-	if (name.length() == 0 || name.length()>(value-1))
-		return false;
-	else
-		return true;
-}
-//seperates a string by the delimiting character
-std::vector<std::string> Executive::split(std::string mainString, char seperatingChar) {
-	std::istringstream issMainString(mainString);
-	std::string f;
-	std::vector<std::string> returnString;
-	while (std::getline(issMainString, f, seperatingChar)) {
-		returnString.push_back(f);
-	}
-	return returnString;
-}
-=======
->>>>>>> Event/Availability
