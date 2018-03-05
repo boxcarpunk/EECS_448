@@ -20,19 +20,19 @@ public:
 	Events();
 
 	/**
-	*	Creates an event with default values
+	*	Creates an event with the values passed in
 	*	@pre None
 	*	@post Assigns member variables the corresponding value passed in and creates an event
-	*	@param String for name and integers for month, day, and year
+	*	@param Strings representing the name of the event and admin, the number of days the event will take place, the time slots for the event
 	*	@return None
 	*/
 	Events(std::string name, std::string adminName, int numOfDays, TimeSlots** times);
 
 	/**
-	*	Creates an event with default values
+	*	Creates an event with the values passed in
 	*	@pre None
 	*	@post Assigns member variables the corresponding value passed in and creates an event
-	*	@param String for name and integers for month, day, and year
+	*	@param Strings representing the name of the event and admin, the number of days the event will take place, the time slots for the event, and the list of dates for the event
 	*	@return None
 	*/
 	Events(std::string name, std::string adminName, int numOfDays, TimeSlots** times, std::vector<std::string> dates);
@@ -200,15 +200,6 @@ public:
 	bool operator==(const Events& rhs) const;
 
 	/**
-	*	Operator overload for == between two events, checks the event name, admin name, and dates of the events
-	*	@pre None
-	*	@post None
-	*	@param The event to be compared to this one
-	*	@return True if the names and dates of the events are the same, false otherwise
-	*/
-	Events& operator<<(Events& rhs);
-
-	/**
 	*	Operator overload for == between an event and a string, checks the string against the event's name
 	*	@pre None
 	*	@post None
@@ -235,6 +226,13 @@ public:
 	*/
 	void getInfo();
 
+	/**
+	*	Adds a date to the date vector
+	*	@pre None
+	*	@post A date is added to the date vector
+	*	@param A string representing the date to be added
+	*	@return None
+	*/
 	void setDates(std::string date);
 
 private:

@@ -1,0 +1,183 @@
+﻿Andrew Hubbard
+Anna Seib
+Denzel Richmond
+Nick Alvarez
+Tanner Cronister
+
+Team 6
+Backlog:
+https://trello.com/invite/b/2zLDERJR/bf3eccd8126953a5c94b1b2d3238fe14/eecs-448-project-2
+
+Meeting Log
+Facilitator
+* Andrew
+Rules for preparation and participation
+* Respect other people’s ideas
+* Show up to meetings
+* Try to complete your task before the next meeting
+________________
+
+3/5 Monday 11:58 - Monday 11:59
+Things discussed
+* Good job we got it done 
+
+
+Things To-Do
+* Finish Presentation
+   * Almost done but must be finished after program is turn in
+   * Shorter presentation this time
+   * Longer Demonstration
+
+
+Things Left Unfinished from Last Meeting
+* Nothing perfect job team you did good 
+________________
+
+3/4 Sunday 1:00-Monday 11:59
+Things discussed
+* Integrating Interface
+* Storing information with vectors instead of a LinkedList because of Issues
+
+
+Things To-Do
+* “Sources” have to be included from the last team
+“References (5%)
+This will be its own section in the documentation and should be part of your GitHub repository. Any work/code that you or a teammate did not write from scratch, must be cited. This includes the code left over from Project 1!”
+
+
+Things Left Unfinished from Last Meeting
+* Merge Interface with master
+________________
+
+3/3 Saturday 1:00-6:00 Fishbowl lab
+Things discussed
+* Nick completed interface
+* Tanner merged all his changes
+* Denzel fixed the double input problem with the interface
+
+
+Things To-Do
+* Denzel merge Nick’s interface with master
+
+
+Things Left Unfinished from Last Meeting
+* Nick’s code isn’t merged yet
+________________
+
+3/2 Friday 4:00-6:00 Fishbowl
+Things Discussed
+* Merging of the interface and who wants to do it
+   * Nobody seemed eager to be the person to do that
+* Anna “Disallowed the creation of an event with no name” to master
+* Tanner disallowed events from 12-5am and lunchtime, added ability to add tasks from one day to another day
+* In the event class, need to make a variable for the admins name so when the event is created it will get the current username from the current user variable in executive and add it
+
+
+To-Do Before Meeting
+* Everyone start merging code that hasn’t been merged with master yet
+
+
+Things Left Unfinished from Last Meeting
+* Store Dates in the correct
+________________
+
+2/28 Wednesday in Class
+Things Discussed
+* Nick changed the interface from arrays to vector
+* Tanner added the 20 minutes time slots, and the functionality for an event to span multiple days
+
+
+To-Do Before Meeting
+* Store Dates in the correct format
+* Add user names to the program
+
+
+Things Left Unfinished from Last Meeting
+* Interface is still being worked on
+________________
+
+2/27 Tuesday 5:00 LEEP 2415
+Things Discussed
+* Process Model Scrum Chosen
+* Andrew is titled Scrum Master
+
+
+To-Do
+* Make an event span multiple day
+* Nick’s working on the Interface
+
+
+Things Left Unfinished from Last Meeting
+* Nothing
+________________
+
+2/26 Monday in Class
+Things Discussed
+* Anna completed proposed Diagram of Interface
+
+
+To-Do Before Next Meeting
+* Add A Task List to the Event Class
+
+
+Things Left Unfinished from Last Meeting
+* Add task list
+________________
+
+2/24 Saturday 10:00-3:00 LEEP 2425
+Things Discussed
+* Planned Interfaces
+* Andrew completed LinkedList Refactoring
+
+
+To-Do Before Next Meeting
+* Allow events to span multiple days
+* Fix 20-minute time slots
+* Copy available time slots to another day
+* Add task list
+
+
+Things Left Unfinished from Last Meeting
+* Nothing
+________________
+
+2/23 Friday 8:00 In Class
+Things Discussed
+* When we are meeting next
+
+
+To-Do Before Next Meeting
+* Everyone works on getting the the program running
+* Linked List refactoring
+
+
+Things Left Unfinished from Last Meeting
+* LinkedList not finished yet
+________________
+
+2/21 Wednesday 4:00-6:00 LEEP 2322 and 6:00-7:00 Eaton 1005D
+Things Discussed
+* Andrew suggests using Trello for the product backlog
+* Andrew and Tanner get the program running on our computers
+
+
+Things to do for this project:
+* Time validation
+   * No lunch time/ no 12am - 5am
+   * No holidays
+   * 12 hr/ 24 hr user input
+   * 20 min time slots
+* Event name search
+   * Incorrect names crashes
+   * Events with the same name
+      * fix: search by index
+   * Create event with no name
+* LinkedList
+Things already done   
+* Read/Write Works
+* Leap year accounted for
+* Meets all the other proj. 1
+* Can’t go in the past in year
+Things to do before next meeting:
+* Andrew: Work on LinkedList
+* Everyone: Add anything to list of things to accomplish

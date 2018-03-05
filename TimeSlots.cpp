@@ -16,11 +16,6 @@ TimeSlots::TimeSlots(int index)
 	}
 }
 
-void TimeSlots::increaseAtt()
-{
-	m_numOfAtt += 1; //increases the number of attendees by one
-}
-
 int TimeSlots::getTimeSlot()
 {
 	return m_TimeSlot; //returns the time slot

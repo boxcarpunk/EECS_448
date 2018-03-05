@@ -1,3 +1,5 @@
+Project 1 Sources:
+
 ## LinkedList.h
   - LinkedList.h has been sourced from EECS 268 at the University of Kansas by Dr. John Gibbons.
   - Methods have been implemented by EECS 448 Team 7 Spring 2018 Semester
@@ -6,3 +8,9 @@
 ## Documentation Website 
   - Built around template provided by: https://www.egrappler.com/free-product-documentation-html-template/
   - Website structure has remained, however colors, fonts and text have all been implemented by EECS 448 Team 7 Spring 2018 Semester
+
+Project 2 Sources:
+
+All code except for the Task class was adapted and based on the code originally written by Group 2.
+Code that was added or changed between Project 1 and 2 was solely written by the members of Group 6.
+Includes Used: stdexcept, fstream, vector, iostream, algorithm, string, math.h, ctime, cctype, and sstream

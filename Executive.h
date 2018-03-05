@@ -32,8 +32,22 @@ class Executive
 	*/
 	~Executive();
 
+	/**
+	*	Splits the string passed in based on the delimiting character also passed in
+	*	@pre None
+	*	@post The string is split at the delimiting character
+	*	@param The string to be split and the delimiting character
+	*	@return A vector containing the parts of the string
+	*/
 	std::vector<std::string> split(std::string mainString, char seperatingChar);
 
+	/**
+	*	Checks if the length of the name passed in is between zero and the value passed in
+	*	@pre None
+	*	@post None
+	*	@param The name to be checked and the size it cannot be longer than
+	*	@return True if the name is of a valid length, false otherwise
+	*/
 	bool validEventName(std::string name, int value);
 
 
@@ -47,7 +61,7 @@ class Executive
 	void run();
 
 	/**
-	*	Wasn't included in documentation
+	*	Prints all the events in the event list
 	*	@pre None
 	*	@post None
 	*	@param None
@@ -56,14 +70,21 @@ class Executive
 	void printEvents();
 
 	/**
-	*	Wasn't included in documentation
+	*	Checks the validity of the date passed in
 	*	@pre None
 	*	@post None
-	*	@param None
-	*	@return None
+	*	@param Integers representing the day, month, and year of a potential event
+	*	@return True is the date is valid, false otherwise
 	*/
 	bool dateCheck(int y, int m, int d);
 
+	/**
+	*	Adds the user's availability to the event passed in
+	*	@pre None
+	*	@post The user's availability is added to the event
+	*	@param The event to add availability to
+	*	@return None
+	*/
 	void AddAvailability(Events event);
 
 

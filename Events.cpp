@@ -290,11 +290,6 @@ bool Events::operator==(const Events& rhs) const
 	return((m_eventName == rhs.m_eventName) && (year == rhsYear) && (month == rhsMonth) && (day == rhsDay)); //returns true if the name, year, month, and day are the same
 }
 
-Events& Events::operator<<(Events & rhs)
-{
-	return(rhs);
-}
-
 bool Events::operator==(const std::string& rhs) const
 {
 	return(m_eventName == rhs); //returns true of the string is equal to the name of the event
