@@ -3,7 +3,10 @@
 #include "Events.h"
 #include <fstream>
 #include <vector>
-#include <iostream>
+#include <algorithm>
+#include <string>
+#include <math.h>
+#include <ctime>
 
 class Executive
 {
@@ -27,22 +30,31 @@ public:
 	~Executive();
 
 	/**
-	*	The program begins and the user can interact with it
+	*	Sets the name of the current user of the program
 	*	@pre None
-	*	@post Program begins
-	*	@param None
+	*	@post The name of the current user is set to the name passed in
+	*	@param A string representing the name of the current user
 	*	@return None
 	*/
-	void run();
+	void setCurrentUser(std::string name);
 
 	/**
-	*	Wasn't included in documentation
+	*	Creates an event and adds it to the event list
+	*	@pre None
+	*	@post An event is added to the list of events
+	*	@param A string representing the name, an int representing the number of days, and a vector of dates for the event
+	*	@return True if the event could be added, false otherwise
+	*/
+	bool addEvent(std::string name, int numOfDays, std::vector<std::string> dates);
+
+	/**
+	*	Returns the list of events
 	*	@pre None
 	*	@post None
 	*	@param None
-	*	@return None
+	*	@return The list of events
 	*/
-	void printEvents();
+	std::vector<Events> getEventList();
 
 	/**
 	*	Wasn't included in documentation
@@ -53,68 +65,7 @@ public:
 	*/
 	bool dateCheck(int y, int m, int d);
 
-	/**
-	*	Wasn't included in documentation
-	*	@pre None
-	*	@post None
-	*	@param None
-	*	@return None
-	*/
-	void AddAvailability(Events event);
-
-	/**
-	*	Sets the name of the current user of the program
-	*	@pre None
-	*	@post The name of the current user is set to the name passed in
-	*	@param A string representing the name of the current user
-	*	@return None
-	*/
-	void setCurrentUser(std::string name);
-
 private:
 	LinkedList<Events, std::string>* eventList; /**< List which holds the event objects */
-	std::string m_attNum = ""; /**< placeholder variable for an attendance number of an event, to be passed to Event class as an argument */
-	std::string m_months[12] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }; /**< Variable Description */
-	std::string m_currentUser = ""; /**< The name of the current user */
-
-	//std::vector<Events> eventList;
-
-	/**
-	*	The program initializes the admin mode
-	*	@pre None
-	*	@post Admin mode begins
-	*	@param Boolean checking whether the user has selected 12 or 24 hour mode
-	*	@return Wasn't included in documentation
-	*/
-	bool adminFunc(bool mode12);
-
-	/**
-	*	The program initializes the user mode
-	*	@pre None
-	*	@post User mode begins
-	*	@param Boolean checking whether the user has selected 12 or 24 hour mode
-	*	@return Wasn't included in documentation
-	*/
-	bool userFunc(bool mode12);
-
-	/**
-	*	The program allows the user to add an event
-	*	@pre None
-	*	@post An event is added to the list of events
-	*	@param Boolean checking whether the user has selected 12 or 24 hour mode
-	*	@return Wasn't included in documentation
-	*/
-	bool addEvent(bool mode12);
-
-
-	int timeMode;
-
-	/**
-	* The program checks inputs to be greater than 0 and less than the value given to it
-	* @pre None
-	* @post None
-	* @param String name of the event and the int value is the greatest amount of characters the event name can have
-	* @return returns true if a valid name and false if invalid name
-	*/
-	bool validEventName(std::string name, unsigned int value);
+	std::string m_currentUser; /**< The name of the current user */
 };

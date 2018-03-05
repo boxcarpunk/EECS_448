@@ -6,10 +6,10 @@ class Node
 {
 public:
 	/**
-	*	Creates a new node with the vallue that is passed in
+	*	Creates a new node with the value that is passed in
 	*	@pre None
 	*   @post A node with the passed value is created
-	*	@param Templated value
+	*	@param Templated value to be held by the node
 	*   @return None
 	*/
 	Node(T value);
@@ -19,7 +19,7 @@ public:
 	*	@pre None
 	*   @post None
 	*	@param None
-	*   @return Returns m_value Private member variable
+	*   @return Returns m_value private member variable
 	*/
 	T& getValue();
 
@@ -27,7 +27,7 @@ public:
 	*	Sets the value of a node equal to the value passed in
 	*	@pre The value for 'T' is valid
 	*   @post The value for a node is set
-	*	@param Templated value
+	*	@param Templated value to be held by the node
 	*   @return None
 	*/
 	void setValue(T value);

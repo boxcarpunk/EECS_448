@@ -1,10 +1,3 @@
-/**
-* @author Sahil Hirani
-* @cal448
-* @date 12 February 2017
-* @brief A class file for the Node class
-* @file Node.hpp **/
-
 template <typename T>
 Node<T>::Node(T value)
 {

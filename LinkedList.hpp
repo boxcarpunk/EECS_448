@@ -53,8 +53,7 @@ void LinkedList<keyType, searchType>::addBack(keyType value)
 {
   if(isEmpty()) //if the list is empty
   {
-		  addFront(value); //add the value to the front
-
+	addFront(value); //add the value to the front
   }
   else //if the list is not empty
   {

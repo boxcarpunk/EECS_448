@@ -3,33 +3,25 @@
 TimeSlots::TimeSlots()
 {
 	m_numOfAtt = 0; //sets the number of attendees to zero
-	m_TimeSlot = 0; //sets the time slot to zero
+	m_Index = 0; //sets the time slot to zero
 }
 
-TimeSlots::TimeSlots(int num, int time)
+TimeSlots::TimeSlots(int index)
 {
-	m_numOfAtt = num; //sets the number of attendees to what was passed in
-	m_TimeSlot = time; //sets the time slot to what was passed in
+	m_numOfAtt = 0; //sets the number of attendees to zero
+
+	if ((index < 54) && (index >= 0)) //if the index is valid
+	{
+		m_Index = index; //sets the index of the time slot to the index passed in
+	}
 }
 
-void TimeSlots::increaseAtt()
+void TimeSlots::setIndex(int index)
 {
-	m_numOfAtt += 1; //increases the number of attendees by one
-}
-
-void TimeSlots::setNum(int num)
-{
-	m_numOfAtt = num; //sets the number of attendees to what was passed in
-}
-
-void TimeSlots::setTimeSlot(int time)
-{
-	m_TimeSlot = time; //sets the time slot to what was passed in
-}
-
-void TimeSlots::addAttendee(std::string name)
-{
-	m_attendees.push_back(name);
+	if ((index < 54) && (index >= 0)) //if the index is valid
+	{
+		m_Index = index; //sets the index of the time slot to the index passed in
+	}
 }
 
 int TimeSlots::getNum()
@@ -37,27 +29,31 @@ int TimeSlots::getNum()
 	return m_numOfAtt; //returns the number of attendees
 }
 
-int TimeSlots::getTimeSlot()
+int TimeSlots::getIndex()
 {
-	return m_TimeSlot; //returns the time slot
+	return m_Index; //returns the time slot
 }
 
 std::vector<std::string> TimeSlots::getAttendees()
 {
-	return m_attendees;
+	return m_attendees; //returns the vector of attendee names
 }
-
-/*TimeSlots::~TimeSlots()
-{
-	//Destructor for good coding practice
-}*/
 
 bool TimeSlots::operator==(const TimeSlots& rhs) const
 {
-	return((m_TimeSlot == rhs.m_TimeSlot) && (m_numOfAtt == rhs.m_numOfAtt)); //true if the time slot and number of attendees are the same, false otherwise
+	return((m_Index == rhs.m_Index) && (m_numOfAtt == rhs.m_numOfAtt)); //true if the index and number of attendees are the same, false otherwise
+}
+
+TimeSlot& operator=(const TimeSlots& rhs)
+{
+	m_numOfAtt = rhs.m_numOfAtt; //makes the number of attendees equal
+	m_Index = rhs.m_Index; //makes the indices equal
+	m_attendees = rhs.getAttendees; //makes the list of attendee names equal
+
+	return(*this); //returns this object
 }
 
 bool TimeSlots::operator>(const TimeSlots& rhs) const
 {
-	return(m_TimeSlot > rhs.m_TimeSlot); //true if the current time slot is after the one passed in, false otherwise
+	return(m_Index > rhs.m_Index); //true if the current index is after the one passed in, false otherwise
 }
