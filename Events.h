@@ -1,6 +1,6 @@
 #pragma once
-#include <sstream>
 #include <string>
+#include <vector>
 #include "LinkedList.h"
 #include "TimeSlots.h"
 #include "Task.h"
@@ -10,7 +10,7 @@ class Events
 public:
 
 	/**
-	*	Creates an event with default values
+	*	Creates an event with default values. Note: Should never be used
 	*	@pre None
 	*	@post Assigns member variables a default value and creates an event
 	*	@param None
@@ -19,13 +19,13 @@ public:
 	Events();
 
 	/**
-	*	Creates an event with default values
+	*	Creates an event with the values passed in
 	*	@pre None
-	*	@post Assigns member variables the corresponding value passed in and creates an event
-	*	@param String for name and integers for month, day, and year
+	*	@post Assigns member variables the corresponding values passed in and creates an event
+	*	@param A string representing the name, an int representing the number of days, and a vector of dates for the event
 	*	@return None
 	*/
-	Events (std::string name, int month, int day, int year);
+	Events(std::string name, int numOfDays, std::vector<std::string> dates);
 
 	/**
 	*	Destructor deletes the linked lists
@@ -34,106 +34,65 @@ public:
 	*	@param None
 	*	@return None
 	*/
+<<<<<<< HEAD
 	~Events();
+=======
+	//~Events();
+>>>>>>> Event/Availability
 
 	/**
-	*	Private member variable is assigned correct value
-	*	@pre The name is valid
-	*	@post The private member variable is set to match the parameter
+	*	Sets the name of the event
+	*	@pre None
+	*	@post The name of the event is equal to the name passed in
 	*	@param String representing the name of an event
 	*	@return None
 	*/
 	void setName(std::string name);
 
 	/**
-	*	Private member variable is assigned correct value
-	*	@pre Int representing the month of an event
-	*	@post The private member variable is set to match the parameter
-	*	@param Int representing the month of an event
-	*	@return None
-	*/
-	void setMonth(int month);
-
-	/**
-	*	Private member variable is assigned correct value
-	*	@pre The day is valid
-	*	@post The private member variable is set to match the parameter
-	*	@param Int representing the day of an event
-	*	@return None
-	*/
-	void setDay(int day);
-
-	/**
-	*	Private member variable is assigned correct value
-	*	@pre The year is valid
-	*	@post The private member variable is set to match the parameter
-	*	@param Int representing the year of an event
-	*	@return None
-	*/
-	void setYear(int year);
-
-	/**
-	*	The name of the event being accessed is returned to the program
+	*	Returns the name of the event
 	*	@pre None
-	*	@post The name of an event it returned
+	*	@post None
 	*	@param None
 	*	@return A string representing the name of the event
 	*/
 	std::string getName() const;
 
 	/**
-	*	The month of the event being accessed is returned to the program
+	*	Returns the number of days the event will occur
 	*	@pre None
-	*	@post The month of an event it returned
+	*	@post None
 	*	@param None
-	*	@return An int representing the month of the event
+	*	@return An int representing the number of days the event will occur
 	*/
-	int getMonth() const;
+	int getNumOfDays() const;
 
 	/**
-	*	The day of the event being accessed is returned to the program
+	*	The list of days the event will occur on will be returned
 	*	@pre None
-	*	@post The day of an event it returned
+	*	@post None
 	*	@param None
-	*	@return An int representing the day of the event
+	*	@return A vector containing the list of dates the event will occur on in MM/DD/YYYY format
 	*/
-	int getDay() const;
+	std::vector<std::string> getDates() const;
 
 	/**
-	*	The year of the event being accessed is returned to the program
+	*	The 2D array of time slots will be returned. The first index refers to the day of the event and the second index refers to the 20min time slot for that day
 	*	@pre None
-	*	@post The year of an event it returned
+	*	@post None
 	*	@param None
-	*	@return An int representing the year of the event
+	*	@return A 2D array of time slots for the event
 	*/
-	int getYear() const;
+	TimeSlots** getTimes() const;
 
 	/**
-	*	The list of time slots for the event being accessed is returned to the program
+	*	The 2D array of time slots will be set. The first index refers to the day of the event and the second index refers to the 20min time slot for that day
 	*	@pre None
-	*	@post The list of time slots for an event it returned
-	*	@param None
-	*	@return Head pointer to m_TimeSlot. Specifically created for >, <, == operator overloads
-	*/
-	LinkedList<TimeSlots, TimeSlots>* getTimeSlots() const;
-
-	/**
-	*	The information for an event is printed out so that the user can see it
-	*	@pre None
-	*	@post The info for an event is printed
-	*	@param None
+	*	@post None
+	*	@param A 2D array of time slots
 	*	@return None
 	*/
-	void getInfo();
-
-	/**
-	*	Adds time slot for event. Executive.cpp controls how many time slots are filled for an event.
-	*	@pre None
-	*	@post New TimeSlots object added to m_TimeSlot list for an event
-	*	@param numOfAtt the number of attendants for a certain event
-	*	@return None
-	*/
-	void addTimeSlots(int s_t, int numOfAtt);
+	void setTimes(TimeSlots**);
 
 	/**
 	*	Adds a task to the list of tasks for the event
@@ -146,7 +105,7 @@ public:
 
 	/**
 	*	Allows a user to sign up for a task
-	*	@pre There is a task in the list with the given name
+	*	@pre There is an unhandled task in the list with the given name
 	*	@post The task is handled
 	*	@param The name of the task to be handled and the person handling it
 	*	@return True if the person could sign up for the task, false otherwise
@@ -167,16 +126,16 @@ public:
 	*	@pre None
 	*	@post None
 	*	@param None
-	*	@return The list of tasks for the event
+	*	@return A vector with the task list for the event
 	*/
-	LinkedList<Task, std::string>* getTasks();
+	std::vector<Task> getTasks();
 
 	/**
 	*	Operator overload for == between two events, checks the name and dates of the events
 	*	@pre None
 	*	@post None
 	*	@param The event to be compared to this one
-	*	@return True if the name and date of the events are the same, false otherwise
+	*	@return True if the name and dates of the events are the same, false otherwise
 	*/
 	bool operator==(const Events& rhs) const;
 
@@ -190,19 +149,18 @@ public:
 	bool operator==(const std::string& rhs) const;
 
 	/**
-	*	Operator overload for > between two events, checks the dates of the events
+	*	Operator overload for > between two events, checks the starting date of the events
 	*	@pre None
 	*	@post None
 	*	@param The event to be compared to this one
-	*	@return True if the date of the current event is after the event passed in, false otherwise
+	*	@return True if the starting date of the current event is after the event passed in, false otherwise
 	*/
 	bool operator>(const Events& rhs) const;
 
 private:
-	std::string m_name; /**< event name */
-	int m_month; /**< month of event */
-	int m_day; /**< day of event */
-	int m_year; /**< year of event */
-	LinkedList<TimeSlots, TimeSlots>* m_TimeSlot; /**< pointer to list of time slots for this event */
-	LinkedList<Task, std::string>* m_Task; /**< pointer to list of tasks for this event */
+	std::string m_name; /**< The name of the Event */
+	int m_numOfDays; /**< The number of days the event will occur */
+	std::vector<std::string> m_dates; /**< The actual dates that the event will occur */
+	TimeSlots** timeSlot; /**< The time slots for the event, the first index cooresponds to the day and the second index cooresponds to the actual time slot */
+	LinkedList<Task, std::string>* m_Task; /**< The list of tasks for the event */
 };

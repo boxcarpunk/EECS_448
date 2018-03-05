@@ -9,7 +9,7 @@ class LinkedList
 {
 	public:
 	/**
-	*	Assigns private member variables and creates an empty list
+	*	Assigns private member variables default values and creates an empty list
 	*	@pre None
 	*	@post An empty LinkedList object is created
 	*	@param None

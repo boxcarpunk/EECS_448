@@ -3,11 +3,14 @@
 #include "Events.h"
 #include <fstream>
 #include <vector>
-#include <iostream>
+#include <algorithm>
+#include <string>
+#include <math.h>
+#include <ctime>
 
 class Executive
 {
-	public:
+public:
 	/**
 	*	The list of events is populated from a file and the member variables are initialized or set up to be used
 	*	@pre None
@@ -18,31 +21,40 @@ class Executive
 	Executive();
 
 	/**
-	*	Empty destructor
+	*	Writes the program information to file in order to save it
 	*	@pre None
-	*	@post None
+	*	@post The object is destroyed and the info is stored in a file called "eventslist.txt"
 	*	@param None
 	*	@return None
 	*/
 	~Executive();
 
 	/**
-	*	The program begins and the user can interact with it
+	*	Sets the name of the current user of the program
 	*	@pre None
-	*	@post Program begins
-	*	@param None
+	*	@post The name of the current user is set to the name passed in
+	*	@param A string representing the name of the current user
 	*	@return None
 	*/
-	void run();
+	void setCurrentUser(std::string name);
 
 	/**
-	*	Wasn't included in documentation
+	*	Creates an event and adds it to the event list
+	*	@pre None
+	*	@post An event is added to the list of events
+	*	@param A string representing the name, an int representing the number of days, and a vector of dates for the event
+	*	@return True if the event could be added, false otherwise
+	*/
+	bool addEvent(std::string name, int numOfDays, std::vector<std::string> dates);
+
+	/**
+	*	Returns the list of events
 	*	@pre None
 	*	@post None
 	*	@param None
-	*	@return None
+	*	@return The list of events
 	*/
-	void printEvents();
+	std::vector<Events> getEventList();
 
 	/**
 	*	Wasn't included in documentation
@@ -53,8 +65,9 @@ class Executive
 	*/
 	bool dateCheck(int y, int m, int d);
 
-	private:
+private:
 	LinkedList<Events, std::string>* eventList; /**< List which holds the event objects */
+<<<<<<< HEAD
 
 	/**
 	*	The program initializes the admin mode
@@ -103,4 +116,7 @@ class Executive
 	std::string m_months[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 	const std::string holidays[3] = { "01/01", "07/4","12/25" };
 
+=======
+	std::string m_currentUser; /**< The name of the current user */
+>>>>>>> Event/Availability
 };

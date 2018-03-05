@@ -1,18 +1,4 @@
-/**
-* @author Leon Kleyn
-* @cal448
-* @date 12 February 2017
-* @brief Executive class implementation
-* @file Executive.cpp
-Test comment**/
-
 #include "Executive.h"
-#include "Events.h"
-#include "LinkedList.h"
-#include <algorithm>
-#include <string>
-#include <math.h>
-#include <ctime>
 
 Executive::Executive()
 {
@@ -38,7 +24,12 @@ Executive::Executive()
 		std::getline(inFile, month, ','); //gets the month of the event
 		std::getline(inFile, day, ','); //gets the day of the event
 		std::getline(inFile, year, ','); //gets the year of the event
-		Events event(name, std::stoi(month), std::stoi(day), std::stoi(year)); //creates a new event with the given name, month, day, and year
+		std::string strMonth, strDay, strYear;
+		strMonth = month;
+		strDay = day;
+		strYear = year;
+		//TODO: Add numOfDays to constructor
+		Events event(name,  0, 0); //creates a new event with the given name, month, day, and year
 		while (true) //runs infinitely
 		{
 			if (inFile.peek() == '.') //if the next character is a period
@@ -64,6 +55,7 @@ Executive::Executive()
 
 Executive::~Executive()
 {
+<<<<<<< HEAD
 }
 
 void Executive::run()
@@ -143,14 +135,20 @@ void Executive::run()
 			std::cout<<"\nInvalid input. Try again: \n";
 		}
 	}
+=======
+>>>>>>> Event/Availability
 	outFile.open("eventslist.txt"); //opens the file
-	for (int i=1; i<=eventList->getLength(); i++) //goes through the event list
+	for (int i = 1; i <= eventList->getLength(); i++) //goes through the event list
 	{
 		Events temp = eventList->getEntry(i); //stores an event in a temp variable
-		outFile << temp.getName() << "," << temp.getMonth() << "," << temp.getDay() << "," << temp.getYear() << ","; //writes the event info to file
+		outFile << temp.getName() << ",";
+		for (int j = 0; j < temp.getDates().size(); j++)
+		{
+			outFile << temp.getDates()[i]; //writes the event info to file
+		}
 		if (!temp.getTimeSlots()->isEmpty()) //if there are time slots for the event
 		{
-			for (int j=1; j<=temp.getTimeSlots()->getLength(); j++) //goes through the time slots
+			for (int j = 1; j <= temp.getTimeSlots()->getLength(); j++) //goes through the time slots
 			{
 				outFile << "." << temp.getTimeSlots()->getEntry(j).getTimeSlot() << "," << temp.getTimeSlots()->getEntry(j).getNum() << ","; //writes the time slot info to file
 			}
@@ -159,195 +157,20 @@ void Executive::run()
 	outFile.close(); //closes the file
 }
 
-bool Executive::adminFunc(bool mode12)
+void Executive::setCurrentUser(std::string name)
 {
-	int adminChoice = 0; //an int that stores input from the user
-	while (1) //runs infinitely
-	{
-		std::cout << "\nCurrently logged in as admin... How would you like to proceed?\n\n";
-		std::cout << "  (1) Add an event\n  (2) Print all events\n  (3) Find a specific event\n  (4) Main Menu\n  (5) Quit\n\n  Choice: ";
-		std::cin.ignore(); //wipes cin
-		std::cin >> adminChoice; //takes in and stores the menu input
-		while(std::cin.fail()) //fail bit code to recover from bad input
-		{
-			std::cin.clear();
-			std::cin.ignore();
-			std::cout << "Invalid input, please select '1'-'5'\n";
-			std::cin >> adminChoice;
-		}
-
-		if (adminChoice == 1) //if add an event
-		{
-			if (addEvent(mode12)) //if the event could be added
-			{
-				std::cout << "\nYour event has been added!\n";
-			}
-			else //if the function could not add the event
-			{
-				std::cout << "There was an issue creating your event, please try again\n";
-			}
-		}
-		else if (adminChoice == 2) //if print all events
-		{
-			printEvents(); //calls print events
-		}
-		else if (adminChoice == 3) //if find a specific event
-		{
-			std::string nameToSearch = ""; //creates a variable that stores the name of the event
-			std::cout << "\nPlease enter the name of the event you would like to pull up: ";
-			std::cin.ignore(); //wipes cin
-			std::getline(std::cin, nameToSearch); //takes in the name of the event
-
-			if (eventList->isFound(nameToSearch)) //if the event is in the list
-			{
-				std::cout << "\nThe event was found: " << nameToSearch << "\n\n"; //notifies the user that the event was found
-				Events event = eventList->search(nameToSearch); //retrieves the event
-				event.getInfo(); //prints the event info
-				std::cout << "\nThere are " << event.getTimeSlots()->getLength() << " time slots in this event.\n"; //prints the amount of time slots for the event
-				for (int i=1; i<=event.getTimeSlots()->getLength(); i++) //runs through the time slots
-				{
-					std::cout << "There are " << event.getTimeSlots()->getEntry(i).getNum() << " people available at " << event.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n"; //prints the number of attendees at each time slot
-				}
-			}
-			else //if the event is not in the list
-			{
-				std::cout << "\nThe event was not found\n"; //notify the user that the event was not found
-			}
-		}
-		else if (adminChoice == 4) //if main menu
-		{
-			return true; //return true to run to go back to the main menu
-		}
-		else if (adminChoice == 5) //if quit
-		{
-			return false; //return false to run to quit the program
-		}
-		else //if not 1-5
-		{
-			std::cout << "\nPlease enter a valid choice\n";
-		}
-	}
+	m_currentUser = name; //set the current user to the name passed in
 }
 
-bool Executive::userFunc(bool mode12)
+bool Executive::addEvent(std::string name, int numOfDays, std::vector<std::string> dates)
 {
-	int userChoice = 0; //an int that stores input from the user
-	while(1) //runs indefinitely
-	{
-		std::cout << "\nCurrently logged in as user... How would you like to proceed?\n";
-		std::cout << "  (1) Print all events\n  (2) Find a specific event\n  (3) Main Menu\n  (4) Quit\n\n  Choice: ";
-		std::cin.ignore(); //wipes cin
-		std::cin >> userChoice; //takes in and stores the menu input
-		while(std::cin.fail())
-		{
-			std::cin.clear();
-			std::cin.ignore();
-			std::cout << "Invalid input, please select '1'-'4'\n";
-			std::cin >> userChoice;
-		}
-
-		if (userChoice == 1) //if print all events
-		{
-			printEvents(); //prints the events
-		}
-		else if (userChoice == 2) //if find a specific event
-		{
-			std::string nameToSearch = ""; //creates a variable to store the name of the event
-			std::cout << "\nPlease enter the name of the event you would like to pull up: ";
-			std::cin.ignore(); //wipes cin
-			std::getline(std::cin, nameToSearch); //takes in the name of the event
-			if ((eventList->isFound(nameToSearch)) == true) //if the event is in the list
-			{
-				std::cout << "\nThe event was found: " << nameToSearch << "\n\n";
-				std::cout <<"Would you like to attend this event?\n";
-				std::cout <<"  (1) Yes\n  (2) No\n\n";
-				std::cin.ignore(); //wipes cin
-				std::cin >> userChoice; //takes in and stores the attend input
-				while(std::cin.fail()) //fail bit code to recover from bad input
-				{
-					std::cin.clear();
-					std::cin.ignore();
-					std::cout << "Invalid input, please select '1'-'2'\n";
-					std::cin >> userChoice;
-				}
-
-				while((userChoice != 1) && (userChoice != 2)) //while the input is not 1 or 2
-				{
-					std::cout <<"Not a Valid Input, Try Again....\n";
-					std::cin.ignore(); //wipes cin
-					std::cin >> userChoice; //takes in and stores the attend input
-					while (std::cin.fail()) //fail bit code to recover from bad input
-					{
-						std::cin.clear();
-						std::cin.ignore();
-						std::cout << "Invalid input, please select '1'-'2'\n";
-						std::cin >> userChoice;
-					}
-
-				}
-				if(userChoice == 1) //if the user would like to attend the event
-				{
-					Events temp = eventList -> search(nameToSearch); //stores the event
-					for(int i = 1; i <= temp.getTimeSlots() -> getLength(); i++) //runs through the time slots
-					{
-						std::cout <<"(" << i << ") " << temp.getTimeSlots() -> getEntry(i).getTimeSlot() << "\n"; //prints the time slot
-						std::cout <<"Are you Available for this Time Slot?\n (1)Yes\n (2)No\n";
-						std::cin.ignore(); //wipes cin
-						std::cin >> userChoice; //takes in and stores the availability input
-						while (std::cin.fail()) //fail bit code to recover from bad input
-						{
-							std::cin.clear();
-							std::cin.ignore();
-							std::cout << "Invalid input, please select '1'-'2'\n";
-							std::cin >> userChoice;
-						}
-						while(userChoice != 1 && userChoice != 2) //while the input is not 1 or 2
-						{
-							std::cout <<"Invalid Input Try Again!\n";
-							std::cin.ignore(); //wipes cin
-							std::cin >> userChoice; //takes in and stores the availability input
-							while (std::cin.fail()) //fail bit code to recover from bad input
-							{
-								std::cin.clear();
-								std::cin.ignore();
-								std::cout << "Invalid input, please select '1'-'2'\n";
-								std::cin >> userChoice;
-							}
-						}
-						if(userChoice == 1) //if the user is available
-						{
-							temp.getTimeSlots() -> getEntry(i).increaseAtt(); //increases the attendees for that time slot
-							std::cout <<"You have been added to the list. Thank You!\n\n";
-						}
-						else //if the user is not available
-						{
-							std::cout << "Thank You! You will not be added to the Attendee list!\n\n";
-						}
-					}
-				}
-			}
-			else //if the event is not in the list
-			{
-				std::cout << "\nThe event was not found\n"; //notify the user that the event was not found
-			}
-		}
-		else if (userChoice == 3) //if main menu
-		{
-			return true; //return true to run to keep the program running
-		}
-		else if (userChoice == 4) //if quit
-		{
-			return false; //return false to run to end the program
-		}
-		else //if not 1-4
-		{
-			std::cout << "\nPlease enter a valid choice\n";
-		}
-	}
+	eventList->addBack(Event(name, numOfDays, dates)); //creates a new event with the parameters passed in and stores them in the back of the event list
+	eventList->sort(); //sorts the event list
 }
 
-bool Executive::addEvent(bool mode12)
+std::vector<Events> Executive::getEventList()
 {
+<<<<<<< HEAD
 	std::string name = ""; //creates a placeholder variable for a name of an event
 	int month = 0; //creates a placeholder variable for a month of an event
 	int day = 0; //creates a placeholder variable for a day of an event
@@ -483,39 +306,43 @@ bool Executive::addEvent(bool mode12)
 	std::cout << numTs << "\n";
 	int tsup = ceil(m_intSTime);
 	for (int i = 0; i < numTs; i ++)
-	{
-		if(tsup % 100 == 60)
-		{
-			tsup = tsup + 40;
-		}
-		event1.addTimeSlots(tsup, 1);
-		tsup += 20;
+=======
+	std::vector<Events> temp; //creates the temp vector that will be returned
 
-	}
-	eventList->addBack(event1);
-	eventList->sort();
-        std::cout << "\n The length of timeslots is " << event1.getTimeSlots()->getLength() << "\n";
-	event1.getInfo();
-	for (int i=1; i <= event1.getTimeSlots()->getLength(); i++)
+	for (int i = 0; i < eventList->getLength(); i++) //iterates through the event list
+>>>>>>> Event/Availability
 	{
-		std::cout << "There are " << event1.getTimeSlots()->getEntry(i).getNum() << " people available at " << event1.getTimeSlots()->getEntry(i).getTimeSlot() << ".\n";
+		temp.push_back(eventList->getEntry(i+1)); //adds the event at index i+1 to the vector
 	}
 
-	return true;
-}
-
-void Executive::printEvents()
-{
-	std::cout << "Number of events currently planned: " << eventList->getLength() << "\nEvent list:\n";
-	for (int i=1; i<=eventList->getLength(); i++)
-	{
-		eventList->getEntry(i).getInfo();
-	}
+	return(temp); //returns the vector
 }
 
 bool Executive::dateCheck(int y, int m, int d)
 {
+<<<<<<< HEAD
 	// if the day is less than 1, then it can't possibly be a valid day
+=======
+	time_t now = time(0);
+	tm* ltm = localtime(&now);
+	int curY = (1900 + ltm->tm_year);
+	if (y < curY)
+	{
+		std::cout << "The year needs to be this year or later, you cannot create a past event!\n";
+		return false;
+		if (m <= ltm->tm_mon)
+		{
+			std::cout << "The month needs to be this month or later, you cannot create a past event!\n";
+			return false;
+			if (d <= ltm->tm_mday)
+			{
+				std::cout << "The day needs to be this day or later, you cannot create a past event!\n";
+				return false;
+			}
+		}
+
+	}
+>>>>>>> Event/Availability
 	if (d < 1)
 	{
 		std::cout << "\nThe day must be 1 or higher.\n";
@@ -564,6 +391,7 @@ bool Executive::dateCheck(int y, int m, int d)
 		}
 	}
 
+<<<<<<< HEAD
 	//check if the day is in the past
 	const int monthIndex = 0;
 	const int dayIndex = 1;
@@ -594,11 +422,26 @@ bool Executive::dateCheck(int y, int m, int d)
 		std::vector<std::string> holiday = split(holidays[i], '/');
 		if (std::stoi(holiday[monthIndex]) == m && std::stoi(holiday[dayIndex]) == d) {
 			std::cout << "The event cannot be on a holiday!\n";
+=======
+	const std::string Events::holidays[3] = { "01/01", "07/4","12/25" };
+	int size = sizeof(holidays);
+
+	//check if holiday (uses holiday size)
+	for (int i = 0; i < size; i++) {
+		std::istringstream issholiday(holidays[i]);
+		std::string f;
+		std::vector<std::string> holiday;
+		while (std::getline(issholiday, f, '/')) {
+			holiday.push_back(f);
+		}
+		if (std::stoi(holiday[0]) == m && std::stoi(holiday[1]) == d) {
+>>>>>>> Event/Availability
 			return false;
 		}
 	}
 	return true;
 }
+<<<<<<< HEAD
 bool Executive::validEventName(std::string name, unsigned int value) {
 	if (name.length() == 0 || name.length()>(value-1))
 		return false;
@@ -615,3 +458,5 @@ std::vector<std::string> Executive::split(std::string mainString, char seperatin
 	}
 	return returnString;
 }
+=======
+>>>>>>> Event/Availability

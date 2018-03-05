@@ -24,3 +24,10 @@ int main()
 	
 	return(0);
 }
+
+//TODO for Tanner
+/*
+* Fix executive constructor
+* Edit admin menu
+* Add availability function
+*/
