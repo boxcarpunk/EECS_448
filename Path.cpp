@@ -11,7 +11,6 @@
 using namespace std;
 Path::Path()
 {
-	exec = new Executive(); //creates the executive object to run the program
 	TT1 = false;
 	EmptyString = "";
 	initscr();
@@ -30,14 +29,11 @@ Path::Path()
 	Twelve = true;
 	Login(1,0);
 }
-
 Path::~Path()
 {
-	delete H; //deletes the highlight object
-	delete Des; //deletes the designs object
-	delete exec; //deletes the executive object
+	delete H;
+	delete Des;
 }
-
 void Path::Login(int screen, int AdminOrUser)
 {
 	initscr();
@@ -50,38 +46,38 @@ void Path::Login(int screen, int AdminOrUser)
 
 	if(screen == 1)
 	{
-		mvwprintw(win0,1,1,"Enter name"); //asks the user to enter in their name
-		mvwprintw(win0,3,1,"Username: "); //gives the user a place to input their name
+		mvwprintw(win0,1,1,"Enter name");
+		mvwprintw(win0,3,1,"Username: ");
 		wrefresh(win0);
 		box(win1,0,0);
 		wrefresh(win1);
 		refresh();
-		exec.setCurrentUser(Input(win1)); //sets the name of the current user to the name typed in
+		string Username = Input(win1);
 		wclear(win1);
 		wrefresh(win1);
 		Login(3,1);
 	}
-	else if((screen == 5)&&(AdminOrUser == 0))
+	else if((screen == 5)&&(AdminOrUser==0))
 	{
-		mvwprintw(win0,1,1,"Enter event name"); //asks the user for the name of the event to be created
-		mvwprintw(win0,3,1,"Name:"); //gives the user a place to input the name
+		mvwprintw(win0,1,1,"Enter even name");
+		mvwprintw(win0,3,1,"Name:");
 		wrefresh(win0);
 		box(win1,0,0);
 		wrefresh(win1);
 		refresh();
-		eventName = Input(win1); //takes in the name of the event to be created and stores it
+		Input(win1);
 		Login(6,0);
 	}
-	else if((screen == 6)&&(AdminOrUser == 0))
+	else if((screen == 6)&&(AdminOrUser==0))
 	{
-		mvwprintw(win0,1,1,"Enter date"); //asks the user for the date of the event
-		mvwprintw(win0,3,1,"Date: "); //gives the user a place to input the date
-		mvwprintw(win0,6,1,"(MM/DD/YYYY)"); //tells the user what the format of the date should be
+		mvwprintw(win0,1,1,"Enter date");
+		mvwprintw(win0,3,1,"Date: ");
+		mvwprintw(win0,6,1,"(MM/DD/YYYY)");
 		wrefresh(win0);
 		box(win1,0,0);
 		wrefresh(win1);
 		refresh();
-		date = Input(win1); //takes in and stores the date for the event
+		string Username = Input(win1);
 		wclear(win1);
 		wrefresh(win1);
 		Login(4,0);
@@ -108,9 +104,9 @@ void Path::Login(int screen, int AdminOrUser)
 		else
 		{
 			Login(4,Choice);
- 		}
+		}
 	}
-	else if((screen == 4)&&(AdminOrUser == 0))
+	else if((screen == 4)&&(AdminOrUser==0))
 	{
 		wclear(win0);
 		wclear(win1);
@@ -133,7 +129,7 @@ void Path::Login(int screen, int AdminOrUser)
 			Login(3,1);
 		}
 	}
-	else if((screen == 4)&&(AdminOrUser == 1))
+	else if((screen == 4)&&(AdminOrUser==1))
 	{
 		wclear(win0);
 		wclear(win1);
@@ -163,7 +159,7 @@ void Path::Login(int screen, int AdminOrUser)
 			getch();
 		}
 	}
-	else if((screen == 5)&&(AdminOrUser == 1))
+	else if((screen == 5)&&(AdminOrUser==1))
 	{
 		wclear(win0);
 		wclear(win1);
@@ -189,7 +185,7 @@ void Path::Login(int screen, int AdminOrUser)
 		Choice = H->print_vec(win0,Ev1D,3,2);
 		Login(6,1);
 	}
-	else if((screen == 6)&&(AdminOrUser == 1))
+	else if((screen==6)&&(AdminOrUser==1))
 	{
 		bool Submit = false;
 		int Choice2 = 0;
@@ -306,7 +302,7 @@ void Path::Login(int screen, int AdminOrUser)
 			Login(7,1);
 		}
 	}
-	else if((screen == 7)&&(AdminOrUser == 0))
+	else if((screen==7)&&(AdminOrUser==0))
 	{
 		wclear(win0);
 		wclear(win1);
@@ -349,7 +345,7 @@ void Path::Login(int screen, int AdminOrUser)
 			Login(8,0);
 		}
 	}
-	else if((screen == 8)&&(AdminOrUser == 0))
+	else if((screen == 8)&&(AdminOrUser==0))
 	{
 		wclear(win0);
 		wclear(win1);
@@ -370,7 +366,7 @@ void Path::Login(int screen, int AdminOrUser)
 			wrefresh(win1);
 		}	
 	}
-	else if((screen == 7)&&(AdminOrUser == 1))
+	else if((screen==7)&&(AdminOrUser==1))
 	{
 		int Choice2 = H->print_scroll(win0,SecondUserMenu,3,3,2);
 		if(Choice2==0)
@@ -397,7 +393,6 @@ void Path::Login(int screen, int AdminOrUser)
 		}
 	}
 }
-
 string Path::Input(WINDOW * win1)
 {
 	keypad(stdscr,TRUE);
@@ -437,9 +432,9 @@ string Path::Input(WINDOW * win1)
 				break;
 			}
 		}
-		for(int i = 0; i<ValidChars.length(); i++)
+		for(int i = 0; i<ValidChars.length();i++)
 		{
-			if(Keys == ValidChars[i])
+			if(Keys==ValidChars[i])
 			{
 				wclear(win1);
 				box(win1,0,0);
