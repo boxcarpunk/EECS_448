@@ -59,6 +59,15 @@ public:
 	*	@return A vector containing the list of names of the attendees
 	*/
 	std::vector<std::string> getAttendees();
+	
+	/**
+	*	Adds an attendee to the time slot
+	*	@pre None
+	*	@post An attendee is added to m_attendees and m_numOfAtt is incremented
+	*	@param A string representing the name of the attendee to be added
+	*	@return None
+	*/
+	void addAttendee(std::string name);
 
 	/**
 	*	Operator overload for == between two time slots

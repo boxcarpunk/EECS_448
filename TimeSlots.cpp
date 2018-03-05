@@ -39,6 +39,20 @@ std::vector<std::string> TimeSlots::getAttendees()
 	return m_attendees; //returns the vector of attendee names
 }
 
+void TimeSlots::addAttendee(std::string name)
+{
+	for(int i = 0; i < m_attendees.size(); i++) //runs through the attendee vector
+	{
+		if(name == m_attendees[i]) //if the person being added is already in the list
+		{
+			return; //you shouldn't add an attendee twice
+		}
+	}
+	
+	m_attendees.push_back(name); //if the attendee is not already in the time slot then add them
+	m_numOfAtt++; //increment the number of attendees
+}
+
 bool TimeSlots::operator==(const TimeSlots& rhs) const
 {
 	return((m_Index == rhs.m_Index) && (m_numOfAtt == rhs.m_numOfAtt)); //true if the index and number of attendees are the same, false otherwise

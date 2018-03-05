@@ -88,7 +88,7 @@ std::string Executive::getCurrentUser() const
 Events& Executive::addEvent(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates)
 {
 	Events* newEvent = new Events(eventName, adminName, numOfDays, dates); //creates a new event with the parameters passed in
-	eventList->addBack(Events(*newEvent)); //adds the event to the back of the event list
+	eventList->addBack(*newEvent); //adds the event to the back of the event list
 	eventList->sort(); //sorts the event list
 	return(*newEvent); //returns the newly created event
 }
