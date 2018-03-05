@@ -1,21 +1,33 @@
-#include "Path.h"
-#include "Designs.h"
-#include <cstdio>	
-#include <iostream>
-#include <string>
-#include <stdio.h>
-#include <ncurses.h>
-//#include <windows.h>
-//#include <mmsystem.h>
-#define WIDTH 30
-#define HEIGHT 10
-using namespace std;
+/**
+* @author Leon Kleyn
+  @author Sahil Hirani
+  @author David Iordan
+  @author Robert Goss
+* @cal448
+* @date 12 February 2017
+* @brief main file for cal448 that calls and runs executive class
+* @file main.cpp **/
 
-int startx = 0;
-int starty = 0;
+#include "Executive.h"
 
-int main()
+/**
+*	Creates an instance of the Executive class and runs the program
+*	@pre None
+*	@post None
+*	@param None
+*	@return None
+*/
+int main() 
 {
-	Path P;
-	return 0;
+	Executive exec; //creates an executive object
+	exec.run(); //calls run
+	
+	return(0);
 }
+
+//TODO for Tanner
+/*
+* Fix executive constructor
+* Edit admin menu
+* Add availability function
+*/

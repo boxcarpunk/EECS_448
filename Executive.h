@@ -1,16 +1,13 @@
 #pragma once
+#include "LinkedList.h"
 #include "Events.h"
 #include <fstream>
 #include <vector>
-#include <algorithm>
-#include <string>
-#include <math.h>
-#include <ctime>
-#include <sstream>
+#include <iostream>
 
 class Executive
 {
-public:
+	public:
 	/**
 	*	The list of events is populated from a file and the member variables are initialized or set up to be used
 	*	@pre None
@@ -21,62 +18,81 @@ public:
 	Executive();
 
 	/**
-	*	Writes the program information to file in order to save it
+	*	Empty destructor
 	*	@pre None
-	*	@post The object is destroyed and the info is stored in a file called "eventslist.txt"
+	*	@post None
 	*	@param None
 	*	@return None
 	*/
 	~Executive();
 
+	std::vector<std::string> split(std::string mainString, char seperatingChar);
+
+	bool validEventName(std::string name, int value);
+
+
 	/**
-	*	Sets the name of the current user of the program
+	*	The program begins and the user can interact with it
 	*	@pre None
-	*	@post The name of the current user is set to the name passed in
-	*	@param A string representing the name of the current user
+	*	@post Program begins
+	*	@param None
 	*	@return None
 	*/
-	void setCurrentUser(std::string name);
+	void run();
 
 	/**
-	*	Gets the name of the current user
+	*	Wasn't included in documentation
 	*	@pre None
 	*	@post None
 	*	@param None
-	*	@return A string representing the name of the current user
+	*	@return None
 	*/
-	std::string getCurrentUser() const;
+	void printEvents();
 
 	/**
-	*	Creates an event and adds it to the event list
-	*	@pre None
-	*	@post An event is added to the list of events
-	*	@param Two strings representing the name of the event and the admin, an int representing the number of days, and a vector of dates for the event
-	*	@return The newly created event
-	*/
-	Events& addEvent(std::string eventName, std::string adminName, int numOfDays, std::vector<std::string> dates);
-
-	/**
-	*	Returns the list of events
+	*	Wasn't included in documentation
 	*	@pre None
 	*	@post None
 	*	@param None
-	*	@return The vector list of events
-	*/
-	std::vector<Events> getEventList() const;
-
-	/**
-	* Checks if the date is valid or not
-	*	@pre None
-	*	@post None
-	*	@param Integer values representing the year, month and day are taken in
-	*	@return True if the date is valid. False if the date is invalid.
+	*	@return None
 	*/
 	bool dateCheck(int y, int m, int d);
 
-	std::vector<std::string> split(std::string baseString, char splitChar);
+	void AddAvailability(Events event);
 
-private:
-	std::vector<Events> m_eventList; /**< List which holds the event objects */
-	std::string m_currentUser; /**< The name of the current user */
+
+	private:
+	LinkedList<Events, std::string>* eventList; /**< List which holds the event objects */
+
+	/**
+	*	The program initializes the admin mode
+	*	@pre None
+	*	@post Admin mode begins
+	*	@param Boolean checking whether the user has selected 12 or 24 hour mode
+	*	@return Wasn't included in documentation
+	*/
+	bool adminFunc(bool mode12);
+
+	/**
+	*	The program initializes the user mode
+	*	@pre None
+	*	@post User mode begins
+	*	@param Boolean checking whether the user has selected 12 or 24 hour mode
+	*	@return Wasn't included in documentation
+	*/
+	bool userFunc(bool mode12);
+
+	/**
+	*	The program allows the user to add an event
+	*	@pre None
+	*	@post An event is added to the list of events
+	*	@param Boolean checking whether the user has selected 12 or 24 hour mode
+	*	@return Wasn't included in documentation
+	*/
+	bool addEvent(bool mode12);
+
+	int timeMode;
+	std::string m_attNum = ""; // placeholder variable for an attendance number of an event, to be passed to Event class as an argument
+	std::string m_months[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+	std::string currentUser = "";
 };
