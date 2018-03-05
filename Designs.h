@@ -5,7 +5,21 @@
 class Designs
 {
 public:
+	/**
+	* Doesn't do anything
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return None
+	*/
 	Designs();
+	/**
+	* Creates the title design
+	*	@pre None
+	*	@post None
+	*	@param None
+	*	@return None
+	*/
 	void Title();
 private:
 };
