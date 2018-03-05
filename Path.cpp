@@ -30,12 +30,14 @@ Path::Path()
 	Twelve = true;
 	Login(1,0);
 }
+
 Path::~Path()
 {
 	delete H; //deletes the highlight object
 	delete Des; //deletes the designs object
 	delete exec; //deletes the executive object
 }
+
 void Path::Login(int screen, int AdminOrUser)
 {
 	initscr();
@@ -59,7 +61,7 @@ void Path::Login(int screen, int AdminOrUser)
 		wrefresh(win1);
 		Login(3,1);
 	}
-	else if((screen == 5)&&(AdminOrUser==0))
+	else if((screen == 5)&&(AdminOrUser == 0))
 	{
 		mvwprintw(win0,1,1,"Enter event name"); //asks the user for the name of the event to be created
 		mvwprintw(win0,3,1,"Name:"); //gives the user a place to input the name
@@ -70,7 +72,7 @@ void Path::Login(int screen, int AdminOrUser)
 		eventName = Input(win1); //takes in the name of the event to be created and stores it
 		Login(6,0);
 	}
-	else if((screen == 6)&&(AdminOrUser==0))
+	else if((screen == 6)&&(AdminOrUser == 0))
 	{
 		mvwprintw(win0,1,1,"Enter date"); //asks the user for the date of the event
 		mvwprintw(win0,3,1,"Date: "); //gives the user a place to input the date
@@ -106,9 +108,9 @@ void Path::Login(int screen, int AdminOrUser)
 		else
 		{
 			Login(4,Choice);
-		}
+ 		}
 	}
-	else if((screen == 4)&&(AdminOrUser==0))
+	else if((screen == 4)&&(AdminOrUser == 0))
 	{
 		wclear(win0);
 		wclear(win1);
@@ -131,7 +133,7 @@ void Path::Login(int screen, int AdminOrUser)
 			Login(3,1);
 		}
 	}
-	else if((screen == 4)&&(AdminOrUser==1))
+	else if((screen == 4)&&(AdminOrUser == 1))
 	{
 		wclear(win0);
 		wclear(win1);
@@ -161,7 +163,7 @@ void Path::Login(int screen, int AdminOrUser)
 			getch();
 		}
 	}
-	else if((screen == 5)&&(AdminOrUser==1))
+	else if((screen == 5)&&(AdminOrUser == 1))
 	{
 		wclear(win0);
 		wclear(win1);
@@ -187,7 +189,7 @@ void Path::Login(int screen, int AdminOrUser)
 		Choice = H->print_vec(win0,Ev1D,3,2);
 		Login(6,1);
 	}
-	else if((screen==6)&&(AdminOrUser==1))
+	else if((screen == 6)&&(AdminOrUser == 1))
 	{
 		bool Submit = false;
 		int Choice2 = 0;
@@ -304,7 +306,7 @@ void Path::Login(int screen, int AdminOrUser)
 			Login(7,1);
 		}
 	}
-	else if((screen==7)&&(AdminOrUser==0))
+	else if((screen == 7)&&(AdminOrUser == 0))
 	{
 		wclear(win0);
 		wclear(win1);
@@ -347,7 +349,7 @@ void Path::Login(int screen, int AdminOrUser)
 			Login(8,0);
 		}
 	}
-	else if((screen == 8)&&(AdminOrUser==0))
+	else if((screen == 8)&&(AdminOrUser == 0))
 	{
 		wclear(win0);
 		wclear(win1);
@@ -368,7 +370,7 @@ void Path::Login(int screen, int AdminOrUser)
 			wrefresh(win1);
 		}	
 	}
-	else if((screen==7)&&(AdminOrUser==1))
+	else if((screen == 7)&&(AdminOrUser == 1))
 	{
 		int Choice2 = H->print_scroll(win0,SecondUserMenu,3,3,2);
 		if(Choice2==0)
@@ -395,6 +397,7 @@ void Path::Login(int screen, int AdminOrUser)
 		}
 	}
 }
+
 string Path::Input(WINDOW * win1)
 {
 	keypad(stdscr,TRUE);
@@ -434,9 +437,9 @@ string Path::Input(WINDOW * win1)
 				break;
 			}
 		}
-		for(int i = 0; i<ValidChars.length();i++)
+		for(int i = 0; i<ValidChars.length(); i++)
 		{
-			if(Keys==ValidChars[i])
+			if(Keys == ValidChars[i])
 			{
 				wclear(win1);
 				box(win1,0,0);

@@ -12,38 +12,38 @@ class Path
 	public:
 
 		/**
-		*	Wasn't included in documentation
+		*	Creates the Executive, Highlights and Designs objects intializes values
 		*	@pre None
-		*	@post None
+		*	@post Objects are created
 		*	@param None
 		*	@return None
 		*/
 		Path();
 
 		/**
-		*	Wasn't included in documentation
+		*	Deletes the Executive, Highlights and Designs objects  
 		*	@pre None
-		*	@post None
+		*	@post Objects are deleted
 		*	@param None
 		*	@return None
 		*/
 		~Path();
 
 		/**
-		*	Wasn't included in documentation
-		*	@pre None
-		*	@post None
-		*	@param None
+		*	Controls which screens the program user goes to
+		*	@pre In the constructor screen is intially 1 and AdminOrUser is 0
+		*	@post Changes to the next screen
+		*	@param Int representing what screen we go to next, and an int with value 0 if user is an Admin, and 1 if not
 		*	@return None
 		*/
 		void Login(int screen,int AdminOrUser);
 
 		/**
-		*	Wasn't included in documentation
-		*	@pre None
-		*	@post None
-		*	@param None
-		*	@return None
+		*	Checks the value of the input by the program user
+		*	@pre In the constructor screen is intially 1 and AdminOrUser is 0
+		*	@post The string is created with proper characters
+		*	@param pointer to type WINDOW 
+		*	@return String of the input
 		*/
 		std::string Input(WINDOW * win1);
 
