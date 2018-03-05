@@ -27,7 +27,7 @@ Path::Path()
 	ValUser = "Ryan";
 	ValPass = "Alvarez";
 	Twelve = true;
-	Login(1,0);
+	Login(1,3);
 }
 Path::~Path()
 {
@@ -61,7 +61,7 @@ void Path::Login(int screen, int AdminOrUser)
 		int Choice = AOrU(win0, win1);
 		if(Choice==2)
 		{
-			Login(1,1);
+			Login(1,3);
 		}
 		else if(Choice == 0)
 		{
@@ -80,18 +80,32 @@ void Path::Login(int screen, int AdminOrUser)
 				//Login(5,0);
 				wclear(win0);
 				wclear(win1);
-				mvwprintw(win0,1,1,"Enter date");
-				mvwprintw(win0,3,1,"Date: ");
-				mvwprintw(win0,6,1,"(MM/DD/YYYY)");
+				//-------------
+				mvwprintw(win0,1,1,"Enter number of dates");
+				mvwprintw(win0,3,1,"Number: ");
 				box(win0,0,0);
 				box(win1,0,0);
 				wrefresh(win0);
 				wrefresh(win1);
 				refresh();
-				string Date = Input(win1);
-				wclear(win1);
-				wrefresh(win1);
-				Login(1,0);
+				int num = stoi(Input(win1));
+				for(int i = 0; i<num;i++)
+				{
+					wclear(win0);
+					wclear(win1);
+					mvwprintw(win0,1,1,"Enter date");
+					mvwprintw(win0,3,1,"Date: ");
+					mvwprintw(win0,6,1,"(MM/DD/YYYY)");
+					box(win0,0,0);
+					box(win1,0,0);
+					wrefresh(win0);
+					wrefresh(win1);
+					refresh();
+					string Date = Input(win1);
+					wclear(win1);
+					wrefresh(win1);
+				}
+					Login(1,0);
 				//end of add event
 			}
 			else if(Choice==1)
