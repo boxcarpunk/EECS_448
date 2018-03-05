@@ -99,7 +99,7 @@ class Path
 		char * TwelveOrTwentyFourMenu[2]={"12 hour","24 hour"};
 		char * EventNames[9]={"1","2","3","4","5","6","7","8","9"};
 		char * AddTask[2]={"Yes","No"};
-		char * Edit[4]={"Edit event name","Edit event date","Add task","Submit"};
+		char * Edit[6]={"Edit event name","Add date","Remove date","Add task","Remove task","Submit"};
 		bool TT1;
 		bool Type;
 		WINDOW * InvWin;

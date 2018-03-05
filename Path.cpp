@@ -123,7 +123,7 @@ void Path::Login(int screen, int AdminOrUser)
 			else if(Choice==1)
 			{
 				Choice = SelectEvents(win0,win1);
-				Choice = H->print_scroll(win0,Edit,3,2,2);
+				Choice = H->print_scroll(win0,Edit,3,6,2);
 				if(Choice==0)
 				{
 					wclear(win0);
@@ -136,7 +136,7 @@ void Path::Login(int screen, int AdminOrUser)
 					refresh();
 					string EventN = Input(win1);
 				}
-				else
+				else if(Choice==1)
 				{
 					wclear(win0);
 					wclear(win1);
@@ -150,11 +150,20 @@ void Path::Login(int screen, int AdminOrUser)
 					refresh();
 					string Date = Input(win1);
 				}
-				wclear(win0);
-				wclear(win1);
-				wrefresh(win0);
-				wrefresh(win1);
-				Login(1,0);
+				else if(Choice==2)
+				{
+					//needs to be fed appropriate date vector
+					vector<char *> DateVec;
+					DateVec.push_back("Date 1");
+					DateVec.push_back("Date 2");
+					DateVec.push_back("Date 3");
+					Choice=H->print_vec(win0,DateVec,3,2);
+					wclear(win0);
+					wclear(win1);
+					wrefresh(win0);
+					wrefresh(win1);
+					Login(1,0);
+				}
 			}
 			else
 			{
